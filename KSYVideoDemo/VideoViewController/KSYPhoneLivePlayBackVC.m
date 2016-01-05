@@ -10,11 +10,12 @@
 
 #import "KSYPhoneLivePlayView.h"
 #import "CommentModel.h"
-
+#import "SpectatorModel.h"
 
 @interface KSYPhoneLivePlayBackVC ()
 {
     KSYPhoneLivePlayView    *_phoneLivePlayVC;
+    NSMutableArray          *_spectatorsArr;
     NSTimer                 *_commetnTimer;
     NSTimer                 *_praiseTimer0;
     NSTimer                 *_praiseTimer1;
@@ -33,8 +34,14 @@
     //模拟点赞事件
     _praiseTimer0 = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(praiseEvent) userInfo:nil repeats:YES];
 //    _praiseTimer1 = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(presentEvent) userInfo:nil repeats:YES];
-    
+    //模拟观众信息
+    _spectatorsArr = [[NSMutableArray alloc] initWithCapacity:0];
+    [self requestSepctators];
+
     _phoneLivePlayVC = [[KSYPhoneLivePlayView alloc] initWithFrame:self.view.bounds urlString:self.videoUrlString playState:KSYPhoneLivePlayBack];
+    //观看用户
+    _phoneLivePlayVC.spectatorsArray = _spectatorsArr;
+
     _phoneLivePlayVC.isBackGroundReleasePlayer = self.isReleasePlayer;
 
     _phoneLivePlayVC.liveBroadcastCloseBlock = ^{
@@ -81,6 +88,30 @@
     model.headColor = [UIColor colorWithHue:hue1 saturation:saturation1 brightness:brightness1 alpha:1];
     
     [_phoneLivePlayVC addNewCommentWith:model];
+}
+
+- (void)requestSepctators
+{
+    for (int i = 0; i < 20; i++) {
+        SpectatorModel *model = [SpectatorModel new];
+        model.name = @"王大锤";
+        model.signConent = @"我叫王大锤，万万没想到的是...我的生涯一片无悔，我想起那天夕阳下的奔跑，那是我逝去的青春";
+        model.liveNumber = @"888";
+        model.fansNumber = @"20K";
+        model.followNumber = @"88";
+        model.praiseNumber = @"5.5w";
+        model.headColor = [self getRandomColorWithalpha:1];
+        [_spectatorsArr addObject:model];
+    }
+}
+
+//获取随机色
+- (UIColor *)getRandomColorWithalpha:(float)alpla
+{
+    CGFloat hue = ( arc4random() % 256 / 256.0 );
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpla];
 }
 
 - (void)didReceiveMemoryWarning {
