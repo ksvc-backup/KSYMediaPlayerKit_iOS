@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>内容简介内容简介内容简介内容简介内容简介内容简介内容简介</string>
+	<key>playtimes</key>
+	<string>30次</string>
+	<key>time</key>
+	<string>2015年12月22号 09:09:22</string>
+	<key>studioName</key>
+	<string>直播名称</string>
+	<key>signature</key>
+	<string>sfgaesrhsthsethywsjry</string>
+	<key>fansCount</key>
+	<string>2222</string>
+	<key>hostLevel</key>
+	<string>3</string>
+	<key>hostName</key>
+	<string>主播用户名ID</string>
+	<key>hostImageProf</key>
+	<string>1.jpg</string>
+</dict>
+</plist>

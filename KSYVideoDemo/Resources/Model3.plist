@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>content</key>
+		<string>asrefgasdegasregae</string>
+		<key>customerCount</key>
+		<string>123人正在看</string>
+		<key>time</key>
+		<string>01:02:03</string>
+		<key>videoName</key>
+		<string>gysrtyget</string>
+		<key>imageName</key>
+		<string>default.png</string>
+	</dict>
+	<dict>
+		<key>content</key>
+		<string>fasegasrgaaw</string>
+		<key>customerCount</key>
+		<string>321人正在看</string>
+		<key>time</key>
+		<string>01:02:03</string>
+		<key>videoName</key>
+		<string>sefgtergt</string>
+		<key>imageName</key>
+		<string>default.png</string>
+	</dict>
+	<dict>
+		<key>content</key>
+		<string>asrefgasdegasregae</string>
+		<key>customerCount</key>
+		<string>123人正在看</string>
+		<key>time</key>
+		<string>01:02:03</string>
+		<key>videoName</key>
+		<string>gysrtyget</string>
+		<key>imageName</key>
+		<string>default.png</string>
+	</dict>
+</array>
+</plist>
