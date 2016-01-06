@@ -44,7 +44,6 @@
         [self addSubview:self.playStateLab];
         [self addSubview:self.curentTimeLab];
         [self addSubview:self.headButton];
-//        [self addSubview:self.headImageView];
         [self addSubview:self.interactiveView];
         [self addSubview:self.alertView];
         
