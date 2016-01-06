@@ -1,18 +1,20 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "19B430F09D435A37FB7F0B9CF3167F9723F2E077",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "10B6198EB38D4513C4CDEFCA2B4DE720991ED976",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "6AA68591624CE172FDFFCF3C19FD7914B4BA5D2F" : 0,
     "0CFA112DD185579A5A6F8850F048AC72CD14AD78" : 0,
-    "19B430F09D435A37FB7F0B9CF3167F9723F2E077" : 0
+    "19B430F09D435A37FB7F0B9CF3167F9723F2E077" : 0,
+    "6AA68591624CE172FDFFCF3C19FD7914B4BA5D2F" : 0,
+    "10B6198EB38D4513C4CDEFCA2B4DE720991ED976" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1DAFA7E4-DDCE-4AFD-BB22-AC8BE3705BF9",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "6AA68591624CE172FDFFCF3C19FD7914B4BA5D2F" : "KSYMediaPlayer-IOS",
     "0CFA112DD185579A5A6F8850F048AC72CD14AD78" : "KSYMediaPlayer",
-    "19B430F09D435A37FB7F0B9CF3167F9723F2E077" : "KSYMediaPlayer-iOS-SDK-NEW\/"
+    "19B430F09D435A37FB7F0B9CF3167F9723F2E077" : "KSYMediaPlayer-iOS-SDK-NEW\/",
+    "6AA68591624CE172FDFFCF3C19FD7914B4BA5D2F" : "KSYMediaPlayer-IOS",
+    "10B6198EB38D4513C4CDEFCA2B4DE720991ED976" : "KSYMediaPlayer-iOS-SDK-LIBRARY\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "KSYVideoDemo",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -22,6 +24,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ks3sdk\/KSYMediaPlayer-iOS-SDK.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0CFA112DD185579A5A6F8850F048AC72CD14AD78"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ksvc\/KSYMediaPlayer-iOS-SDK-LIBRARY.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "10B6198EB38D4513C4CDEFCA2B4DE720991ED976"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ks3sdk\/KSYMediaPlayer-iOS-SDK-NEW.git",

@@ -9,8 +9,9 @@
 #ifndef KSYHead_h
 #define KSYHead_h
 
-#import "UIView+BFExtension.h"
 #import <KSYMediaPlayer/KSYMediaPlayer.h>
+#import "UIColor+ColorExtension.h"
+#import "UIView+BFExtension.h"
 #import "KSYBasePlayView.h"
 #import "KSYThemeManager.h"
 #import "KSYMediaVoiceView.h"
@@ -20,7 +21,7 @@
 #import "KSYDetailModel.h"
 #import "KSYIntTVCell.h"
 #import "KSYIntroduceModel.h"
-
+#import "UIImageView+WebCache.h"
 
 
 typedef enum : NSUInteger {

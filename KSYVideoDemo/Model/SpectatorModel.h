@@ -38,6 +38,4 @@
  */
 @property (nonatomic, copy)NSString *praiseNumber;
 
-//临时成员，测试效果用
-@property (nonatomic, strong)UIColor *headColor;
 @end

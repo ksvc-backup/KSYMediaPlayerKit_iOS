@@ -58,9 +58,9 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _controCommentBtn.frame = CGRectMake(10, 5, 40, 40);
-    _inputTexField.frame = CGRectMake(_controCommentBtn.right + 10, 5, self.frame.size.width - 120, 40);
-    _shareBtn.frame = CGRectMake(_inputTexField.right + 10, 5, 40, 40);
+    _controCommentBtn.frame = CGRectMake(10, 5, 34, 34);
+    _inputTexField.frame = CGRectMake(_controCommentBtn.right + 10, 5, self.frame.size.width - 120, 35);
+    _shareBtn.frame = CGRectMake(_inputTexField.right + 10, 5, 34, 34);
 }
 
 - (void)setupConfigure
@@ -77,26 +77,27 @@
 {
     
     //控制评论
-    _controCommentBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, 40, 30)];
+    _controCommentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_controCommentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _controCommentBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    [_controCommentBtn setTitle:@"互动开" forState:UIControlStateNormal];
+//    [_controCommentBtn setTitle:@"互动开" forState:UIControlStateNormal];
+    [_controCommentBtn setBackgroundImage:[UIImage imageNamed:@"interactiveOn"] forState:UIControlStateNormal];
     _controCommentBtn.tag = 231;
     _controCommentBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [_controCommentBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     //分享
-    _shareBtn = [[UIButton alloc] init];
+    _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_shareBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _shareBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    [_shareBtn setTitle:@"分享" forState:UIControlStateNormal];
+    [_shareBtn setBackgroundImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
     _shareBtn.tag = 232;
     _shareBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
     [_shareBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     
     _inputTexField = [[UITextField  alloc] init];
-    _inputTexField.backgroundColor = [UIColor grayColor];
+    _inputTexField.backgroundColor = [UIColor callColorFromHexRGB:@"d8d8d8"];
     _inputTexField.placeholder = @" 说点什么吧...";
     _inputTexField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     _inputTexField.returnKeyType = UIReturnKeySend;
@@ -117,14 +118,14 @@
 {
     if (button.tag == 231) {
         if (!button.selected) {
-            [_controCommentBtn setTitle:@"互动关" forState:UIControlStateNormal];
+            [_controCommentBtn setBackgroundImage:[UIImage imageNamed:@"interactiveOff"] forState:UIControlStateNormal];
 
             if (self.userEventBlock) {
                 self.userEventBlock(button.tag - 230);
             }
 
         }else {
-            [_controCommentBtn setTitle:@"互动开" forState:UIControlStateNormal];
+            [_controCommentBtn setBackgroundImage:[UIImage imageNamed:@"interactiveOn"] forState:UIControlStateNormal];
 
             if (self.userEventBlock) {
                 self.userEventBlock(button.tag - 231);

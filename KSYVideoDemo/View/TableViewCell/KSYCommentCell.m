@@ -7,10 +7,11 @@
 //
 
 #import "KSYCommentCell.h"
-#import "UIView+BFExtension.h"
+
 @interface KSYCommentCell ()
 {
     UIView  *_backGroundView;
+    UIView  *_leftView;
     UILabel *_contentLab;
     UIImageView *_headImv;
 }
@@ -36,12 +37,18 @@
         self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         _backGroundView = [[UIView alloc] init];
+        _backGroundView.alpha = 0.5;
         [self.contentView addSubview:_backGroundView];
         
+        _leftView = [[UIView alloc] init];
+        _leftView.alpha = 0.5;
+
+        [self.contentView addSubview:_leftView];
+
         _headImv = [[UIImageView alloc] init];
         _headImv.layer.cornerRadius = 17.5;
         _headImv.layer.masksToBounds = YES;
-        [_backGroundView addSubview:_headImv];
+        [self.contentView addSubview:_headImv];
         
         _contentLab = [[UILabel alloc ] init];
         _contentLab.backgroundColor = [UIColor clearColor];
@@ -64,11 +71,15 @@
 
             
         }else {
-            _backGroundView.frame = CGRectMake(5, 5, 150, 39);
+            _leftView.frame = CGRectMake(5, 5, 39, 39);
+            _leftView.layer.cornerRadius = _leftView.frame.size.width / 2;
+            _leftView.clipsToBounds = YES;
+
+            _backGroundView.frame = CGRectMake(5+22, 5, 150, 39);
 
             _contentLab.frame = CGRectMake(_headImv.right+5, 0, 90, 39);
 
-            _headImv.frame = CGRectMake(3, 2, 35, 35);
+            _headImv.frame = CGRectMake(8, 7, 35, 35);
 
         }
     }else {
@@ -89,8 +100,25 @@
     if ([userModel isKindOfClass:[CommentModel class]]) {
         CommentModel *model = userModel;
 
-        _backGroundView.backgroundColor = model.backColor;
-        _headImv.backgroundColor = model.headColor;
+        _backGroundView.backgroundColor = [UIColor blackColor];
+//        _leftView.backgroundColor = [UIColor blackColor];
+        
+         CAGradientLayer *_gradientLayer = [CAGradientLayer layer];  // 设置渐变效果
+        _gradientLayer.bounds = _leftView.bounds;
+        _gradientLayer.borderWidth = 0;
+        
+        _gradientLayer.frame = _leftView.bounds;
+        _gradientLayer.colors = [NSArray arrayWithObjects:
+                                 (id)[[UIColor clearColor] CGColor],
+                                 (id)[[UIColor blackColor] CGColor], nil, nil];
+        _gradientLayer.startPoint = CGPointMake(0.6, 0.5);
+        _gradientLayer.endPoint = CGPointMake(0.2, 0.5);
+        
+        [_leftView.layer insertSublayer:_gradientLayer atIndex:0];
+
+        
+        
+        [_headImv sd_setImageWithURL:[NSURL URLWithString:_userModel.userHead] placeholderImage:[UIImage imageNamed:@"live_head"]];
         if (model.userComment) {
             _contentLab.text = model.userComment;
 
@@ -100,6 +128,7 @@
 
     }else {
         _backGroundView.backgroundColor = [UIColor clearColor];
+        _leftView.backgroundColor = [UIColor clearColor];
         _headImv.backgroundColor = [UIColor clearColor];
         _contentLab.text = @"";
     }

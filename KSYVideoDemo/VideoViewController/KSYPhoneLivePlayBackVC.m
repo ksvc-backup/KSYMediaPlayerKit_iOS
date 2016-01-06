@@ -77,15 +77,6 @@
 {
     CommentModel *model = [[CommentModel alloc] init];
     model.userComment = @"哇，大美女！";
-    CGFloat hue = ( arc4random() % 256 / 256.0 );
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
-    model.backColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:0.9];
-    
-    CGFloat hue1 = ( arc4random() % 256 / 256.0 );
-    CGFloat saturation1 = ( arc4random() % 128 / 256.0 ) + 0.5;
-    CGFloat brightness1 = ( arc4random() % 128 / 256.0 ) + 0.5;
-    model.headColor = [UIColor colorWithHue:hue1 saturation:saturation1 brightness:brightness1 alpha:1];
     
     [_phoneLivePlayVC addNewCommentWith:model];
 }
@@ -100,7 +91,6 @@
         model.fansNumber = @"20K";
         model.followNumber = @"88";
         model.praiseNumber = @"5.5w";
-        model.headColor = [self getRandomColorWithalpha:1];
         [_spectatorsArr addObject:model];
     }
 }

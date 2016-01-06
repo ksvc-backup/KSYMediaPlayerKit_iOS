@@ -16,6 +16,4 @@
 @property (nonatomic, strong)UIColor *backColor;
 @property (nonatomic, assign)BOOL isShoudDele;
 
-//临时成员
-@property (nonatomic, strong)UIColor *headColor;
 @end

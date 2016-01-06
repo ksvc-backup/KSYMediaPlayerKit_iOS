@@ -84,7 +84,6 @@
         cell = [[KSYSpectatorsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifer];
     }
     cell.backgroundColor = [UIColor clearColor];
-//    cell.contentView.transform = CGAffineTransformMakeRotation(M_PI / 2);
     cell.spectatorModel = self.spectatorsArray[indexPath.row];
     return cell;
 }

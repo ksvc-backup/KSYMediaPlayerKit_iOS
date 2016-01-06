@@ -1,0 +1,203 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/carelink-app/!svn/ver/222/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage
+END
+MKAnnotationView+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/MKAnnotationView+WebCache.h
+END
+SDWebImageDecoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageDecoder.h
+END
+SDImageCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDImageCache.h
+END
+MKAnnotationView+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/MKAnnotationView+WebCache.m
+END
+SDWebImageManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageManager.h
+END
+SDImageCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDImageCache.m
+END
+SDWebImageDecoder.m
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageDecoder.m
+END
+UIButton+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIButton+WebCache.h
+END
+SDWebImageManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageManager.m
+END
+SDWebImageDownloaderOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageDownloaderOperation.h
+END
+UIImageView+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImageView+WebCache.h
+END
+UIImage+WebP.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImage+WebP.h
+END
+UIButton+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIButton+WebCache.m
+END
+SDWebImageDownloaderOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageDownloaderOperation.m
+END
+UIImageView+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImageView+WebCache.m
+END
+UIImage+WebP.m
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImage+WebP.m
+END
+NSData+ImageContentType.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/NSData+ImageContentType.h
+END
+SDWebImageDownloader.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageDownloader.h
+END
+UIView+WebCacheOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIView+WebCacheOperation.h
+END
+NSData+ImageContentType.m
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/NSData+ImageContentType.m
+END
+SDWebImageDownloader.m
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageDownloader.m
+END
+UIView+WebCacheOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIView+WebCacheOperation.m
+END
+UIImageView+HighlightedWebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImageView+HighlightedWebCache.h
+END
+SDWebImageCompat.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageCompat.h
+END
+UIImageView+HighlightedWebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImageView+HighlightedWebCache.m
+END
+UIImage+MultiFormat.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImage+MultiFormat.h
+END
+SDWebImagePrefetcher.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImagePrefetcher.h
+END
+SDWebImageCompat.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageCompat.m
+END
+UIImage+GIF.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImage+GIF.h
+END
+UIImage+MultiFormat.m
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImage+MultiFormat.m
+END
+SDWebImagePrefetcher.m
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/carelink-app/!svn/ver/222/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImagePrefetcher.m
+END
+UIImage+GIF.m
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/UIImage+GIF.m
+END
+SDWebImageOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/carelink-app/!svn/ver/7/trunk/iOS/DoctorClient/KYDoctor/OtherFrameworks/SDWebImage/SDWebImageOperation.h
+END

@@ -167,7 +167,7 @@
         _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //        _praiseBtn.backgroundColor = [UIColor redColor];
         [_praiseBtn setBackgroundImage:[UIImage imageNamed:@"praise"] forState:UIControlStateNormal];
-        _praiseBtn.frame = CGRectMake(_spectatorsTableViews.right + 24, _spectatorsTableViews.top+4, 30, 30);
+        _praiseBtn.frame = CGRectMake(_spectatorsTableViews.right + 24, _spectatorsTableViews.top - 7, 50, 50);
         [_praiseBtn addTarget:self action:@selector(praiseEvent) forControlEvents:UIControlEventTouchUpInside];
 
     }
@@ -226,9 +226,18 @@
     [self.messageToolBar.inputTexField resignFirstResponder];
 }
 #pragma 点赞
+
+- (NSInteger)getRandomNumber:(NSInteger)from to:(NSInteger)to
+
+{
+    
+    return (NSInteger)(from + (arc4random() % (to - from + 1)));
+    
+}
 - (void)onPraiseWithSpectatorsInteractiveType:(SpectatorsInteractiveType)type
 {
-    UIImageView* flakeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"praise"]];
+    NSString *imageName = [NSString stringWithFormat:@"heart%@",@([self getRandomNumber:1 to:7])];
+    UIImageView* flakeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     if (type == SpectatorsInteractivePresent) {
         flakeView.backgroundColor = [UIColor clearColor];
     }else {
@@ -240,7 +249,7 @@
     double scale = 1 / round(random() % 700) + 1.0;
     double speed = 1 / round(random() % 900) + 1.0;
     
-    flakeView.frame = _praiseBtn.frame;
+    flakeView.frame = CGRectMake(_praiseBtn.frame.origin.x + 9, _praiseBtn.frame.origin.y + 7, 32, 32);
     
     flakeView.alpha = 1;
     
@@ -248,7 +257,7 @@
     
     [UIView beginAnimations:nil context:(__bridge void * _Nullable)(flakeView)];
     [UIView setAnimationDuration:7 * speed];
-    flakeView.frame = CGRectMake(startX+300, -200, 25.0 * scale, 25.0 * scale);
+    flakeView.frame = CGRectMake(startX+300, -200, 20.0 * scale, 20.0 * scale);
     flakeView.alpha = 0.3;
 
     [UIView setAnimationDidStopSelector:@selector(onAnimationComplete:finished:context:)];

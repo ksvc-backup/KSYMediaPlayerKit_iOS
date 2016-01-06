@@ -49,6 +49,5 @@
 + (UIColor *)flashColorWithRed:(uint)red green:(uint)green blue:(uint)blue alpha:(float)alpha;
 + (UIColor *)colorWithPatternImageName:(NSString *)imageName;
 
-/*颜色:得到16#转rgb   郭海彬增加*/
-+ (UIColor *) callColorFromHexRGB:(NSString *) inColorString;
++ (UIColor *)callColorFromHexRGB:(NSString *) inColorString;
 @end

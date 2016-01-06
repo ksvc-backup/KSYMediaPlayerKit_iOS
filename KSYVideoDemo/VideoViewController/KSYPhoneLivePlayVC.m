@@ -79,8 +79,6 @@
 {
     CommentModel *model = [[CommentModel alloc] init];
     model.userComment = @"哇，大美女！";
-    model.backColor = [self getRandomColorWithalpha:0.9];
-    model.headColor = [self getRandomColorWithalpha:1];
 
     [_phoneLivePlayVC addNewCommentWith:model];
 }
@@ -89,8 +87,6 @@
 {
     CommentModel *model = [[CommentModel alloc] init];
     model.userName = @"用户名";
-    model.backColor = [self getRandomColorWithalpha:0.9];
-    model.headColor = [self getRandomColorWithalpha:1];
     
     [_phoneLivePlayVC addNewCommentWith:model];
 
@@ -106,7 +102,6 @@
         model.fansNumber = @"20K";
         model.followNumber = @"88";
         model.praiseNumber = @"5.5w";
-        model.headColor = [self getRandomColorWithalpha:1];
         [_spectatorsArr addObject:model];
     }
 }

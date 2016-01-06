@@ -38,14 +38,13 @@
 {
     self = [super initWithFrame:frame urlString:urlString];
     if (self) {
-        
         self.playState = playState;
         [self addSubview:self.closeButton];
         [self addSubview:self.reportButton];
         [self addSubview:self.playStateLab];
         [self addSubview:self.curentTimeLab];
         [self addSubview:self.headButton];
-        [self addSubview:self.headImageView];
+//        [self addSubview:self.headImageView];
         [self addSubview:self.interactiveView];
         [self addSubview:self.alertView];
         
@@ -160,9 +159,8 @@
 {
     if (!_headButton) {
         _headButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_headButton setFrame:CGRectMake(15, 15, 35, 35)];
-        //    [_headBtn setTitle:@"头像" forState:UIControlStateNormal];
-        _headButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
+        [_headButton setFrame:CGRectMake(15, 20, 36, 36)];
+        [_headButton setBackgroundImage:[UIImage imageNamed:@"live_head"] forState:UIControlStateNormal];
         [_headButton addTarget:self action:@selector(headEvent:) forControlEvents:UIControlEventTouchUpInside];
         _headButton.hidden = YES;
 

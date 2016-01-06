@@ -74,7 +74,8 @@
     
     _rtmpTextF = [[UITextField alloc] initWithFrame:CGRectMake(rtmpUrlLabl.right + 5, rtmpUrlLabl.top, self.view.width-_httpTextF.left-5, 20)];
     _rtmpTextF.adjustsFontSizeToFitWidth = YES;
-    _rtmpTextF.text = @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
+//    _rtmpTextF.text = @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    _rtmpTextF.text = @"rtmp://test.live.ksyun.com/live/6AB180.264";
     _rtmpTextF.borderStyle = UITextBorderStyleRoundedRect;
     _rtmpTextF.returnKeyType = UIReturnKeyDone;
     _rtmpTextF.font = [UIFont systemFontOfSize:13.0];

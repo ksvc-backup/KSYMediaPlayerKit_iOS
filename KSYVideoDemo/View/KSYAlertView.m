@@ -7,8 +7,6 @@
 //
 
 #import "KSYAlertView.h"
-#import "UIView+BFExtension.h"
-#import "UIColor+ColorExtension.h"
 #import "SpectatorModel.h"
 
 #define KTEXTSIZE       17

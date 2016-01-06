@@ -168,6 +168,7 @@
             }
             
         }else {
+            
             [_controCommentButton setTitle:@"互动开" forState:UIControlStateNormal];
             
             if (self.userEventBlock) {
