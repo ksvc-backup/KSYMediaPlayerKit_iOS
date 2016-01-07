@@ -25,9 +25,11 @@
 @property (nonatomic, strong)KSYCommentTableView    *commetnTableView;
 @property (nonatomic, strong)KSYSpectatorsTableView *spectatorsTableViews;
 @property (nonatomic, strong)KSYMessageToolBar      *messageToolBar;
+@property (nonatomic, strong)UIImageView            *spectatorsNumberImv;
 @property (nonatomic, strong)UILabel                *userNumLab;
 @property (nonatomic, strong)UIButton               *praiseBtn;
 @property (nonatomic, strong)KSYProgressToolBar     *progressToolBar;
+@property (nonatomic, assign)BOOL                   isOff;
 @end
 @implementation KSYInteractiveView
 
@@ -54,6 +56,7 @@
         [self addSubview:self.spectatorsTableViews];
         [self addSubview:self.commetnTableView];
         [self addSubview:self.praiseBtn];
+        [self addSubview:self.spectatorsNumberImv];
         [self addSubview:self.userNumLab];
 
     }
@@ -100,15 +103,19 @@
         _messageToolBar.delegate = self;
         _messageToolBar.userEventBlock = ^(NSInteger index){
             if (index == 1) {
-               weakSelf.commetnTableView.hidden = YES;
+                weakSelf.isOff = YES;
+
             }else if(index == 0){
-                weakSelf.commetnTableView.hidden = NO;
+                weakSelf.isOff = NO;
+
 
             }else if (index == 2){
                 if (weakSelf.shareEventBlock) {
                     weakSelf.shareEventBlock();
                 }
             }
+            [weakSelf interactiveisOff:weakSelf.isOff];
+
         };
 
     }
@@ -133,15 +140,17 @@
         };
         _progressToolBar.userEventBlock = ^(NSInteger index){
             if (index == 1) {
-                weakSelf.commetnTableView.hidden = YES;
+                weakSelf.isOff = YES;
             }else if(index == 0){
-                weakSelf.commetnTableView.hidden = NO;
+                weakSelf.isOff = NO;
                 
             }else if (index == 2){
                 if (weakSelf.shareEventBlock) {
                     weakSelf.shareEventBlock();
                 }
             }
+            [weakSelf interactiveisOff:weakSelf.isOff];
+
         };
 
         
@@ -149,13 +158,24 @@
     }
     return _progressToolBar;
 }
+
+- (UIImageView *)spectatorsNumberImv
+{
+    if (!_spectatorsNumberImv) {
+        _spectatorsNumberImv = [[UIImageView alloc] initWithFrame:CGRectMake(10, _commetnTableView.bottom + 5, 30, 30)];
+        _spectatorsNumberImv.image = [UIImage imageNamed:@"spectatorsNumber"];
+        
+    }
+    return _spectatorsNumberImv;
+}
 - (UILabel *)userNumLab
 {
     if (!_userNumLab) {
-        _userNumLab = [[UILabel alloc] initWithFrame:CGRectMake(13, _commetnTableView.bottom + 10, 30, 30)];
+        _userNumLab = [[UILabel alloc] initWithFrame:CGRectMake(10, _spectatorsNumberImv.bottom , 30, 14)];
         _userNumLab.backgroundColor = [UIColor clearColor];
         _userNumLab.text = [NSString stringWithFormat:@"%@",@(_testNum)];
         _userNumLab.font = [UIFont systemFontOfSize:12];
+        _userNumLab.textAlignment = NSTextAlignmentCenter;
         _userNumLab.textColor = [UIColor whiteColor];
     }
     return _userNumLab;
@@ -174,6 +194,23 @@
     return _praiseBtn;
 }
 
+- (BOOL)isOff
+{
+    self.commetnTableView.hidden = _isOff;
+    self.spectatorsTableViews.hidden = _isOff;
+    self.spectatorsNumberImv.hidden = _isOff;
+    self.userNumLab.hidden = _isOff;
+    self.praiseBtn.hidden = _isOff;
+    return _isOff;
+}
+- (void)interactiveisOff:(BOOL)isOn
+{
+    self.commetnTableView.hidden = isOn;
+    self.spectatorsTableViews.hidden = isOn;
+    self.spectatorsNumberImv.hidden = isOn;
+    self.userNumLab.hidden = isOn;
+    self.praiseBtn.hidden = isOn;
+}
 - (void)didChangeFrameToHeight:(CGFloat)toHeight endHeight:(CGFloat)bottomHeight
 {
     CGRect fromFrame = self.frame;
@@ -236,6 +273,9 @@
 }
 - (void)onPraiseWithSpectatorsInteractiveType:(SpectatorsInteractiveType)type
 {
+    if (self.isOff) {
+        return;
+    }
     NSString *imageName = [NSString stringWithFormat:@"heart%@",@([self getRandomNumber:1 to:7])];
     UIImageView* flakeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
     if (type == SpectatorsInteractivePresent) {

@@ -76,7 +76,7 @@
 - (void)addNewCommentWith
 {
     CommentModel *model = [[CommentModel alloc] init];
-    model.userComment = @"哇，大美女！";
+    model.userComment = @"评论评论评论";
     
     [_phoneLivePlayVC addNewCommentWith:model];
 }

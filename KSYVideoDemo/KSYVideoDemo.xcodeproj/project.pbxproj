@@ -78,6 +78,12 @@
 		7CC3DA761C3D070F0004E6AB /* spectatorsNumber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA741C3D070F0004E6AB /* spectatorsNumber@2x.png */; };
 		7CC3DA771C3D070F0004E6AB /* spectatorsNumber@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA751C3D070F0004E6AB /* spectatorsNumber@3x.png */; };
 		7CC3DA7D1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC3DA7C1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m */; };
+		7CC3DA801C3E3B600004E6AB /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA7E1C3E3B600004E6AB /* close@2x.png */; };
+		7CC3DA811C3E3B600004E6AB /* close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA7F1C3E3B600004E6AB /* close@3x.png */; };
+		7CC3DA841C3E3C530004E6AB /* report@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA821C3E3C530004E6AB /* report@2x.png */; };
+		7CC3DA851C3E3C530004E6AB /* report@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA831C3E3C530004E6AB /* report@3x.png */; };
+		7CC3DA8D1C3E897C0004E6AB /* replay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA8B1C3E897C0004E6AB /* replay@2x.png */; };
+		7CC3DA8E1C3E897C0004E6AB /* replay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA8C1C3E897C0004E6AB /* replay@3x.png */; };
 		7CCEAE251C23D7E3009E2F89 /* KSYBasePlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCEAE241C23D7E3009E2F89 /* KSYBasePlayView.m */; };
 		7CD2AD391C0D969A00E6532D /* KSYMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD2AD381C0D969A00E6532D /* KSYMainViewController.m */; };
 		7CDBE5AA1C15558900D221C7 /* KSYPhoneLivePlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CDBE5A91C15558900D221C7 /* KSYPhoneLivePlayVC.m */; };
@@ -247,6 +253,12 @@
 		7CC3DA751C3D070F0004E6AB /* spectatorsNumber@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spectatorsNumber@3x.png"; sourceTree = "<group>"; };
 		7CC3DA7B1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+BasicShapes.h"; sourceTree = "<group>"; };
 		7CC3DA7C1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+BasicShapes.m"; sourceTree = "<group>"; };
+		7CC3DA7E1C3E3B600004E6AB /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		7CC3DA7F1C3E3B600004E6AB /* close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@3x.png"; sourceTree = "<group>"; };
+		7CC3DA821C3E3C530004E6AB /* report@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "report@2x.png"; sourceTree = "<group>"; };
+		7CC3DA831C3E3C530004E6AB /* report@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "report@3x.png"; sourceTree = "<group>"; };
+		7CC3DA8B1C3E897C0004E6AB /* replay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replay@2x.png"; sourceTree = "<group>"; };
+		7CC3DA8C1C3E897C0004E6AB /* replay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replay@3x.png"; sourceTree = "<group>"; };
 		7CCEAE231C23D7E3009E2F89 /* KSYBasePlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYBasePlayView.h; sourceTree = "<group>"; };
 		7CCEAE241C23D7E3009E2F89 /* KSYBasePlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYBasePlayView.m; sourceTree = "<group>"; };
 		7CD2AD371C0D969A00E6532D /* KSYMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYMainViewController.h; sourceTree = "<group>"; };
@@ -502,6 +514,12 @@
 				7CC3DA0A1C3CBD630004E6AB /* live@3x.png */,
 				7CC3DA741C3D070F0004E6AB /* spectatorsNumber@2x.png */,
 				7CC3DA751C3D070F0004E6AB /* spectatorsNumber@3x.png */,
+				7CC3DA7E1C3E3B600004E6AB /* close@2x.png */,
+				7CC3DA7F1C3E3B600004E6AB /* close@3x.png */,
+				7CC3DA821C3E3C530004E6AB /* report@2x.png */,
+				7CC3DA831C3E3C530004E6AB /* report@3x.png */,
+				7CC3DA8B1C3E897C0004E6AB /* replay@2x.png */,
+				7CC3DA8C1C3E897C0004E6AB /* replay@3x.png */,
 			);
 			path = PhoneLive;
 			sourceTree = "<group>";
@@ -763,6 +781,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CC3DA811C3E3B600004E6AB /* close@3x.png in Resources */,
 				E323700D1C2D308200CB6B99 /* 4.mp4 in Resources */,
 				7CB6B6D61C33D878006C0AD5 /* pause@3x.png in Resources */,
 				7CC3DA351C3CE2A10004E6AB /* heart3@3x.png in Resources */,
@@ -772,6 +791,7 @@
 				7CB6B6CA1C337180006C0AD5 /* praise@3x.png in Resources */,
 				7CC3DA381C3CE2A10004E6AB /* heart5@2x.png in Resources */,
 				7CC3DA391C3CE2A10004E6AB /* heart5@3x.png in Resources */,
+				7CC3DA8D1C3E897C0004E6AB /* replay@2x.png in Resources */,
 				7CC3DA3C1C3CE2A10004E6AB /* heart7@2x.png in Resources */,
 				E37D20391C2940490009715A /* ipad-h265.720p.1Mbps@2x.png in Resources */,
 				E32370031C2CE11A00CB6B99 /* userName.png in Resources */,
@@ -805,6 +825,7 @@
 				E3626A511C2E984300679848 /* 1.png in Resources */,
 				7CC3DA761C3D070F0004E6AB /* spectatorsNumber@2x.png in Resources */,
 				E37D20381C2940490009715A /* blue in Resources */,
+				7CC3DA801C3E3B600004E6AB /* close@2x.png in Resources */,
 				7CB6B6D71C33D878006C0AD5 /* play@2x.png in Resources */,
 				E3626A521C2E984300679848 /* 2.png in Resources */,
 				7CC3DA1F1C3CC3C00004E6AB /* interactiveOn@2x.png in Resources */,
@@ -813,12 +834,15 @@
 				7CC3DA141C3CC1320004E6AB /* live_head@3x.png in Resources */,
 				7CC3DA0C1C3CBD630004E6AB /* live@3x.png in Resources */,
 				E37D162C1C2850170009715A /* touxiang.png in Resources */,
+				7CC3DA841C3E3C530004E6AB /* report@2x.png in Resources */,
 				E37D20361C2940490009715A /* phone-h265.480p.300kbps@2x.png in Resources */,
 				7CC3DA341C3CE2A10004E6AB /* heart3@2x.png in Resources */,
+				7CC3DA8E1C3E897C0004E6AB /* replay@3x.png in Resources */,
 				E37D16301C2850170009715A /* Model1.plist in Resources */,
 				E37D162B1C2850170009715A /* play.png in Resources */,
 				E37D162A1C2850170009715A /* default.png in Resources */,
 				7CB6B6D51C33D878006C0AD5 /* pause@2x.png in Resources */,
+				7CC3DA851C3E3C530004E6AB /* report@3x.png in Resources */,
 				7CC3DA3D1C3CE2A10004E6AB /* heart7@3x.png in Resources */,
 				7CC3DA0F1C3CBD730004E6AB /* share@2x.png in Resources */,
 			);

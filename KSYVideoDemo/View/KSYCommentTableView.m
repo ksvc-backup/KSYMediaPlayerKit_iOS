@@ -72,12 +72,12 @@
 {
     
     id model = _commentArray[indexPath.row];
-    if ([model isKindOfClass:[CommentModel class]]) {
-        CommentModel *userModel = (CommentModel *)model;
-        if (userModel.userName != nil) {
-            return 35;
-        }
-    }
+//    if ([model isKindOfClass:[CommentModel class]]) {
+//        CommentModel *userModel = (CommentModel *)model;
+//        if (userModel.userName != nil) {
+//            return 35;
+//        }
+//    }
     return 50;
 
 }

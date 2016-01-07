@@ -32,7 +32,7 @@
     //模拟观众评论
     _commetnTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addNewCommentWith) userInfo:nil repeats:YES];
     //模拟用户进入
-    _commetnTimer1 = [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(addNewUserName) userInfo:nil repeats:YES];
+//    _commetnTimer1 = [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(addNewUserName) userInfo:nil repeats:YES];
 
     //模拟点赞事件
     _praiseTimer0 = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(praiseEvent) userInfo:nil repeats:YES];
@@ -78,7 +78,8 @@
 - (void)addNewCommentWith
 {
     CommentModel *model = [[CommentModel alloc] init];
-    model.userComment = @"哇，大美女！";
+    model.userComment = @"评论评论评论";
+    model.userName = @"用户名";
 
     [_phoneLivePlayVC addNewCommentWith:model];
 }

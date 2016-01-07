@@ -65,7 +65,7 @@
     
     _httpTextF = [[UITextField alloc] initWithFrame:CGRectMake(httpUrlLabl.right + 5, httpUrlLabl.top,self.view.width-httpUrlLabl.right-10, 20)];
     _httpTextF.adjustsFontSizeToFitWidth = YES;
-    _httpTextF.text = @"http://eflakee.kssws.ks-cdn.com/BBC%E5%9C%B0%E5%B9%B3%E7%BA%BF%EF%BC%9A%E5%B0%8F%E7%8C%AB%E6%97%A5%E8%AE%B0.BBC.Horizon.2013.Little.Cat.Diaries.mp4";
+    _httpTextF.text = @"http://121.42.58.232:8980/hls_test/1.m3u8";
     _httpTextF.borderStyle = UITextBorderStyleRoundedRect;
     _httpTextF.returnKeyType = UIReturnKeyDone;
     _httpTextF.font = [UIFont systemFontOfSize:13.0];
