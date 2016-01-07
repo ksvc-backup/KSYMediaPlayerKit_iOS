@@ -30,14 +30,14 @@
 {
 
     self.backgroundColor=[UIColor blackColor];
-    self.alpha=0.6;
+    self.alpha=0.5;
     //用户名和关注按钮
     kUserImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 30, 30)];
     [self addSubview:kUserImageView];
     kUserImageView.layer.masksToBounds=YES;
     kUserImageView.layer.cornerRadius=15;
     kUserImageView.contentMode=UIViewContentModeScaleAspectFit;//等比例缩放
-    kUserImageView.image=[UIImage imageNamed:@"touxiang.png"];
+    kUserImageView.image=[UIImage imageNamed:@"avatar20"];
 
      kUserName=[[UILabel alloc]initWithFrame:CGRectMake(kUserImageView.right+5, kUserImageView.center.y-10, 80, 20)];
     [self addSubview:kUserName];

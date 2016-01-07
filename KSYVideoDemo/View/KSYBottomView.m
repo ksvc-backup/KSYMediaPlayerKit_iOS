@@ -27,15 +27,13 @@
     if (self)
     {
         self.backgroundColor=[UIColor blackColor];
-        self.alpha=0.6;
+        self.alpha=0.5;
         _playstate=playstate;
         //播放按钮 播放时间 进度条 总时间
         kShortPlayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         kShortPlayBtn.alpha = 0.6;
-        UIImage *pauseImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_normal"];
-        UIImage *pauseImg_h = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_hl"];
+        UIImage *pauseImg_n = [UIImage imageNamed:@"play"];
         [kShortPlayBtn setImage:pauseImg_n forState:UIControlStateNormal];
-        [kShortPlayBtn setImage:pauseImg_h forState:UIControlStateHighlighted];
         kShortPlayBtn.frame = CGRectMake(5, 5, 30, 30);
         [kShortPlayBtn addTarget:self action:@selector(playBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:kShortPlayBtn];
@@ -82,24 +80,20 @@
         }else {
             _playstate=NO;
             //播放时间
-            kCurrentLabel=[[UILabel alloc]initWithFrame:CGRectMake(kShortPlayBtn.right+10, kShortPlayBtn.center.y-15, 60, 30)];
+            kCurrentLabel=[[UILabel alloc]initWithFrame:CGRectMake(kShortPlayBtn.right+10, kShortPlayBtn.center.y-15, 50, 30)];
             [self addSubview:kCurrentLabel];
-            kCurrentLabel.textColor=[UIColor whiteColor];
             kCurrentLabel.text=@"00:00";
             kCurrentLabel.textColor=[UIColor whiteColor];
-            kCurrentLabel.textAlignment = NSTextAlignmentRight;
+            kCurrentLabel.textAlignment = NSTextAlignmentCenter;
             kCurrentLabel.tag= kProgressCurLabelTag;
-            kCurrentLabel.font = [UIFont boldSystemFontOfSize:13];
-            UIColor *tintColor = [[KSYThemeManager sharedInstance] themeColor];
-            kCurrentLabel.textColor = tintColor;
+            kCurrentLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
             
             //进度条
-            UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-            UIImage *minImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"slider_color"];
+            UIImage *dotImg = [UIImage imageNamed:@"Oval"];
             kPlaySlider=[[UISlider alloc]initWithFrame:CGRectMake(kCurrentLabel.right+10, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-10-90, 10)];
-            [kPlaySlider setMinimumTrackImage:minImg forState:UIControlStateNormal];
-            kPlaySlider.maximumTrackTintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2];
+            [kPlaySlider setMinimumTrackTintColor:KSYCOLER(92, 232, 223)];
+//            kPlaySlider.maximumTrackTintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2];
             [kPlaySlider setThumbImage:dotImg forState:UIControlStateNormal];
             [kPlaySlider addTarget:self action:@selector(progressDidBegin:) forControlEvents:UIControlEventTouchDown];
             [kPlaySlider addTarget:self action:@selector(progressChanged:) forControlEvents:UIControlEventValueChanged];
@@ -109,13 +103,14 @@
             [self addSubview:kPlaySlider];
             
             //总时间
-            kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kPlaySlider.right+5, kShortPlayBtn.center.y-15, 40, 30)];
+            kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kPlaySlider.right+5, kShortPlayBtn.center.y-15, 50, 30)];
             kTotalLabel.tag=kProgressMaxLabelTag;
             [self addSubview:kTotalLabel];
+            kTotalLabel.textAlignment = NSTextAlignmentCenter;
             kTotalLabel.text=@"00:00";
             kTotalLabel.textColor=[UIColor whiteColor];
             kTotalLabel.alpha = 0.6;
-            kTotalLabel.font = [UIFont boldSystemFontOfSize:13];
+            kTotalLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
             
             //全屏按钮
