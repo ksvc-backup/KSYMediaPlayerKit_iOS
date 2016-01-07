@@ -35,9 +35,9 @@
 @property (nonatomic, copy) void (^addDanmu)(UIButton *btn);
 
 
-
-
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate;
+
+
 - (void)setSubviews;
 - (void)resetSubviews;
 @end
