@@ -77,6 +77,7 @@
 		7CC3DA6F1C3CF04C0004E6AB /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC3DA5F1C3CF04C0004E6AB /* UIView+WebCacheOperation.m */; };
 		7CC3DA761C3D070F0004E6AB /* spectatorsNumber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA741C3D070F0004E6AB /* spectatorsNumber@2x.png */; };
 		7CC3DA771C3D070F0004E6AB /* spectatorsNumber@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA751C3D070F0004E6AB /* spectatorsNumber@3x.png */; };
+		7CC3DA7D1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC3DA7C1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m */; };
 		7CCEAE251C23D7E3009E2F89 /* KSYBasePlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CCEAE241C23D7E3009E2F89 /* KSYBasePlayView.m */; };
 		7CD2AD391C0D969A00E6532D /* KSYMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD2AD381C0D969A00E6532D /* KSYMainViewController.m */; };
 		7CDBE5AA1C15558900D221C7 /* KSYPhoneLivePlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CDBE5A91C15558900D221C7 /* KSYPhoneLivePlayVC.m */; };
@@ -244,6 +245,8 @@
 		7CC3DA5F1C3CF04C0004E6AB /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		7CC3DA741C3D070F0004E6AB /* spectatorsNumber@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spectatorsNumber@2x.png"; sourceTree = "<group>"; };
 		7CC3DA751C3D070F0004E6AB /* spectatorsNumber@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spectatorsNumber@3x.png"; sourceTree = "<group>"; };
+		7CC3DA7B1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+BasicShapes.h"; sourceTree = "<group>"; };
+		7CC3DA7C1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+BasicShapes.m"; sourceTree = "<group>"; };
 		7CCEAE231C23D7E3009E2F89 /* KSYBasePlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYBasePlayView.h; sourceTree = "<group>"; };
 		7CCEAE241C23D7E3009E2F89 /* KSYBasePlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYBasePlayView.m; sourceTree = "<group>"; };
 		7CD2AD371C0D969A00E6532D /* KSYMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYMainViewController.h; sourceTree = "<group>"; };
@@ -567,6 +570,8 @@
 		7CDBE5BD1C157BC900D221C7 /* Catergoary */ = {
 			isa = PBXGroup;
 			children = (
+				7CC3DA7B1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.h */,
+				7CC3DA7C1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m */,
 				7CDBE5D51C15B12100D221C7 /* UIView+BFExtension.h */,
 				7CDBE5D61C15B12100D221C7 /* UIView+BFExtension.m */,
 				7C5CA4DA1C2193BB003A92A8 /* UIColor+ColorExtension.h */,
@@ -835,6 +840,7 @@
 				E37D16371C285BA70009715A /* KSBarrageItemView.m in Sources */,
 				7C5CA4DF1C225514003A92A8 /* KSYProgressToolBar.m in Sources */,
 				7CDBE5D41C158F4600D221C7 /* KSYPhoneLivePlayView.m in Sources */,
+				7CC3DA7D1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m in Sources */,
 				E3A945651C350232000F7FB3 /* KSYDetailModel.m in Sources */,
 				E3A19D531C2D6FBD001CF09F /* KSYVoiceView.m in Sources */,
 				7CDBE5AD1C15559A00D221C7 /* KSYPhoneLivePlayBackVC.m in Sources */,

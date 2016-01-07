@@ -7,11 +7,10 @@
 //
 
 #import "KSYCommentCell.h"
-
+#import "UIBezierPath+BasicShapes.h"
 @interface KSYCommentCell ()
 {
     UIView  *_backGroundView;
-    UIView  *_leftView;
     UILabel *_contentLab;
     UIImageView *_headImv;
 }
@@ -38,13 +37,13 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         _backGroundView = [[UIView alloc] init];
         _backGroundView.alpha = 0.5;
+        _backGroundView.layer.cornerRadius = 8;
+
         [self.contentView addSubview:_backGroundView];
+
         
-        _leftView = [[UIView alloc] init];
-        _leftView.alpha = 0.5;
-
-        [self.contentView addSubview:_leftView];
-
+        
+        
         _headImv = [[UIImageView alloc] init];
         _headImv.layer.cornerRadius = 17.5;
         _headImv.layer.masksToBounds = YES;
@@ -68,18 +67,20 @@
             _headImv.frame = CGRectZero;
             _contentLab.frame = CGRectMake(_headImv.right+5, 0, 90, 25);
             _backGroundView.frame = CGRectMake(5, 5, 150, 25);
+            
+            _backGroundView.layer.mask = [self getCAShapeLayerWithSize:CGSizeMake(8, 8)];
 
             
         }else {
-            _leftView.frame = CGRectMake(5, 5, 39, 39);
-            _leftView.layer.cornerRadius = _leftView.frame.size.width / 2;
-            _leftView.clipsToBounds = YES;
 
-            _backGroundView.frame = CGRectMake(5+22, 5, 150, 39);
+            _backGroundView.frame = CGRectMake(5, 5, 150, 39);
 
             _contentLab.frame = CGRectMake(_headImv.right+5, 0, 90, 39);
 
             _headImv.frame = CGRectMake(8, 7, 35, 35);
+            
+            _backGroundView.layer.mask = [self getCAShapeLayerWithSize:CGSizeMake(39, 39)];
+
 
         }
     }else {
@@ -89,11 +90,24 @@
 
         _headImv.frame = CGRectMake(3, 2, 35, 35);
 
-    }
 
+    }
+    
     
 }
 
+//设置View的圆角弧度
+- (CAShapeLayer *)getCAShapeLayerWithSize:(CGSize)size
+{
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:_backGroundView.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerTopLeft cornerRadii:size];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+
+    maskLayer.frame = _backGroundView.bounds;
+    maskLayer.path = maskPath.CGPath;
+    
+    return maskLayer;
+
+}
 - (void)setUserModel:(id)userModel
 {
     _userModel = userModel;
@@ -101,21 +115,6 @@
         CommentModel *model = userModel;
 
         _backGroundView.backgroundColor = [UIColor blackColor];
-//        _leftView.backgroundColor = [UIColor blackColor];
-        
-         CAGradientLayer *_gradientLayer = [CAGradientLayer layer];  // 设置渐变效果
-        _gradientLayer.bounds = _leftView.bounds;
-        _gradientLayer.borderWidth = 0;
-        
-        _gradientLayer.frame = _leftView.bounds;
-        _gradientLayer.colors = [NSArray arrayWithObjects:
-                                 (id)[[UIColor clearColor] CGColor],
-                                 (id)[[UIColor blackColor] CGColor], nil, nil];
-        _gradientLayer.startPoint = CGPointMake(0.6, 0.5);
-        _gradientLayer.endPoint = CGPointMake(0.2, 0.5);
-        
-        [_leftView.layer insertSublayer:_gradientLayer atIndex:0];
-
         
         
         [_headImv sd_setImageWithURL:[NSURL URLWithString:_userModel.userHead] placeholderImage:[UIImage imageNamed:@"live_head"]];
@@ -128,7 +127,6 @@
 
     }else {
         _backGroundView.backgroundColor = [UIColor clearColor];
-        _leftView.backgroundColor = [UIColor clearColor];
         _headImv.backgroundColor = [UIColor clearColor];
         _contentLab.text = @"";
     }
