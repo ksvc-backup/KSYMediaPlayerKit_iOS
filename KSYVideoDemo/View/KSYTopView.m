@@ -37,11 +37,11 @@
     kUserImageView.layer.masksToBounds=YES;
     kUserImageView.layer.cornerRadius=15;
     kUserImageView.contentMode=UIViewContentModeScaleAspectFit;//等比例缩放
-    kUserImageView.image=[UIImage imageNamed:@"touxiang.png"];
+    kUserImageView.image=[UIImage imageNamed:@"Avatar 20"];
 
-     kUserName=[[UILabel alloc]initWithFrame:CGRectMake(kUserImageView.right+5, kUserImageView.center.y-10, 80, 20)];
+     kUserName=[[UILabel alloc]initWithFrame:CGRectMake(kUserImageView.right+10, kUserImageView.center.y-10, 60, 20)];
     [self addSubview:kUserName];
-    kUserName.text=@"用户名ID";
+    kUserName.text=@"用户名";
     kUserName.textColor=[UIColor whiteColor];
     kUserName.font=[UIFont systemFontOfSize:WORDFONT16];
 

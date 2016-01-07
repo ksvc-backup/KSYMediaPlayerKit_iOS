@@ -23,6 +23,10 @@
  */
 @property (nonatomic, readonly) NSTimeInterval              duration;
 /**
+ *	@brief	已加载时长
+ */
+@property (nonatomic, readonly) double                      readSize;
+/**
  *	@brief	加载等待视图
  */
 @property (nonatomic, strong)   UIActivityIndicatorView     *indicator;

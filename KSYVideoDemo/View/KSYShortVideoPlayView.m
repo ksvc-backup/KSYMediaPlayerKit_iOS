@@ -8,6 +8,7 @@
 
 #import "KSYShortVideoPlayView.h"
 #import "KSYCommentView.h"
+#import "KSYInterfaceCell.h"
 
 @interface KSYShortVideoPlayView ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -84,11 +85,17 @@
             _videoCell.ksyShortView.isBackGroundReleasePlayer=self.isDidRelease;
         }
         return _videoCell;
+    }else if(indexPath.row==1){
+        KSYInterfaceCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId1];
+        if (!cell) {
+            cell=[[KSYInterfaceCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId1];
+            return cell;
+        }
     }else {
         commentView.hidden=NO;
         KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId2];
         if (!cell){
-            cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"KSY1TableViewCellIdentify"];
+            cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId2];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
             tempView.backgroundColor =KSYCOLER(90, 90, 90);
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
@@ -101,6 +108,7 @@
         cell.model1=SKYmodel;
         return cell;
     }
+    return nil;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -115,8 +123,9 @@
 {
     if (indexPath.row==0){
         return 260;
+    }else if(indexPath.row==1){
+        return 80;
     }else{
-        
         KSYComTvCell *cell=_modelsCells[indexPath.row];
         cell.model1=_models[indexPath.row];//这里执行set方法
         return cell.height;
@@ -138,5 +147,10 @@
     commentView.frame=CGRectMake(0, self.height-40, self.width, 40);
     UITextField *kTextField=(UITextField *)[self viewWithTag:kCommentFieldTag];
     [kTextField resignFirstResponder];
+}
+- (void)ClickButton:(UIButton *)btn{
+    if (btn.tag==160) {
+        
+    }
 }
 @end

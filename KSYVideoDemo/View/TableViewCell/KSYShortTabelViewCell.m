@@ -20,7 +20,7 @@
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         if (!self.ksyShortView) {
-            self.ksyShortView=[[KSYBasePlayView alloc]initWithFrame:frame urlString:urlstring];
+            self.ksyShortView=[[KSYShortView alloc]initWithShortFrame:frame UrlFromShortString:urlstring];
             [self addSubview:self.ksyShortView];
         }
     }

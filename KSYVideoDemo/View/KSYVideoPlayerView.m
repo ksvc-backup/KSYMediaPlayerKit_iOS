@@ -130,7 +130,6 @@
 
 - (void)addBottomView
 {
-        
     WeakSelf(KSYVideoPlayerView);
     bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:_playState];
     if (_playState==KSYPopularLivePlay) {
@@ -238,10 +237,8 @@
 
 - (void)progDidBegin:(UISlider *)slider
 {
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot"];
-    [slider setThumbImage:dotImg forState:UIControlStateNormal];
     if ([self.player isPlaying]==YES) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_play_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
@@ -268,10 +265,8 @@
         slider.value=0.0f;
         return;
     }
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-    [slider setThumbImage:dotImg forState:UIControlStateNormal];
     if ([self.player isPlaying]==YES) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
@@ -286,12 +281,12 @@
     }
     if ([self.player isPlaying]==NO){
         [self play];
-        UIImage *pauseImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_normal"];
+        UIImage *pauseImg_n = [UIImage imageNamed:@"pause"];
         [btn setImage:pauseImg_n forState:UIControlStateNormal];
     }
     else{
         [self pause];
-        UIImage *playImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_play_normal"];
+        UIImage *playImg_n = [UIImage imageNamed:@"play"];
        [btn setImage:playImg_n forState:UIControlStateNormal];
     }
 
@@ -331,7 +326,7 @@
     kPlaySlider.value = position;
     kPlaySlider.maximumValue = duration;
     if ([self.player isPlaying]) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"pause"];
         [bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];
     }
 }
@@ -339,7 +334,7 @@
 {
     [super moviePlayerFinishState:finishState];
     if (finishState == MPMoviePlaybackStateStopped) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_play_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"play"];
         [bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];
     }
 }
@@ -396,7 +391,7 @@
     kLockView.frame=CGRectMake(kCoverLockViewLeftMargin, (self.height - self.height / 6) / 2, self.height / 6, self.height / 6);
     [self addSubview:self.kToolView];
     UIButton *fullBtn=(UIButton *)[self viewWithTag:kFullScreenBtnTag];
-    UIImage *fullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_exit_fullscreen_normal"];
+    UIImage *fullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"UnFullScreen 30"];
     [fullBtn setImage:fullImg forState:UIControlStateNormal];
     self.indicator.center=self.center;
 }
@@ -412,7 +407,7 @@
     kProgressView.frame=CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 4, kProgressViewWidth, 50);
     kToolView.hidden=YES;
     UIButton *unFullBtn=(UIButton *)[self viewWithTag:kFullScreenBtnTag];
-    UIImage *unFullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_fullscreen_normal"];
+    UIImage *unFullImg = [UIImage imageNamed:@"FullScreen 30"];
     [unFullBtn setImage:unFullImg forState:UIControlStateNormal];
     self.indicator.center=self.center;
 }
@@ -429,7 +424,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     // **** 锁屏状态下，屏幕禁用
-    if (_isLock == YES) {
+    if (_isLock == YES||self.height<THESCREENHEIGHT) {
         return;
     }
     CGPoint curPoint = [[touches anyObject] locationInView: self];
@@ -515,8 +510,6 @@
                 wardImageView.image = backwardImg;
             }
             progressViewCurLabel.text = strCurTime2;
-            UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot"];
-            [progressSlider setThumbImage:dotImg forState:UIControlStateNormal];
         }
     }
 }
@@ -540,13 +533,9 @@
         
         [self.player setCurrentPlaybackTime: progressSlider.value];
         
-        UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-        [progressSlider setThumbImage:dotImg forState:UIControlStateNormal];
     }
     else if (self.gestureType == kKSYBrightness) {
         UISlider *brightnessSlider = (UISlider *)[self viewWithTag:kBrightnessSliderTag];
-        UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-        [brightnessSlider setThumbImage:dotImg forState:UIControlStateNormal];
         if (isActive == NO) {
             UIView *brightnessView = [self viewWithTag:kBrightnessViewTag];
             [UIView animateWithDuration:0.3 animations:^{

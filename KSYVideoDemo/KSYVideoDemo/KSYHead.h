@@ -67,26 +67,19 @@ typedef enum KSYGestureType KSYGestureType;
 #define TEXTCOLOR1 ([UIColor colorWithRed:207.0/255.0 green:206.0/255.0 blue:203.0/255.0 alpha:1.0])
 #define TEXTCOLOR2 ([UIColor colorWithRed:237.0/255.0 green:236.0/255.0 blue:234.0/255.0 alpha:1.0])
 #define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
-#define kTopBarHeight 40
-#define kBottomBarHeight 58
-#define kCoverBarHeight 140
+
 #define kCoverBarLeftMargin 20
 #define kCoverBarRightMargin 20
-#define kCoverBarTopMargin 48
-#define kCoverBarBottomMargin 42
 #define kCoverLockViewLeftMargin 68
-#define kCoverLockViewBgWidth 40
-#define kCoverLockWidth 30
+
 #define kCoverBarWidth 25
 #define kProgressViewWidth 150
 #define kLandscapeSpacing 10
 #define kVertialSpacing 20
 #define kBigFont 18
 #define kSmallFont 16
-#define kBarViewtag             100
-#define kQualityViewTag         101
+
 #define kVoiceViewTag           102
-//#define kVoiceLabelTag          103
 #define kVoiceSliderTag         104
 #define kProgressSliderTag      105
 #define kProgressMaxLabelTag    106
