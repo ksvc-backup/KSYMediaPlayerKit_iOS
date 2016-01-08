@@ -17,6 +17,8 @@
 
 @interface KSYPhoneLivePlayView ()<UIAlertViewDelegate>
 
+@property (nonatomic, strong)UIView             *topBackView;
+@property (nonatomic, strong)UIView                 *bottomBackView;
 
 @property (nonatomic, strong)KSYInteractiveView *interactiveView;
 @property (nonatomic, strong)UIButton           *closeButton;
@@ -39,16 +41,19 @@
 {
     self = [super initWithFrame:frame urlString:urlString];
     if (self) {
+//        self.backgroundColor = [UIColor cyanColor];
         self.playState = playState;
+        [self addSubview:self.topBackView];
         [self addSubview:self.headButton];
         [self addSubview:self.playStateImageV];
         [self addSubview:self.curentTimeLab];
         [self addSubview:self.closeButton];
         [self addSubview:self.reportButton];
+        [self addSubview:self.bottomBackView];
 
         [self addSubview:self.interactiveView];
         [self addSubview:self.alertView];
-        
+
         [self bringSubviewToFront:self.closeButton];
 
     }
@@ -98,6 +103,30 @@
     _interactiveView.spectatorsArray = self.spectatorsArray;
 
 }
+
+- (UIView *)topBackView
+{
+    if (!_topBackView) {
+        _topBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 100)];
+        _topBackView.alpha = 0.6;
+        [_topBackView.layer addSublayer:[self shadowAsInverse:YES]];
+
+    }
+    return _topBackView;
+}
+
+- (UIView *)bottomBackView
+{
+    if (!_bottomBackView) {
+        _bottomBackView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 100, self.frame.size.width, 100)];
+        _bottomBackView.alpha = 0.6;
+        _bottomBackView.userInteractionEnabled = YES;
+        [_bottomBackView.layer addSublayer:[self shadowAsInverse:NO]];
+        
+    }
+    return _bottomBackView;
+}
+
 - (UIButton *)closeButton
 {
     if (!_closeButton) {
@@ -326,6 +355,37 @@
                                               }];
                          }];
     }
+}
+
+- (CAGradientLayer *)shadowAsInverse:(BOOL)isTop;
+{
+    CAGradientLayer *newShadow = [[CAGradientLayer alloc] init];
+    CGRect newShadowFrame = CGRectMake(0, 0, self.width,100);
+    newShadow.frame = newShadowFrame;
+    if (isTop) {
+        newShadow.colors = [NSArray arrayWithObjects:
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.6] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.4] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.3] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.1] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0] CGColor],
+                            nil];
+
+    }else {
+        newShadow.colors = [NSArray arrayWithObjects:
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.1] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.3] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.4] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.6] CGColor],
+                            nil];
+
+    }
+    return newShadow;
 }
 
 @end

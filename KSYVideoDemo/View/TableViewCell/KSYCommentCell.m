@@ -95,9 +95,9 @@
     }else {
         _backGroundView.frame = CGRectMake(5, 5, 150, 39);
 
-        _contentLab.frame = CGRectMake(_headImv.right+5, 0, 90, 39);
+        _contentLab.frame = CGRectMake(_headImv.right+5, _userLab.bottom, 90, 20);
 
-        _headImv.frame = CGRectMake(3, 2, 35, 35);
+        _headImv.frame = CGRectMake(8, 7, 35, 35);
 
 
     }

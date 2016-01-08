@@ -20,6 +20,7 @@
     NSTimer                 *_commetnTimer1;
     NSTimer                 *_praiseTimer0;
     NSTimer                 *_praiseTimer1;
+    NSInteger               _index;         //测试数据
 }
 @end
 
@@ -32,7 +33,7 @@
     //模拟观众评论
     _commetnTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addNewCommentWith) userInfo:nil repeats:YES];
     //模拟用户进入
-//    _commetnTimer1 = [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(addNewUserName) userInfo:nil repeats:YES];
+    _commetnTimer1 = [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(addNewUserName) userInfo:nil repeats:YES];
 
     //模拟点赞事件
     _praiseTimer0 = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(praiseEvent) userInfo:nil repeats:YES];
@@ -40,6 +41,7 @@
 
     //模拟观众信息
     _spectatorsArr = [[NSMutableArray alloc] initWithCapacity:0];
+    _index = 0;
     [self requestSepctators];
     
     _phoneLivePlayVC = [[KSYPhoneLivePlayView alloc] initWithFrame:self.view.bounds urlString:self.videoUrlString playState:KSYPhoneLivePlay];
@@ -86,10 +88,9 @@
 
 - (void)addNewUserName
 {
-    CommentModel *model = [[CommentModel alloc] init];
-    model.userName = @"用户名";
     
-    [_phoneLivePlayVC addNewCommentWith:model];
+    [_phoneLivePlayVC addNewCommentWith:[NSString stringWithFormat:@"王大锤%@",@(_index)]];
+    _index++;
 
 }
 

@@ -24,6 +24,7 @@
 }
 @property (nonatomic, strong)KSYCommentTableView    *commetnTableView;
 @property (nonatomic, strong)KSYSpectatorsTableView *spectatorsTableViews;
+@property (nonatomic, strong)UILabel                *spectatorsComeLabel;
 @property (nonatomic, strong)KSYMessageToolBar      *messageToolBar;
 @property (nonatomic, strong)UIImageView            *spectatorsNumberImv;
 @property (nonatomic, strong)UILabel                *userNumLab;
@@ -54,6 +55,8 @@
 
         [self addGestureRecognizer:_gestureRecongizer];
         [self addSubview:self.spectatorsTableViews];
+        [self addSubview:self.spectatorsComeLabel];
+
         [self addSubview:self.commetnTableView];
         [self addSubview:self.praiseBtn];
         [self addSubview:self.spectatorsNumberImv];
@@ -73,12 +76,31 @@
     return _commetnTableView;
 }
 
+- (UILabel *)spectatorsComeLabel
+{
+    if (!_spectatorsComeLabel) {
+        _spectatorsComeLabel = [[UILabel alloc] initWithFrame:CGRectMake(13, _spectatorsTableViews.top - 22, 150, 22)];
+        _spectatorsComeLabel.backgroundColor = [UIColor blackColor];
+        _spectatorsComeLabel.textAlignment = NSTextAlignmentCenter;
+        _spectatorsComeLabel.textColor = [UIColor whiteColor];
+        _spectatorsComeLabel.font = [UIFont systemFontOfSize:13.0];
+        _spectatorsComeLabel.alpha = 0.5;
+        _spectatorsComeLabel.layer.cornerRadius = 8;
+        _spectatorsComeLabel.layer.masksToBounds = YES;
+        _spectatorsComeLabel.hidden = YES;
+        
+
+    }
+    return _spectatorsComeLabel;
+}
+
+
 - (KSYSpectatorsTableView *)spectatorsTableViews
 {
     WeakSelf(KSYInteractiveView);
     if (!_spectatorsTableViews) {
         if (_messageToolBar) {
-            _spectatorsTableViews = [[KSYSpectatorsTableView alloc] initWithFrame:CGRectMake(46, _messageToolBar.top - 40 - 5, self.bounds.size.width - 46 - 80, 40)];
+            _spectatorsTableViews = [[KSYSpectatorsTableView alloc] initWithFrame:CGRectMake(46, _messageToolBar.top - 45, self.bounds.size.width - 46 - 80, 40)];
 
         }else {
             _spectatorsTableViews = [[KSYSpectatorsTableView alloc] initWithFrame:CGRectMake(46, _progressToolBar.top - 40 - 5, self.bounds.size.width - 46 - 80, 40)];
@@ -162,7 +184,7 @@
 - (UIImageView *)spectatorsNumberImv
 {
     if (!_spectatorsNumberImv) {
-        _spectatorsNumberImv = [[UIImageView alloc] initWithFrame:CGRectMake(10, _commetnTableView.bottom + 5, 30, 30)];
+        _spectatorsNumberImv = [[UIImageView alloc] initWithFrame:CGRectMake(10, _spectatorsTableViews.top, 30, 30)];
         _spectatorsNumberImv.image = [UIImage imageNamed:@"spectatorsNumber"];
         
     }
@@ -210,6 +232,7 @@
     self.spectatorsNumberImv.hidden = isOn;
     self.userNumLab.hidden = isOn;
     self.praiseBtn.hidden = isOn;
+    self.spectatorsComeLabel.hidden = isOn;
 }
 - (void)didChangeFrameToHeight:(CGFloat)toHeight endHeight:(CGFloat)bottomHeight
 {
@@ -237,9 +260,20 @@
 #pragma mark- 事件
 - (void)addNewCommentWith:(id)object
 {
-    [self.commetnTableView newUserAdd:object];
-    _testNum++;
-    _userNumLab.text = [NSString stringWithFormat:@"%@",@(_testNum)];
+    if ([object isKindOfClass:[NSString class]]) {
+        _testNum++;
+        _userNumLab.text = [NSString stringWithFormat:@"%@",@(_testNum)];
+        self.spectatorsComeLabel.text = [NSString stringWithFormat:@"%@     来了",object];
+
+        if (!self.isOff) {
+            self.spectatorsComeLabel.hidden = NO;
+            self.commetnTableView.frame = CGRectMake(10, _spectatorsComeLabel.top - 200 - 5, 200, 200);
+
+        }
+    }else {
+        [self.commetnTableView newUserAdd:object];
+
+    }
 }
 
 - (void)updateProgressWithCurentTime:(NSTimeInterval)time duration:(NSTimeInterval)duration
@@ -320,5 +354,22 @@
     }else
         return YES;
 }
-#pragma mark messageToolBarDelegate
+- (CAGradientLayer *)shadowAsInverse
+{
+    CAGradientLayer *newShadow = [[CAGradientLayer alloc] init];
+    CGRect newShadowFrame = CGRectMake(0, 0, self.width,100);
+    newShadow.frame = newShadowFrame;
+    //添加渐变的颜色组合（颜色透明度的改变）
+    newShadow.colors = [NSArray arrayWithObjects:
+                        (id)[[[UIColor grayColor] colorWithAlphaComponent:0] CGColor] ,
+                        (id)[[[UIColor grayColor] colorWithAlphaComponent:0.1] CGColor] ,
+                        (id)[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor],
+                        (id)[[[UIColor grayColor] colorWithAlphaComponent:0.3] CGColor],
+                        (id)[[[UIColor grayColor] colorWithAlphaComponent:0.4] CGColor],
+                        (id)[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor],
+                        (id)[[[UIColor grayColor] colorWithAlphaComponent:0.6] CGColor],
+                        nil];
+    return newShadow;
+}
+
 @end
