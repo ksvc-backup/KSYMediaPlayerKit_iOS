@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "View/KSYBasePlayView.m"
-            timestampString = "473677971.318789"
+            filePath = "View/KSYInteractiveView.m"
+            timestampString = "473941778.758077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "-moviePlayerFinishState:"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "-addNewCommentWith:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

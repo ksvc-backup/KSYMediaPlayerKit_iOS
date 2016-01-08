@@ -17,10 +17,13 @@
 
 @interface KSYPhoneLivePlayView ()<UIAlertViewDelegate>
 
+@property (nonatomic, strong)UIView             *topBackView;
+@property (nonatomic, strong)UIView                 *bottomBackView;
 
 @property (nonatomic, strong)KSYInteractiveView *interactiveView;
 @property (nonatomic, strong)UIButton           *closeButton;
 @property (nonatomic, strong)UIButton           *reportButton;
+@property (nonatomic, strong)UIImageView        *playStateImageV;
 @property (nonatomic, strong)UILabel            *playStateLab;
 @property (nonatomic, strong)UILabel            *curentTimeLab;
 @property (nonatomic, strong)UIButton           *headButton;
@@ -38,15 +41,19 @@
 {
     self = [super initWithFrame:frame urlString:urlString];
     if (self) {
+//        self.backgroundColor = [UIColor cyanColor];
         self.playState = playState;
+        [self addSubview:self.topBackView];
+        [self addSubview:self.headButton];
+        [self addSubview:self.playStateImageV];
+        [self addSubview:self.curentTimeLab];
         [self addSubview:self.closeButton];
         [self addSubview:self.reportButton];
-        [self addSubview:self.playStateLab];
-        [self addSubview:self.curentTimeLab];
-        [self addSubview:self.headButton];
+        [self addSubview:self.bottomBackView];
+
         [self addSubview:self.interactiveView];
         [self addSubview:self.alertView];
-        
+
         [self bringSubviewToFront:self.closeButton];
 
     }
@@ -96,12 +103,36 @@
     _interactiveView.spectatorsArray = self.spectatorsArray;
 
 }
+
+- (UIView *)topBackView
+{
+    if (!_topBackView) {
+        _topBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 100)];
+        _topBackView.alpha = 0.6;
+        [_topBackView.layer addSublayer:[self shadowAsInverse:YES]];
+
+    }
+    return _topBackView;
+}
+
+- (UIView *)bottomBackView
+{
+    if (!_bottomBackView) {
+        _bottomBackView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 100, self.frame.size.width, 100)];
+        _bottomBackView.alpha = 0.6;
+        _bottomBackView.userInteractionEnabled = YES;
+        [_bottomBackView.layer addSublayer:[self shadowAsInverse:NO]];
+        
+    }
+    return _bottomBackView;
+}
+
 - (UIButton *)closeButton
 {
     if (!_closeButton) {
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_closeButton setFrame:CGRectMake(DeviceSizeBounds.size.width - 60, 10, 40, 30)];
-        [_closeButton setTitle:@"X" forState:UIControlStateNormal];
+        [_closeButton setFrame:CGRectMake(DeviceSizeBounds.size.width - 45, _headButton.top + 7, 16, 16)];
+        [_closeButton setBackgroundImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
         _closeButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
         [_closeButton addTarget:self action:@selector(liveBroadcastWillClose) forControlEvents:UIControlEventTouchUpInside];
 
@@ -113,8 +144,8 @@
 {
     if (!_reportButton) {
         UIButton *reportBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [reportBtn setFrame:CGRectMake(DeviceSizeBounds.size.width - 115, 10, 40, 30)];
-        [reportBtn setTitle:@"举报" forState:UIControlStateNormal];
+        [reportBtn setFrame:CGRectMake(DeviceSizeBounds.size.width - 115, _headButton.top, 30, 30)];
+        [reportBtn setBackgroundImage:[UIImage imageNamed:@"report"] forState:UIControlStateNormal];
         reportBtn.titleLabel.font = [UIFont systemFontOfSize:12.0];
         [reportBtn addTarget:self action:@selector(liveBroadcastWillBeReport) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:reportBtn];
@@ -123,6 +154,24 @@
     return _reportButton;
 }
 
+- (UIImageView *)playStateImageV
+{
+    if (!_playStateImageV) {
+        
+        _playStateImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_headButton.right + 7, 23, 40, 17)];
+        if (self.playState == KSYPhoneLivePlayBack) {
+            
+            _playStateImageV.image = [UIImage imageNamed:@"replay"];
+            
+        }else {
+            _playStateImageV.image = [UIImage imageNamed:@"live"];
+            
+        }
+
+
+    }
+    return _playStateImageV;
+}
 - (UILabel *)playStateLab
 {
     if (!_playStateLab) {
@@ -145,10 +194,11 @@
 - (UILabel *)curentTimeLab
 {
     if (!_curentTimeLab) {
-        _curentTimeLab = [[UILabel alloc] initWithFrame:CGRectZero];
+        _curentTimeLab = [[UILabel alloc] initWithFrame:CGRectMake(_headButton.right + 7, _playStateImageV.bottom , 70, 20)];
         _curentTimeLab.textColor = [UIColor whiteColor];
         _curentTimeLab.font = [UIFont systemFontOfSize:12.0];
         _curentTimeLab.backgroundColor = [UIColor clearColor];
+        _curentTimeLab.text = @"连线中...";
 
     }
     return _curentTimeLab;
@@ -161,7 +211,6 @@
         [_headButton setFrame:CGRectMake(15, 20, 36, 36)];
         [_headButton setBackgroundImage:[UIImage imageNamed:@"live_head"] forState:UIControlStateNormal];
         [_headButton addTarget:self action:@selector(headEvent:) forControlEvents:UIControlEventTouchUpInside];
-        _headButton.hidden = YES;
 
     }
     return _headButton;
@@ -203,13 +252,7 @@
 - (void)moviePlayerPlaybackState:(MPMoviePlaybackState)playbackState
 {
     if (playbackState == MPMoviePlaybackStatePlaying) {
-        _headButton.hidden = NO;
-        _playStateLab.frame = CGRectMake(_headButton.right + 5, 15, 75, 20);
-        if (self.playState == KSYPhoneLivePlay) {
-            _playStateLab.text = @"直播中";
 
-        }
-        _headImageView.hidden = NO;
     }
 }
 
@@ -223,7 +266,6 @@
 - (void)updateCurrentTime
 {
     [super updateCurrentTime];
-    _curentTimeLab.frame = CGRectMake(_headButton.right  +5, _playStateLab.bottom , 70, 20);
     NSInteger position = (NSInteger)self.currentPlaybackTime;
     int iMin  = (int)(position / 60);
     int iSec  = (int)(position % 60);
@@ -313,6 +355,37 @@
                                               }];
                          }];
     }
+}
+
+- (CAGradientLayer *)shadowAsInverse:(BOOL)isTop;
+{
+    CAGradientLayer *newShadow = [[CAGradientLayer alloc] init];
+    CGRect newShadowFrame = CGRectMake(0, 0, self.width,100);
+    newShadow.frame = newShadowFrame;
+    if (isTop) {
+        newShadow.colors = [NSArray arrayWithObjects:
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.6] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.4] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.3] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.1] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0] CGColor],
+                            nil];
+
+    }else {
+        newShadow.colors = [NSArray arrayWithObjects:
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.1] CGColor] ,
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.2] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.3] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.4] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor],
+                            (id)[[[UIColor grayColor] colorWithAlphaComponent:0.6] CGColor],
+                            nil];
+
+    }
+    return newShadow;
 }
 
 @end

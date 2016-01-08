@@ -38,11 +38,11 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.controCommentButton.frame = CGRectMake(10, 5, 40, 30);
+    self.controCommentButton.frame = CGRectMake(10, 5, 34, 34);
     self.playControlButton.frame = CGRectMake(self.controCommentButton.right + 8, 3, 34, 34);
 
     self.slider.frame = CGRectMake(_playControlButton.right + 6, 5, self.frame.size.width - 120 - 36, 30);
-    self.shareButton.frame = CGRectMake(_slider.right + 10, 5, 30, 30);
+    self.shareButton.frame = CGRectMake(_slider.right + 10, 5, 34, 34);
     self.timeLabel.frame = CGRectMake(self.slider.left, self.slider.bottom - 10, self.slider.frame.size.width - 8, 20);
 }
 - (UIButton *)controCommentButton
@@ -52,7 +52,7 @@
         _controCommentButton.tag = 331;
         [_controCommentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _controCommentButton.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        [_controCommentButton setTitle:@"互动开" forState:UIControlStateNormal];
+        [_controCommentButton setBackgroundImage:[UIImage imageNamed:@"interactiveOn"] forState:UIControlStateNormal];
         [_controCommentButton addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
 
     }
@@ -66,7 +66,7 @@
         _shareButton.tag = 332;
         [_shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _shareButton.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        [_shareButton setTitle:@"分享" forState:UIControlStateNormal];
+        [_shareButton setBackgroundImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
         [_shareButton addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
 
     }
@@ -161,15 +161,15 @@
 {
     if (button.tag == 331) {
         if (!button.selected) {
-            [_controCommentButton setTitle:@"互动关" forState:UIControlStateNormal];
+            [_controCommentButton setBackgroundImage:[UIImage imageNamed:@"interactiveOff"] forState:UIControlStateNormal];
             
             if (self.userEventBlock) {
                 self.userEventBlock(button.tag - 330);
             }
             
         }else {
-            
-            [_controCommentButton setTitle:@"互动开" forState:UIControlStateNormal];
+            [_controCommentButton setBackgroundImage:[UIImage imageNamed:@"interactiveOn"] forState:UIControlStateNormal];
+
             
             if (self.userEventBlock) {
                 self.userEventBlock(button.tag - 331);

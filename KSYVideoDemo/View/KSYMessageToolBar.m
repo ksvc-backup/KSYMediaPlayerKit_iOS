@@ -80,7 +80,6 @@
     _controCommentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_controCommentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _controCommentBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
-//    [_controCommentBtn setTitle:@"互动开" forState:UIControlStateNormal];
     [_controCommentBtn setBackgroundImage:[UIImage imageNamed:@"interactiveOn"] forState:UIControlStateNormal];
     _controCommentBtn.tag = 231;
     _controCommentBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
@@ -98,6 +97,7 @@
     
     _inputTexField = [[UITextField  alloc] init];
     _inputTexField.backgroundColor = [UIColor callColorFromHexRGB:@"d8d8d8"];
+    _inputTexField.alpha = 0.5;
     _inputTexField.placeholder = @" 说点什么吧...";
     _inputTexField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     _inputTexField.returnKeyType = UIReturnKeySend;

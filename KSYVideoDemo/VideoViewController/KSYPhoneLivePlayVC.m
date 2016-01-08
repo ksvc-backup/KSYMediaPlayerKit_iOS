@@ -20,6 +20,7 @@
     NSTimer                 *_commetnTimer1;
     NSTimer                 *_praiseTimer0;
     NSTimer                 *_praiseTimer1;
+    NSInteger               _index;         //测试数据
 }
 @end
 
@@ -40,6 +41,7 @@
 
     //模拟观众信息
     _spectatorsArr = [[NSMutableArray alloc] initWithCapacity:0];
+    _index = 0;
     [self requestSepctators];
     
     _phoneLivePlayVC = [[KSYPhoneLivePlayView alloc] initWithFrame:self.view.bounds urlString:self.videoUrlString playState:KSYPhoneLivePlay];
@@ -78,17 +80,17 @@
 - (void)addNewCommentWith
 {
     CommentModel *model = [[CommentModel alloc] init];
-    model.userComment = @"哇，大美女！";
+    model.userComment = @"评论评论评论";
+    model.userName = @"用户名";
 
     [_phoneLivePlayVC addNewCommentWith:model];
 }
 
 - (void)addNewUserName
 {
-    CommentModel *model = [[CommentModel alloc] init];
-    model.userName = @"用户名";
     
-    [_phoneLivePlayVC addNewCommentWith:model];
+    [_phoneLivePlayVC addNewCommentWith:[NSString stringWithFormat:@"王大锤%@",@(_index)]];
+    _index++;
 
 }
 
