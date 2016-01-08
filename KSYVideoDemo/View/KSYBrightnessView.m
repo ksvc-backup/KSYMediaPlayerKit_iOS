@@ -20,10 +20,7 @@
 }
 - (void)addSubviews
 {
-    // **** brightness view
     //亮度条
-//    CGRect brightnessRect = CGRectMake(kCoverBarLeftMargin, size.height / 4, kCoverBarWidth, size.height / 2);
-//    UIView *brightnessView = [[UIView alloc] initWithFrame:brightnessRect];
     self.backgroundColor = [UIColor clearColor];
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = 3;
@@ -32,11 +29,10 @@
     //亮度条背景视图
     UIView *brightnessBgView = [[UIView alloc] initWithFrame:self.bounds];
     brightnessBgView.backgroundColor = [UIColor blackColor];
-    brightnessBgView.alpha = 0.6f;
+    brightnessBgView.alpha = 0.7;
     [self addSubview:brightnessBgView];
     
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-    UIImage *minImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"slider_color"];
+
     //高亮模式图片
     CGRect brightnessImgViewRect1 = CGRectMake(3, 3, self.width - 6, self.width - 6);
     UIImageView *brightnessImgView1 = [[UIImageView alloc] initWithFrame:brightnessImgViewRect1];
@@ -45,14 +41,14 @@
     [self addSubview:brightnessImgView1];
     
     //亮度条
+    UIImage *dotImg = [UIImage imageNamed:@"Oval"];
     CGFloat sliderWidth = self.height - 45;
     CGFloat sliderHeight = 15;
     CGFloat X = -sliderWidth / 2 + self.width / 2;
     CGFloat Y = self.height / 2 - sliderHeight / 2 + 4;
     CGRect brightnessSliderRect = CGRectMake(X, Y, sliderWidth, sliderHeight);
     UISlider *brightnessSlider = [[UISlider alloc] initWithFrame:brightnessSliderRect];
-    [brightnessSlider setMinimumTrackImage:minImg forState:UIControlStateNormal];
-    brightnessSlider.maximumTrackTintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2];
+    [brightnessSlider setMinimumTrackTintColor:THEMECOLOR];
     [brightnessSlider setThumbImage:dotImg forState:UIControlStateNormal];
     brightnessSlider.value = [[UIScreen mainScreen] brightness];
     brightnessSlider.tag = kBrightnessSliderTag;

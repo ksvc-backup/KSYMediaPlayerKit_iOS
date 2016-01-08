@@ -118,6 +118,6 @@ typedef enum KSYGestureType KSYGestureType;
 //字体大小
 #define WORDFONT16 16
 #define WORDFONT18 18
-
-
+#define THEMECOLOR [UIColor colorWithRed:92/255.0 green:232/255.0 blue:223/255.0 alpha:1.0]
+#define ALPHA 0.7
 #endif /* KSYHead_h */

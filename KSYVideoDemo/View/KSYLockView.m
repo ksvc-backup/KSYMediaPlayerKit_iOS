@@ -23,25 +23,20 @@
 - (void)addSubviews
 {
     //锁屏按钮大小
-    self.backgroundColor = [UIColor clearColor];
-
-    
+    self.backgroundColor = [UIColor blackColor];
+    self.alpha=0.7;
     //锁屏背景视图
     UIView *lockBgView = [[UIView alloc] initWithFrame:self.bounds];
     self.backgroundColor = [UIColor blackColor];
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = self.width / 2;
-    self.alpha = 0.6f;
     [self addSubview:lockBgView];
     
     //锁屏按钮
     UIButton *lockBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    lockBtn.alpha = 0.6f;
     lockBtn.frame = CGRectMake(10, 10, self.width - 20, self.width - 20);
-    UIImage *lockOpenImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_lock_open_normal"];
-    UIImage *lockOpenImg_h = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_lock_open_hl"];
+    UIImage *lockOpenImg_n = [UIImage imageNamed:@"screenLock_off"];
     [lockBtn setImage:lockOpenImg_n forState:UIControlStateNormal];
-    [lockBtn setImage:lockOpenImg_h forState:UIControlStateHighlighted];
     [lockBtn addTarget:self action:@selector(clickLockBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:lockBtn];
 }

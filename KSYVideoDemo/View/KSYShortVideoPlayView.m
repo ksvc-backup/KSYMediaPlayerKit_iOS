@@ -8,7 +8,7 @@
 
 #import "KSYShortVideoPlayView.h"
 #import "KSYCommentView.h"
-
+#import "KSYInteractCell.h"
 @interface KSYShortVideoPlayView ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *ksyShortTableView;
@@ -84,11 +84,25 @@
             _videoCell.ksyShortView.isBackGroundReleasePlayer=self.isDidRelease;
         }
         return _videoCell;
-    }else {
+    }else if (indexPath.row==1){
+        KSYInteractCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId1];
+        if (!cell){
+            cell=[[KSYInteractCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId1];
+            UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
+            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
+            UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
+            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
+            cell.selectedBackgroundView = tempView1;
+            
+        }
+        return cell;
+
+    }else{
         commentView.hidden=NO;
         KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId2];
         if (!cell){
-            cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"KSY1TableViewCellIdentify"];
+            cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId2];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
             tempView.backgroundColor =KSYCOLER(90, 90, 90);
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
@@ -101,13 +115,19 @@
         cell.model1=SKYmodel;
         return cell;
     }
+    return nil;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (ksyShortTableView.contentOffset.y>260.0) {
-        [_videoCell.ksyShortView pause];
+    UIButton *btn=(UIButton *)[_videoCell.ksyShortView viewWithTag:kBarPlayBtnTag];
+    if (btn.isSelected==NO) {
+        
     }else{
-        [_videoCell.ksyShortView play];
+        if (ksyShortTableView.contentOffset.y>260.0) {
+            [_videoCell.ksyShortView pause];
+        }else {
+            [_videoCell.ksyShortView play];
+        }
     }
 }
 #pragma mark 设置行高
@@ -115,6 +135,8 @@
 {
     if (indexPath.row==0){
         return 260;
+    }else if (indexPath.row==1){
+        return 80;
     }else{
         
         KSYComTvCell *cell=_modelsCells[indexPath.row];

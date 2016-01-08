@@ -13,6 +13,6 @@
 @property (nonatomic, strong)  UILabel *kUserName;
 @property (nonatomic, strong)  UIButton *kForcBtn;
 
-
+@property (nonatomic, copy) void (^forceBtn)(UIButton *btn);
 
 @end

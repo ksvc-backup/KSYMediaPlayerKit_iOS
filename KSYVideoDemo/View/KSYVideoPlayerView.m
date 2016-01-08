@@ -32,6 +32,7 @@
     KSBarrageView *kDanmuView;
     BOOL isActive;
     BOOL isOpen;
+    CGFloat _HEIGHT;
 }
 
 @property (nonatomic, assign)  KSYGestureType gestureType;
@@ -70,6 +71,7 @@
         [self addProgressView];
         [self addLockBtn];
         [self performSelector:@selector(hiddenAllControls) withObject:nil afterDelay:3.0];
+        _HEIGHT=THESCREENWIDTH;
     }
     return self;
 }
@@ -97,10 +99,23 @@
             [weakSelf unFullclick];
 
         };
+        kToolView.reportBtn=^(UIButton *btn){
+            [weakSelf reportBtnClick:btn];
+        };
+        kToolView.subscribeBtn=^(UIButton *btn){
+            [weakSelf subscribeBtnClick:btn];
+        };
     }
     return kToolView;
 }
-
+- (void)reportBtnClick:(UIButton *)btn{
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"接口已提供" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+- (void)subscribeBtnClick:(UIButton *)btn{
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"接口已提供" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
 - (void)addLockBtn
 {
     WeakSelf(KSYVideoPlayerView);
@@ -122,9 +137,6 @@
 - (void)addTopView
 {
     topView=[[KSYTopView alloc]initWithFrame:CGRectMake(0, 0, self.width, 40)];
-    if (_playState==KSYPopularLivePlay) {
-        topView.hidden=YES;
-    }
     [self addSubview:topView];
 }
 
@@ -133,9 +145,6 @@
         
     WeakSelf(KSYVideoPlayerView);
     bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:_playState];
-    if (_playState==KSYPopularLivePlay) {
-        bottomView.hidden=YES;
-    }
     bottomView.progressDidBegin=^(UISlider *slider){
         [weakSelf progDidBegin:slider];
     };
@@ -224,24 +233,16 @@
 }
 
 - (void)brightnessDidBegin:(UISlider *)slider {
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot"];
-    [slider setThumbImage:dotImg forState:UIControlStateNormal];
 }
 - (void)brightnessChanged:(UISlider *)slider {
     [[UIScreen mainScreen] setBrightness:slider.value];
 }
 - (void)brightnessChangeEnd:(UISlider *)slider {
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-    [slider setThumbImage:dotImg forState:UIControlStateNormal];
 }
-
-
 - (void)progDidBegin:(UISlider *)slider
 {
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot"];
-    [slider setThumbImage:dotImg forState:UIControlStateNormal];
     if ([self.player isPlaying]==YES) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_play_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
@@ -260,7 +261,7 @@
     int iSec  = (int)(position % 60);
     NSString *strCurTime = [NSString stringWithFormat:@"%02d:%02d", iMin, iSec];
     startLabel.text = strCurTime;
-
+    
 }
 - (void)progChangeEnd:(UISlider *)slider
 {
@@ -268,15 +269,13 @@
         slider.value=0.0f;
         return;
     }
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-    [slider setThumbImage:dotImg forState:UIControlStateNormal];
     if ([self.player isPlaying]==YES) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
-
-    [self.player setCurrentPlaybackTime: slider.value];
+    
+    [self moviePlayerSeekTo: slider.value];
 }
 - (void)BtnClick:(UIButton *)btn
 {
@@ -286,15 +285,15 @@
     }
     if ([self.player isPlaying]==NO){
         [self play];
-        UIImage *pauseImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_normal"];
+        UIImage *pauseImg_n = [UIImage imageNamed:@"pause"];
         [btn setImage:pauseImg_n forState:UIControlStateNormal];
     }
     else{
         [self pause];
-        UIImage *playImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_play_normal"];
-       [btn setImage:playImg_n forState:UIControlStateNormal];
+        UIImage *playImg_n = [UIImage imageNamed:@"play"];
+        [btn setImage:playImg_n forState:UIControlStateNormal];
     }
-
+    
 }
 -(void)unFullclick
 {
@@ -331,15 +330,17 @@
     kPlaySlider.value = position;
     kPlaySlider.maximumValue = duration;
     if ([self.player isPlaying]) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_pause_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"pause"];
         [bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];
     }
+    bottomView.kPlayabelSlider.value=self.player.playableDuration;
+    bottomView.kPlayabelSlider.maximumValue=self.player.duration;
 }
 - (void)moviePlayerFinishState:(MPMoviePlaybackState)finishState
 {
     [super moviePlayerFinishState:finishState];
     if (finishState == MPMoviePlaybackStateStopped) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_play_normal"];
+        UIImage *playImg = [UIImage imageNamed: @"play"];
         [bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];
     }
 }
@@ -354,10 +355,8 @@
         kToolView.hidden=YES;
         bottomView.kFullBtn.hidden = NO;
 
-        UIImage *lockCloseImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_lock_close_normal"];
-        UIImage *lockCloseImg_h = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_lock_close_hl"];
+        UIImage *lockCloseImg_n = [UIImage imageNamed:@"screenLock_on"];
         [btn setImage:lockCloseImg_n forState:UIControlStateNormal];
-        [btn setImage:lockCloseImg_h forState:UIControlStateHighlighted];
         if (self.lockScreen) {
             self.lockScreen(_isLock);
         }
@@ -368,10 +367,8 @@
         bottomView.hidden=NO;
         kToolView.hidden=NO;
         bottomView.kFullBtn.hidden = YES;
-        UIImage *lockOpenImg_n = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_lock_open_normal"];
-        UIImage *lockOpenImg_h = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_lock_open_hl"];
+        UIImage *lockOpenImg_n = [UIImage imageNamed:@"screenLock_off"];
         [btn setImage:lockOpenImg_n forState:UIControlStateNormal];
-        [btn setImage:lockOpenImg_h forState:UIControlStateHighlighted];
         if (self.lockScreen) {
             self.lockScreen(_isLock);
         }
@@ -389,15 +386,12 @@
 - (void)lunchFullScreen
 {
     topView.hidden=YES;
-    bottomView.hidden=YES;
+//    bottomView.hidden=YES;
     bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
     [bottomView setSubviews];
     kProgressView.frame=CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 2, kProgressViewWidth, 50);
     kLockView.frame=CGRectMake(kCoverLockViewLeftMargin, (self.height - self.height / 6) / 2, self.height / 6, self.height / 6);
     [self addSubview:self.kToolView];
-    UIButton *fullBtn=(UIButton *)[self viewWithTag:kFullScreenBtnTag];
-    UIImage *fullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_exit_fullscreen_normal"];
-    [fullBtn setImage:fullImg forState:UIControlStateNormal];
     self.indicator.center=self.center;
 }
 
@@ -411,9 +405,6 @@
     bottomView.hidden=YES;
     kProgressView.frame=CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 4, kProgressViewWidth, 50);
     kToolView.hidden=YES;
-    UIButton *unFullBtn=(UIButton *)[self viewWithTag:kFullScreenBtnTag];
-    UIImage *unFullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_fullscreen_normal"];
-    [unFullBtn setImage:unFullImg forState:UIControlStateNormal];
     self.indicator.center=self.center;
 }
 
@@ -429,7 +420,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     // **** 锁屏状态下，屏幕禁用
-    if (_isLock == YES) {
+    if (_isLock == YES||self.height<_HEIGHT) {
         return;
     }
     CGPoint curPoint = [[touches anyObject] locationInView: self];
@@ -537,16 +528,10 @@
     else if (self.gestureType == kKSYProgress) {
         
         UISlider *progressSlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
+        [self moviePlayerSeekTo : progressSlider.value];
         
-        [self.player setCurrentPlaybackTime: progressSlider.value];
-        
-        UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-        [progressSlider setThumbImage:dotImg forState:UIControlStateNormal];
     }
     else if (self.gestureType == kKSYBrightness) {
-        UISlider *brightnessSlider = (UISlider *)[self viewWithTag:kBrightnessSliderTag];
-        UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-        [brightnessSlider setThumbImage:dotImg forState:UIControlStateNormal];
         if (isActive == NO) {
             UIView *brightnessView = [self viewWithTag:kBrightnessViewTag];
             [UIView animateWithDuration:0.3 animations:^{

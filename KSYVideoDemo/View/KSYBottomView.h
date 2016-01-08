@@ -22,7 +22,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *fansCount;
 @property (nonatomic, strong) UITextField *commentText;
-
+@property (nonatomic, strong) UISlider *kPlayabelSlider;
 
 
 @property (nonatomic, copy) void (^progressDidBegin)(UISlider *slider);

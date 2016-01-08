@@ -14,6 +14,7 @@
     KSYTopView *_topView;
     KSYBottomView *_bottomView;
     BOOL _showORhidden;
+    UISlider *_slider;
 }
 @end
 
@@ -24,6 +25,8 @@
     if (self) {
         //添加顶部视图
         [self addTopView];
+        //添加底部slider
+        [self addBottomPro];
         
     }
     return self;
@@ -32,11 +35,19 @@
 - (void)addTopView
 {
     if (!_topView) {
+        WeakSelf(KSYShortView);
         _topView=[[KSYTopView alloc]initWithFrame:CGRectMake(0, 0, self.width, 40)];
+        _topView.forceBtn=^(UIButton *btn){
+            [weakSelf forceBtnClick:(btn)];
+        };
         _topView.backgroundColor=[UIColor blackColor];
         _topView.alpha=0.5;
         [self addSubview:_topView];
     }
+}
+- (void)forceBtnClick:(UIButton *)btn{
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"已为你提供接口" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 //更新当前状态
 -(void)updateCurrentTime{
@@ -68,7 +79,12 @@
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         [_bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];
     }
-
+    
+    _bottomView.kPlayabelSlider.value=self.player.playableDuration;
+    _bottomView.kPlayabelSlider.maximumValue=self.player.duration;
+    
+    _slider.value=position;
+    _slider.maximumValue=duration;
 }
 - (UIView *)bottomView{
     if (!_bottomView) {
@@ -94,7 +110,7 @@
 - (void)progDidBegin:(UISlider *)slider
 {
     if ([self.player isPlaying]==YES) {
-        UIImage *playImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_play_normal"];
+        UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
@@ -121,8 +137,6 @@
         slider.value=0.0f;
         return;
     }
-    UIImage *dotImg = [UIImage imageNamed:@"Oval"];
-    [slider setThumbImage:dotImg forState:UIControlStateNormal];
     if ([self.player isPlaying]==YES) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
@@ -141,11 +155,13 @@
         [self play];
         UIImage *pauseImg_n = [UIImage imageNamed:@"pause"];
         [btn setImage:pauseImg_n forState:UIControlStateNormal];
+        [btn setSelected:YES];
     }
     else{
         [self pause];
         UIImage *playImg_n = [UIImage imageNamed:@"play"];
         [btn setImage:playImg_n forState:UIControlStateNormal];
+        [btn setSelected:NO];
     }
     
 }
@@ -166,14 +182,24 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     _showORhidden=!_showORhidden;
     if (_showORhidden) {
+        //oc中函数的调用是通过消息的传递
         _topView.hidden=YES;
         _bottomView.hidden=YES;
+        _slider.hidden=NO;
     }else{
         _topView.hidden=NO;
         _bottomView.hidden=NO;
-
+        _slider.hidden=YES;
     }
     
 }
 
+- (void)addBottomPro{
+    _slider=[[UISlider alloc]initWithFrame:CGRectMake(0, self.height-2, self.width, 2)];
+    [self addSubview:_slider];
+    _slider.hidden=YES;
+    //设置slider的相关属性
+    [_slider setMinimumTrackTintColor:THEMECOLOR];
+    _slider.thumbTintColor=[UIColor clearColor];
+}
 @end

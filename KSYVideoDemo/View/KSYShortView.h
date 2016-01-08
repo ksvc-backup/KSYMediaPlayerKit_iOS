@@ -7,8 +7,11 @@
 //
 
 #import "KSYBasePlayView.h"
+@class KSYBottomView;
 
 @interface KSYShortView : KSYBasePlayView
 //初始化方法
 - (instancetype)initWithFrame:(CGRect)frame urlShortString:(NSString *)urlString;
+@property (nonatomic, retain) KSYBottomView *bottomView;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
+#import "KSYNavigationView.h"
 @interface KSYPopularVideoView (){
     CGFloat _WIDTH;
     CGFloat _HEIGHT;
@@ -28,6 +29,7 @@
 
     self = [super initWithFrame:frame];//初始化父视图的(frame、url)
     if (self) {
+        [self performSelector:@selector(hideNavigation) withObject:nil afterDelay:0];
         WeakSelf(KSYPopularVideoView);
         self.ksyVideoPlayerView=[[KSYVideoPlayerView alloc]initWithFrame: CGRectMake(0, 0, self.width, self.height/2-60) UrlFromString:urlString playState:playState];
         self.ksyVideoPlayerView.lockScreen=^(BOOL isLocked){
@@ -49,7 +51,11 @@
     return self;
 
 }
-
+- (void)hideNavigation{
+    if (self.changeNavigationBarColor) {
+        self.changeNavigationBarColor();
+    }
+}
 
 // 退出全屏模式
 - (void)changeDeviceOrientation:(UIInterfaceOrientation)toOrientation
@@ -169,15 +175,11 @@
         else {
             if (!KSYSYS_OS_IOS8) {
                 [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:YES];
-                
             }
             else {
             }
         }
-        if (self.changeNavigationBarColor) {
-            self.changeNavigationBarColor();
-        }
-
+        [self hideNavigation];
         [self lunchFull];
     }
     else if (orientation == UIDeviceOrientationPortrait)
@@ -185,7 +187,7 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO
                                                 withAnimation:UIStatusBarAnimationFade];
 //        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:YES];
-
+        [self hideNavigation];
         [self unLunchFull];
     }
 }

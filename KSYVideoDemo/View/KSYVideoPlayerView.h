@@ -14,10 +14,9 @@
 
 
 - (instancetype)initWithFrame:(CGRect)frame UrlFromString:(NSString *)urlString playState:(KSYPopularLivePlayState)playState;
-
-
 - (void)lunchFullScreen;
 - (void)minFullScreen;
+
 
 @property (nonatomic, assign) KSYPopularLivePlayState playState;
 @property (nonatomic, copy) void (^lockScreen)(BOOL isLocked);

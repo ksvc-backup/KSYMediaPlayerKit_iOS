@@ -32,17 +32,15 @@
 {
     // **** voice view
     // 声音视图
-//    CGRect voiceRect = CGRectMake(size.width - kCoverBarWidth - kCoverBarRightMargin, size.height / 4, kCoverBarWidth, size.height / 2);
-//    UIView *voiceView = [[UIView alloc] initWithFrame:voiceRect];
     self.backgroundColor = [UIColor clearColor];
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = 3;
-//    self.tag = kVoiceViewTag;
+
     
     //声音背景视图
     UIView *voiceBgView = [[UIView alloc] initWithFrame:self.bounds];
     voiceBgView.backgroundColor = [UIColor blackColor];
-    voiceBgView.alpha = 0.6f;
+    voiceBgView.alpha = 0.7f;
     [self addSubview:voiceBgView];
     
     //静音按钮
@@ -59,7 +57,7 @@
     CGRect mediaVoiceRect = CGRectMake(4, 25, kCoverBarWidth - 10, self.height - 25 * 2);
     _mediaVoiceView = [[KSYMediaVoiceView alloc] initWithFrame:mediaVoiceRect];
     _mediaVoiceView.tag = kMediaVoiceViewTag;
-    [_mediaVoiceView setFillColor:[[KSYThemeManager sharedInstance] themeColor]];
+    [_mediaVoiceView setFillColor:THEMECOLOR];
     [_mediaVoiceView setIVoice:[MPMusicPlayerController applicationMusicPlayer].volume];
     [self addSubview:_mediaVoiceView];
     

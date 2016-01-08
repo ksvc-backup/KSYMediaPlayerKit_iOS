@@ -63,7 +63,7 @@
     _content=[[UILabel alloc]init];
     [self addSubview:_content];
     _content.font=[UIFont systemFontOfSize:CONTENTFONT];
-    _content.textColor=KSYMODEL1Color;
+    _content.textColor=[UIColor lightGrayColor];
     //因为评论可能有很多需要多行显示
     _content.numberOfLines=0;
 }

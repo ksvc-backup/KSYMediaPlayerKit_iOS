@@ -20,6 +20,7 @@
 @synthesize imageView;
 @synthesize fansCount;
 @synthesize commentText;
+@synthesize kPlayabelSlider;
 
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate
 {
@@ -27,11 +28,10 @@
     if (self)
     {
         self.backgroundColor=[UIColor blackColor];
-        self.alpha=0.5;
+        self.alpha=0.7;
         _playstate=playstate;
         //播放按钮 播放时间 进度条 总时间
         kShortPlayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        kShortPlayBtn.alpha = 0.6;
         UIImage *pauseImg_n = [UIImage imageNamed:@"play"];
         [kShortPlayBtn setImage:pauseImg_n forState:UIControlStateNormal];
         kShortPlayBtn.frame = CGRectMake(5, 5, 30, 30);
@@ -69,7 +69,6 @@
             //全屏按钮
             kFullBtn=[UIButton buttonWithType:UIButtonTypeCustom];
             CGRect kFullBtnRect = CGRectMake(self.width-40, 5, 30, 30);
-            kFullBtn.alpha = 0.6;
             UIImage *fullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_fullscreen_normal"];
             [kFullBtn setImage:fullImg forState:UIControlStateNormal];
             kFullBtn.frame = kFullBtnRect;
@@ -88,12 +87,19 @@
             kCurrentLabel.tag= kProgressCurLabelTag;
             kCurrentLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
-            
+            //缓冲进度条
+            kPlayabelSlider=[[UISlider alloc]initWithFrame:CGRectMake(kCurrentLabel.right+10, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-10-90, 10)];
+            [kPlayabelSlider setMinimumTrackTintColor:[UIColor whiteColor]];
+            [kPlayabelSlider setMaximumTrackTintColor:[UIColor clearColor]];
+            [kPlayabelSlider setThumbTintColor:[UIColor clearColor]];
+            kPlayabelSlider.value = 0.0;
+            [self addSubview:kPlayabelSlider];
             //进度条
             UIImage *dotImg = [UIImage imageNamed:@"Oval"];
             kPlaySlider=[[UISlider alloc]initWithFrame:CGRectMake(kCurrentLabel.right+10, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-10-90, 10)];
             [kPlaySlider setMinimumTrackTintColor:KSYCOLER(92, 232, 223)];
-//            kPlaySlider.maximumTrackTintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2];
+            [kPlaySlider setBackgroundColor:[UIColor blackColor]];
+            [kPlaySlider setAlpha:0.7];
             [kPlaySlider setThumbImage:dotImg forState:UIControlStateNormal];
             [kPlaySlider addTarget:self action:@selector(progressDidBegin:) forControlEvents:UIControlEventTouchDown];
             [kPlaySlider addTarget:self action:@selector(progressChanged:) forControlEvents:UIControlEventValueChanged];
@@ -101,6 +107,8 @@
             kPlaySlider.value = 0.0;
             kPlaySlider.tag =kProgressSliderTag;
             [self addSubview:kPlaySlider];
+
+            
             
             //总时间
             kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kPlaySlider.right+5, kShortPlayBtn.center.y-15, 50, 30)];
@@ -109,55 +117,39 @@
             kTotalLabel.textAlignment = NSTextAlignmentCenter;
             kTotalLabel.text=@"00:00";
             kTotalLabel.textColor=[UIColor whiteColor];
-            kTotalLabel.alpha = 0.6;
             kTotalLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
             
             //全屏按钮
             kFullBtn=[UIButton buttonWithType:UIButtonTypeCustom];
             CGRect kFullBtnRect = CGRectMake(kTotalLabel.right, 5, 30, 30);
-            kFullBtn.alpha = 0.6;
-            UIImage *fullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_fullscreen_normal"];
+            UIImage *fullImg = [UIImage imageNamed:@"full"];
             [kFullBtn setImage:fullImg forState:UIControlStateNormal];
             kFullBtn.frame = kFullBtnRect;
             kFullBtn.tag = kFullScreenBtnTag;
             [kFullBtn addTarget:self action:@selector(clickFullBtn:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:kFullBtn];
         }
-        //添加流畅度按钮面向对象的语言 特性 继承 封装 多态 今天晚上先实现了 明天再优化
         //视频清晰度选择按钮
         qualityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        qualityBtn.alpha = 0.6f;
         qualityBtn.hidden=YES;
         qualityBtn.frame = CGRectMake(self.width-155, 10, 50, 30);
         qualityBtn.tag = kQualityBtnTag;
-        qualityBtn.layer.masksToBounds = YES;
-        qualityBtn.layer.borderColor = [UIColor whiteColor].CGColor;
-        qualityBtn.layer.borderWidth = 0.5;
-        qualityBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-        [qualityBtn setTitle:@"流畅" forState:UIControlStateNormal];
-        [qualityBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [qualityBtn setTitleColor:KSYCOLER(92, 232, 223) forState:UIControlStateHighlighted];
+        UIImage *qualityImage=[UIImage imageNamed:@"quality"];
+        [qualityBtn setImage:qualityImage forState:UIControlStateNormal];
         [qualityBtn addTarget:self action:@selector(clickQualityBtn) forControlEvents:UIControlEventTouchUpInside];
         //    [qualityBtn addTarget:self action:@selector(clickNormalBtn:) forControlEvents:UIControlEventTouchUpOutside | UIControlEventTouchDragOutside];
         //    [qualityBtn addTarget:self action:@selector(clickHighlightBtn:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:qualityBtn];
         
-        //添加弹幕按钮
-        
+
         //添加弹幕按钮
         danmuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        danmuBtn.alpha = 0.6f;
         danmuBtn.hidden = YES;
         danmuBtn.frame = CGRectMake(self.width-95, 10, 50, 30);
         danmuBtn.tag = kDanmuBtnTag;
-        danmuBtn.layer.masksToBounds = YES;
-        danmuBtn.layer.borderColor = [UIColor whiteColor].CGColor;
-        danmuBtn.layer.borderWidth = 0.5;
-        danmuBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-        [danmuBtn setTitle:@"弹幕" forState:UIControlStateNormal];
-        [danmuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [danmuBtn setTitleColor:KSYCOLER(92, 232, 223) forState:UIControlStateHighlighted];
+        UIImage *danmuImage=[UIImage imageNamed:@"danMuClose"];
+        [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
         [danmuBtn addTarget:self action:@selector(clickDanmuBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:danmuBtn];
         
@@ -213,6 +205,7 @@
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 60, 30);
         kPlaySlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-195, 10);
+        kPlayabelSlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-195, 10);
         kTotalLabel.frame=CGRectMake(self.right-190, kShortPlayBtn.center.y-15, 60, 30);
         qualityBtn.hidden=NO;
         qualityBtn.frame= CGRectMake(kTotalLabel.right+5, 5, 40, 30);
@@ -236,6 +229,7 @@
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 60, 30);
         kPlaySlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-100, 10);
+        kPlayabelSlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-100, 10);
         kTotalLabel.frame=CGRectMake(self.right-95, kShortPlayBtn.center.y-15, 60, 30);
         qualityBtn.hidden=YES;
         danmuBtn.hidden=YES;
