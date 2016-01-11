@@ -13,7 +13,8 @@
 @interface KSYPopularVideoView : UIView
 
 
-@property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;
+@property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;  
+
 
 @property (nonatomic, copy) void (^changeNavigationBarColor)();
 @property (nonatomic, copy) void (^lockWindow)(BOOL isLocked);

@@ -14,6 +14,7 @@
     self=[super initWithFrame:frame];
     if (self) {
         [self addsubViews];
+        
     }
     return self;
 }
@@ -29,12 +30,11 @@
     [self addSubview:ksyBackBtn];
     
     //添加标题标签
-    UILabel *ksyTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 40)];
+    UILabel *ksyTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.width/2-50, 0, 100, 40)];
     ksyTitleLabel.text=@"视频标题";
     ksyTitleLabel.textColor=[UIColor whiteColor];
     ksyTitleLabel.textAlignment=NSTextAlignmentCenter;
     ksyTitleLabel.font=[UIFont systemFontOfSize:WORDFONT18];
-    ksyTitleLabel.center=self.center;
     [self addSubview:ksyTitleLabel];
     
     

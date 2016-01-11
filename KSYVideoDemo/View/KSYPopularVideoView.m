@@ -12,6 +12,7 @@
 @interface KSYPopularVideoView (){
     CGFloat _WIDTH;
     CGFloat _HEIGHT;
+    KSYNavigationView *_navigationView;
 }
 
 @property (nonatomic,strong) KSYDetailView *detailView;
@@ -29,8 +30,9 @@
 
     self = [super initWithFrame:frame];//初始化父视图的(frame、url)
     if (self) {
-        [self performSelector:@selector(hideNavigation) withObject:nil afterDelay:0];
         WeakSelf(KSYPopularVideoView);
+        _navigationView=[[KSYNavigationView alloc]initWithFrame:CGRectMake(0, -44, self.width, 44)];
+        [self addSubview:_navigationView];
         self.ksyVideoPlayerView=[[KSYVideoPlayerView alloc]initWithFrame: CGRectMake(0, 0, self.width, self.height/2-60) UrlFromString:urlString playState:playState];
         self.ksyVideoPlayerView.lockScreen=^(BOOL isLocked){
             [weakSelf lockTheScreen:isLocked];
