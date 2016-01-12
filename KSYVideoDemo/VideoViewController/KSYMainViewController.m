@@ -238,7 +238,7 @@
             break;
         case 2:
         {
-            KSYVideoOnDemandPlayVC *view=[[KSYVideoOnDemandPlayVC alloc]init];
+            KSYVideoOnDemandPlayVC *view=[KSYVideoOnDemandPlayVC new];
             view.urlPath=_httpTextF.text;
             view.isReleasePlayer=_switchControl.isOn;
             [self.navigationController pushViewController:view animated:YES];

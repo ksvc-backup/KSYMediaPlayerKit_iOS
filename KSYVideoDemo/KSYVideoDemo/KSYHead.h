@@ -65,8 +65,8 @@ typedef enum KSYGestureType KSYGestureType;
 #define THESCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define THESCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
-#define TEXTCOLOR1 ([UIColor colorWithRed:207.0/255.0 green:206.0/255.0 blue:203.0/255.0 alpha:1.0])
-#define TEXTCOLOR2 ([UIColor colorWithRed:237.0/255.0 green:236.0/255.0 blue:234.0/255.0 alpha:1.0])
+#define TEXTCOLOR1 ([UIColor whiteColor])
+#define TEXTCOLOR2 ([UIColor whiteColor])
 #define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 
 

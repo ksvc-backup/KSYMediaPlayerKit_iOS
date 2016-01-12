@@ -45,6 +45,7 @@
     NSArray *array=[NSArray arrayWithObjects:@"小",@"中",@"大", nil];
     UISegmentedControl *fontSizeSC=[[UISegmentedControl alloc]initWithItems:array];
     fontSizeSC.frame=CGRectMake(fontSizeSCX, fontSizeSCY, CGRectGetWidth(self.frame)-fontSizeSCX-kLandscapeSpacing, 30);
+    fontSizeSC.tintColor=THEMECOLOR;
     fontSizeSC.tag=kFontSizeSCTag;
     [self addSubview:fontSizeSC];
     fontSizeSC.selectedSegmentIndex=0;
@@ -60,6 +61,7 @@
     CGFloat speedSCX=CGRectGetMaxX(speedLabel.frame)+kLandscapeSpacing;
     CGFloat speedSCY=CGRectGetMidY(speedLabel.frame)-15;
     UISegmentedControl *speedSC=[[UISegmentedControl alloc]initWithItems:array];
+    speedSC.tintColor=THEMECOLOR;
     speedSC.tag=kSpeedSCTag;
     speedSC.frame=CGRectMake(speedSCX, speedSCY, CGRectGetWidth(self.frame)-fontSizeSCX-kLandscapeSpacing, 30);
     [self addSubview:speedSC];
@@ -76,6 +78,7 @@
     CGFloat alphaSCX=CGRectGetMaxX(alphaLabel.frame)+kLandscapeSpacing;
     CGFloat alphaSCY=CGRectGetMidY(alphaLabel.frame)-15;
     UISegmentedControl *alphaSC=[[UISegmentedControl alloc]initWithItems:array];
+    alphaSC.tintColor=THEMECOLOR;
     alphaSC.tag=kAlphaSCTag;
     alphaSC.frame=CGRectMake(alphaSCX, alphaSCY, CGRectGetWidth(self.frame)-fontSizeSCX-kLandscapeSpacing, 30);
     [self addSubview:alphaSC];
@@ -126,33 +129,21 @@
     [self addSubview:highVoiceImageView];
     
     //添加音量进度条
-    //        CGFloat brightnessX=CGRectGetMaxX(lowBrightnessImgView.frame)+10;
-    //        CGFloat brightnessY=CGRectGetMidY(lowBrightnessImgView.frame)-5;
-    //        CGFloat brightnessHeight=10;
-    //        CGFloat brightnessWidth=CGRectGetWidth(setView.frame)-brightnessX-(CGRectGetWidth(setView.frame)-CGRectGetMinX(highBrightnessImgView.frame));
-    //        CGRect brightnessRect1=CGRectMake(brightnessX, brightnessY, brightnessWidth, brightnessHeight);
-    //        UISlider *brightnessSilder1=[[UISlider alloc]initWithFrame:brightnessRect1];
-    //        [setView addSubview:brightnessSilder1];
     CGFloat voiceSliderX = CGRectGetMaxX(lowVoiceImageView.frame)+10;
     CGFloat voiceSliderY =CGRectGetMidY(lowVoiceImageView.frame)-5;
     CGFloat voiceSliderWidth =CGRectGetWidth(self.frame)-voiceSliderX-(CGRectGetWidth(self.frame)-CGRectGetMinX(highVoiceImageView.frame));
     CGFloat voiceSliderHeight = 10;
-    
-    
-    UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot_normal"];
-    UIImage *minImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"slider_color"];
+    UIImage *dotImg = [UIImage imageNamed:@"Oval"];
     CGRect voiceSliderRect = CGRectMake(voiceSliderX, voiceSliderY, voiceSliderWidth, voiceSliderHeight);
     UISlider *voiceSlider = [[UISlider alloc] initWithFrame:voiceSliderRect];
     [self addSubview:voiceSlider];
-    [voiceSlider setMinimumTrackImage:minImg forState:UIControlStateNormal];
-    voiceSlider.maximumTrackTintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2];
+    [voiceSlider setMinimumTrackTintColor:THEMECOLOR ];
     [voiceSlider setThumbImage:dotImg forState:UIControlStateNormal];
     voiceSlider.value = [MPMusicPlayerController applicationMusicPlayer].volume;
     voiceSlider.tag = kVoiceSliderTag;
-    //        [voiceSlider addTarget:_controller action:@selector(voiceChanged:) forControlEvents:UIControlEventValueChanged];
-    //        [voiceSlider addTarget:_controller action:@selector(voiceDidBegin:) forControlEvents:UIControlEventTouchDown];
-    //        [voiceSlider addTarget:_controller action:@selector(voiceChangeEnd:) forControlEvents:(UIControlEventTouchUpOutside | UIControlEventTouchCancel|UIControlEventTouchUpInside)];
-    
+    [voiceSlider addTarget:self action:@selector(voiceChanged:) forControlEvents:UIControlEventValueChanged];
+    [voiceSlider addTarget:self action:@selector(voiceDidBegin:) forControlEvents:UIControlEventTouchDown];
+    [voiceSlider addTarget:self action:@selector(voiceChangeEnd:) forControlEvents:(UIControlEventTouchUpOutside | UIControlEventTouchCancel|UIControlEventTouchUpInside)];
     
     
     //添加亮度设置
@@ -189,9 +180,8 @@
     UISlider *brightnessSilder1=[[UISlider alloc]initWithFrame:brightnessRect1];
     [self addSubview:brightnessSilder1];
     
-    [brightnessSilder1 setMinimumTrackImage:minImg forState:UIControlStateNormal];
-    brightnessSilder1.maximumTrackTintColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2];
     [brightnessSilder1 setThumbImage:dotImg forState:UIControlStateNormal];
+    [brightnessSilder1 setMinimumTrackTintColor:THEMECOLOR ];
     brightnessSilder1.value = [UIScreen mainScreen].brightness;
     brightnessSilder1.tag = kVoiceSliderTag;
     [brightnessSilder1 addTarget:self action:@selector(brightnessChanged:) forControlEvents:UIControlEventValueChanged];
@@ -200,16 +190,37 @@
     
     
 }
--(void)brightnessChanged:(UISlider *)slider
+
+#pragma mark 声音调节
+-(void)voiceChanged:(UISlider *)slider{
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+    [musicPlayer setVolume:slider.value];
+}
+-(void)voiceDidBegin:(UISlider *)slider{
+    
+}
+-(void)voiceChangeEnd:(UISlider *)slider{
+    
+}
+#pragma mark 亮度调节
+-(void)brightnessChanged:(UISlider *)slider{
+    [[UIScreen mainScreen] setBrightness:slider.value];
+}
+-(void) brightnessDidBegin:(UISlider *)slider{
+    
+}
+- (void)brightnessChangeEnd:(UISlider *)slider{
+    
+}
+#pragma mark 触摸事件
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    
+}
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     
 }
--(void) brightnessDidBegin:(UISlider *)slider
-{
-    
-}
-- (void)brightnessChangeEnd:(UISlider *)slider
-{
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     
 }
 @end

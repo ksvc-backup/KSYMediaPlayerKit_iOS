@@ -9,6 +9,12 @@
 #import "KSYBottomView.h"
 
 
+@interface KSYBottomView (){
+    BOOL isFull;
+}
+
+@end
+
 @implementation KSYBottomView
 @synthesize kCurrentLabel;
 @synthesize kPlaySlider;
@@ -21,7 +27,7 @@
 @synthesize fansCount;
 @synthesize commentText;
 @synthesize kPlayabelSlider;
-
+@synthesize episodeBtn;
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate
 {
     self=[super initWithFrame:frame];
@@ -39,13 +45,12 @@
         [self addSubview:kShortPlayBtn];
         kShortPlayBtn.tag=kBarPlayBtnTag;
         
-        if (playstate==KSYPopularLivePlay) {
-            _playstate=YES;
+        if (_playstate==KSYPopularLivePlay) {
             //添加用户头像
             imageView=[[UIImageView alloc]initWithFrame:CGRectMake(kShortPlayBtn.right+5, 5, 30, 30)];
             [self addSubview:imageView];
             imageView.contentMode=UIViewContentModeScaleAspectFit;
-            imageView.image=[UIImage imageNamed:@"userName.png"];
+            imageView.image=[UIImage imageNamed:@"custome"];
             
             //添加标签
             fansCount=[[UILabel alloc]initWithFrame:CGRectMake(imageView.right+5, 5, 45, 30)];
@@ -57,6 +62,7 @@
             //添加文本框
             CGRect commentTextRect=CGRectMake(fansCount.right+5, 5, self.width-fansCount.right-10-45, 30);
             commentText=[[UITextField alloc]initWithFrame:commentTextRect];
+            commentText.backgroundColor=[UIColor lightGrayColor];
             [self addSubview:commentText];
             commentText.placeholder=@"填写评论内容";
             [commentText setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
@@ -69,7 +75,7 @@
             //全屏按钮
             kFullBtn=[UIButton buttonWithType:UIButtonTypeCustom];
             CGRect kFullBtnRect = CGRectMake(self.width-40, 5, 30, 30);
-            UIImage *fullImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"bt_fullscreen_normal"];
+            UIImage *fullImg = [UIImage imageNamed:@"full"];
             [kFullBtn setImage:fullImg forState:UIControlStateNormal];
             kFullBtn.frame = kFullBtnRect;
             kFullBtn.tag = kFullScreenBtnTag;
@@ -77,7 +83,7 @@
             [self addSubview:kFullBtn];
             
         }else {
-            _playstate=NO;
+           
             //播放时间
             kCurrentLabel=[[UILabel alloc]initWithFrame:CGRectMake(kShortPlayBtn.right+10, kShortPlayBtn.center.y-15, 50, 30)];
             [self addSubview:kCurrentLabel];
@@ -129,6 +135,7 @@
             kFullBtn.tag = kFullScreenBtnTag;
             [kFullBtn addTarget:self action:@selector(clickFullBtn:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:kFullBtn];
+            
         }
         //视频清晰度选择按钮
         qualityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -152,12 +159,15 @@
         [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
         [danmuBtn addTarget:self action:@selector(clickDanmuBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:danmuBtn];
-        
        
     }
     return self;
 }
-
+- (void)clickEpisodeBtn:(UIButton *)btn{
+    if (self.addEpisodeView) {
+        self.addEpisodeView(btn);
+    }
+}
 
 - (void)progressDidBegin:(UISlider *)slider
 {
@@ -190,7 +200,8 @@
 }
 - (void)setSubviews
 {
-    if (_playstate==YES) {
+    UIImage *fullImage=[UIImage imageNamed:@"unfull"];
+    if (_playstate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);
@@ -201,22 +212,40 @@
         danmuBtn.hidden=NO;
         danmuBtn.frame=CGRectMake(qualityBtn.right+5, 5, 40, 30);
         kFullBtn.frame=CGRectMake(danmuBtn.right+5, 5, 30, 30);
-    }else{
+        [kFullBtn setImage:fullImage forState:UIControlStateNormal];
+    }else  {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
-        kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 60, 30);
+        kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 55, 30);
         kPlaySlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-195, 10);
         kPlayabelSlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-195, 10);
-        kTotalLabel.frame=CGRectMake(self.right-190, kShortPlayBtn.center.y-15, 60, 30);
+        kTotalLabel.frame=CGRectMake(self.right-190, kShortPlayBtn.center.y-15, 55, 30);
         qualityBtn.hidden=NO;
         qualityBtn.frame= CGRectMake(kTotalLabel.right+5, 5, 40, 30);
         danmuBtn.hidden=NO;
         danmuBtn.frame=CGRectMake(qualityBtn.right+5, 5, 40, 30);
-        kFullBtn.frame=CGRectMake(danmuBtn.right+5, 5, 30, 30);
+        if (_playstate==KSYVideoOnlinePlay) {
+            if (!episodeBtn) {
+                //选集
+                episodeBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+                CGRect episodeBtnRect = CGRectMake(danmuBtn.right+5, 5, 40, 30);
+                UIImage *episodeBtnImage = [UIImage imageNamed:@"episode"];
+                [episodeBtn setImage:episodeBtnImage forState:UIControlStateNormal];
+                episodeBtn.frame = episodeBtnRect;
+                [episodeBtn addTarget:self action:@selector(clickEpisodeBtn:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:episodeBtn];
+            }
+            episodeBtn.hidden=NO;
+            kFullBtn.hidden=YES; 
+        }else if (_playstate==KSYPopularPlayBack){
+            kFullBtn.frame=CGRectMake(danmuBtn.right+5, 5, 30, 30);
+            [kFullBtn setImage:fullImage forState:UIControlStateNormal];
+        }
     }
 }
 - (void)resetSubviews
 {
-    if (_playstate==YES) {
+    UIImage *unFullImage=[UIImage imageNamed:@"full"];
+    if (_playstate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);
@@ -225,7 +254,8 @@
         qualityBtn.hidden=YES;
         danmuBtn.hidden=YES;
         kFullBtn.frame=CGRectMake(commentText.right+5, 5, 30, 30);
-    }else{
+        [kFullBtn setImage:unFullImage forState:UIControlStateNormal];
+    }else {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 60, 30);
         kPlaySlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-100, 10);
@@ -234,12 +264,21 @@
         qualityBtn.hidden=YES;
         danmuBtn.hidden=YES;
         kFullBtn.frame=CGRectMake(kTotalLabel.right+5, 5, 30, 30);
+        [kFullBtn setImage:unFullImage forState:UIControlStateNormal];
+        episodeBtn.hidden=YES;
     }
 }
 - (void)clickFullBtn:(UIButton *)btn
 {
-    if (self.FullBtnClick) {
-        self.FullBtnClick(btn);
+    isFull=!isFull;
+    if (isFull) {
+        if (self.FullBtnClick) {
+            self.FullBtnClick(btn);
+        }
+    }else{
+        if (self.unFullBtnClick) {
+            self.unFullBtnClick(btn);
+        }
     }
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField

@@ -9,9 +9,10 @@
 #import "KSYVideoOnDemandPlayVC.h"
 #import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
-@interface KSYVideoOnDemandPlayVC ()
+@interface KSYVideoOnDemandPlayVC ()<UIActionSheetDelegate>
 {
-    KSYPopularVideoView *ksyPoularbackView;
+    KSYPopularVideoView *ksyOnDemandView;
+    UIAlertView *alertView;
 }
 @end
 @implementation KSYVideoOnDemandPlayVC
@@ -22,16 +23,16 @@
     self.navigationController.navigationBar.barTintColor=[UIColor blackColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self changeNavigationStayle];
-    ksyPoularbackView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:_urlPath playState:KSYPopularPlayBack];
-    ksyPoularbackView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
+    ksyOnDemandView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYVideoOnlinePlay];
+    ksyOnDemandView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
     WeakSelf(KSYVideoOnDemandPlayVC);
-    ksyPoularbackView.changeNavigationBarColor=^(){
-        [weakSelf changeNavigationBarCLO];
-    };
-    ksyPoularbackView.lockWindow=^(BOOL isLocked){
+    ksyOnDemandView.lockWindow=^(BOOL isLocked){
         [weakSelf lockTheWindow:(isLocked)];
     };
-    [self.view addSubview:ksyPoularbackView];
+    ksyOnDemandView.changeNavigationBarColor=^(){
+        [weakSelf changeNavigationBarCLO];
+    };
+    [self.view addSubview:ksyOnDemandView];
     AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
     appDelegate.allowRotation=YES;
 }
@@ -80,20 +81,39 @@
 }
 - (void)back
 {
-    [ksyPoularbackView.ksyVideoPlayerView shutDown];
-    [ksyPoularbackView removeFromSuperview];
+    [ksyOnDemandView.ksyVideoPlayerView shutDown];
+    [ksyOnDemandView unregisterObservers];
+    [ksyOnDemandView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
 }
-- (void)menu
+- (void)menu{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"想要做什么？"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:@"订阅"
+                                  otherButtonTitles:@"举报",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:self.view];
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
+    switch (buttonIndex) {
+        case 0:
+            alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"以提供订阅按钮接口" delegate:self cancelButtonTitle:nil otherButtonTitles: @"OK",nil];
+            [alertView show];
+            break;
+        case 1:
+            alertView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"以提供举报按钮接口" delegate:self cancelButtonTitle:nil otherButtonTitles: @"OK",nil];
+            [alertView show];
+        default:
+            break;
+    }
 }
 - (void)dealloc
 {
     AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
     appDelegate.allowRotation=NO;
 }
-
-
 @end

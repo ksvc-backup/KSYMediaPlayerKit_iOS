@@ -31,8 +31,8 @@
     self = [super initWithFrame:frame];//初始化父视图的(frame、url)
     if (self) {
         WeakSelf(KSYPopularVideoView);
-        _navigationView=[[KSYNavigationView alloc]initWithFrame:CGRectMake(0, -44, self.width, 44)];
-        [self addSubview:_navigationView];
+//        _navigationView=[[KSYNavigationView alloc]initWithFrame:CGRectMake(0, -44, self.width, 44)];
+//        [self addSubview:_navigationView];
         self.ksyVideoPlayerView=[[KSYVideoPlayerView alloc]initWithFrame: CGRectMake(0, 0, self.width, self.height/2-60) UrlFromString:urlString playState:playState];
         self.ksyVideoPlayerView.lockScreen=^(BOOL isLocked){
             [weakSelf lockTheScreen:isLocked];
@@ -189,7 +189,6 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO
                                                 withAnimation:UIStatusBarAnimationFade];
 //        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:YES];
-        [self hideNavigation];
         [self unLunchFull];
     }
 }

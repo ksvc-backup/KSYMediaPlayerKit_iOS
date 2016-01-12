@@ -1,7 +1,5 @@
 //
 //  KSBarrageItemView.m
-//  KwSing
-//  去做，动手去做
 //  Created by yuchenghai on 14/12/24.
 //  Copyright (c) 2014年 kuwo.cn. All rights reserved.
 //
@@ -44,16 +42,11 @@
 {
     self.contentLabel.font=[UIFont systemFontOfSize:font];
 }
+
 -(void)KSBarrageItemViewsetDanmuAlpha:(CGFloat)alpha
 {
     self.alpha=alpha;
 }
-//- (void)setAvatarUrl:(NSString *)imageUrl withContent:(NSString *)content {
-//    [_avatarView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:DEFAULAVATAR];
-//    [_contentLabel setText:content];
-//    [_contentLabel sizeToFit];
-//    self.width = _contentLabel.width+43;
-//}
 
 - (void)setAvatarWithImage:(UIImage *)image withContent:(NSString *)content {
     [_avatarView setImage:image];

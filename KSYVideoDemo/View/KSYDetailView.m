@@ -20,20 +20,21 @@
 
 - (void)addBellowPart{
 
-    self.backgroundColor=[UIColor whiteColor];
+    self.backgroundColor=KSYCOLER(90, 90, 90);
     //初始化分段控制器
     NSArray *segmentedArray=[NSArray arrayWithObjects:@"评论",@"详情",@"推荐", nil];
     self.kSegmentedCTL=[[UISegmentedControl alloc]initWithItems:segmentedArray];
     self.kSegmentedCTL.frame=CGRectMake(10, 10, THESCREENWIDTH-20, 30);
+    self.kSegmentedCTL.tintColor=THEMECOLOR;
     [self addSubview:self.kSegmentedCTL];
     [self.kSegmentedCTL addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     self.kSegmentedCTL.selectedSegmentIndex=0;
     //添加一个分割线
     UILabel *lineLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.kSegmentedCTL.frame)+10, THESCREENWIDTH, 1)];
-    lineLabel.backgroundColor=[UIColor blackColor];
+    lineLabel.backgroundColor=[UIColor whiteColor];
     [self addSubview:lineLabel];
     //初始化表视图 只要你在做你就在想
-    _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(lineLabel.frame)+10, THESCREENWIDTH, THESCREENHEIGHT/2-72) style:UITableViewStylePlain];
+    _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(lineLabel.frame), THESCREENWIDTH, THESCREENHEIGHT/2-62) style:UITableViewStylePlain];
     self.kTableView.backgroundColor = [UIColor blackColor];
     [self addSubview:self.kTableView];
     self.kTableView.delegate=self;
@@ -49,10 +50,13 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString *commentIdentify=@"commentIdentify";
+    static NSString *detailIdentify=@"detailIdentify";
+    static NSString *subscribeIdentify=@"subscribeIdentify";
     if (self.kSegmentedCTL.selectedSegmentIndex==0){
-        KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:@"KSY1TableViewCellIdentify"];
+        KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:commentIdentify];
         if (cell==nil){
-            cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"KSY1TableViewCellIdentify"];
+            cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:commentIdentify];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
             tempView.backgroundColor =KSYCOLER(90, 90, 90);
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
@@ -65,9 +69,15 @@
         return cell;
     }
     else if (self.kSegmentedCTL.selectedSegmentIndex==1){
-        KSYDetalTVCell *cell=[tableView dequeueReusableCellWithIdentifier:@"KSY2TableViewCellIdentify"];
+        KSYDetalTVCell *cell=[tableView dequeueReusableCellWithIdentifier:detailIdentify];
         if (cell==nil){
-            cell=[[KSYDetalTVCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"KSY2TableViewCellIdentify"];
+            cell=[[KSYDetalTVCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:detailIdentify];
+            UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
+            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
+            UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
+            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
+            cell.selectedBackgroundView = tempView1;
         }
         KSYDetailModel *SKYmodel=_models[indexPath.row];
         cell.model2=SKYmodel;//调用set方法
@@ -75,9 +85,15 @@
         
     }
     else if (self.kSegmentedCTL.selectedSegmentIndex==2){
-        KSYIntTVCell *cell=[tableView dequeueReusableCellWithIdentifier:@"KSY3TableViewCellIdentify"];
+        KSYIntTVCell *cell=[tableView dequeueReusableCellWithIdentifier:subscribeIdentify];
         if (cell==nil){
-            cell=[[KSYIntTVCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"KSY3TableViewCellIdentify"];
+            cell=[[KSYIntTVCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:subscribeIdentify];
+            UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
+            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
+            UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
+            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
+            cell.selectedBackgroundView = tempView1;
         }
         KSYIntroduceModel *SKYmodel=_models[indexPath.row];
         cell.model3=SKYmodel;//调用set方法
@@ -86,6 +102,7 @@
     else
         return nil;
 }
+
 #pragma mark tableViewDelegate 表视图代理方法
 #pragma mark 设置行高
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -7,9 +7,9 @@
 //
 
 #import "KSYIntTVCell.h"
-#define SPACING 10
+#define SPACING 5
 #define BIGFONT 22
-#define SMALLFONT 20
+#define SMALLFONT 16
 @interface KSYIntTVCell ()
 {
     UIImageView *imageView;
@@ -45,17 +45,21 @@
     //直播名称
     videoName=[[UILabel alloc]init];
     [self addSubview:videoName];
+    videoName.textColor=[UIColor whiteColor];
     videoName.font=[UIFont systemFontOfSize:BIGFONT];
     //时间
     time=[[UILabel alloc]init];
+    time.textColor=[UIColor lightGrayColor];
     [self addSubview:time];
     time.font=[UIFont systemFontOfSize:SMALLFONT];
     //正在观看人数
     customerCount=[[UILabel alloc]init];
+    customerCount.textColor=[UIColor whiteColor];
     [self addSubview:customerCount];
     customerCount.font=[UIFont systemFontOfSize:SMALLFONT];
     //内容
     content=[[UILabel alloc]init];
+    content.textColor=[UIColor lightGrayColor];
     [self addSubview:content];
     content.font=[UIFont systemFontOfSize:SMALLFONT];
     content.numberOfLines=0;
@@ -79,22 +83,22 @@
     videoName.frame=CGRectMake(videoNameX, videoNameY, videoSize.width, videoSize.height);
     videoName.text=model3.videoName;
     //设置时间
-    CGFloat timeX=videoNameX;
-    CGFloat timeY=CGRectGetMaxY(videoName.frame)+SPACING;
+    CGFloat timeX=self.right-80;
+    CGFloat timeY=videoName.top+2;
     CGSize timeSize=[model3.time sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SMALLFONT]}];
     time.frame=CGRectMake(timeX, timeY, timeSize.width, timeSize.height);
     time.text=model3.time;
     //设置在观看人数
-    CGFloat customerCountX=timeX;
-    CGFloat customerCountY=CGRectGetMaxY(time.frame)+SPACING;
+    CGFloat customerCountX=videoNameX;
+    CGFloat customerCountY=CGRectGetMaxY(videoName.frame)+SPACING;
     CGSize customerCountSize=[model3.customerCount sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SMALLFONT]}];
     customerCount.frame=CGRectMake(customerCountX, customerCountY, customerCountSize.width, customerCountSize.height);
     customerCount.text=model3.customerCount;
     
     //内容简介
-    CGFloat contentX=timeX;
+    CGFloat contentX=videoNameX;
     CGFloat contentY=CGRectGetMaxY(customerCount.frame)+SPACING;
-    CGFloat contentWidth=CGRectGetWidth(self.frame)-timeX-SPACING;
+    CGFloat contentWidth=self.right-imageView.right-2*SPACING;
     CGSize contentSize=[model3.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SMALLFONT]} context:nil].size;
     content.frame=CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
     content.text=model3.content;

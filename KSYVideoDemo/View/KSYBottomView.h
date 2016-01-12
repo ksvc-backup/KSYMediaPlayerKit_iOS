@@ -10,7 +10,7 @@
 
 @interface KSYBottomView : UIView<UITextFieldDelegate>
 {
-    BOOL _playstate;
+    KSYPopularLivePlayState _playstate;
 }
 @property (nonatomic, strong) UIButton *kShortPlayBtn;
 @property (nonatomic, strong) UILabel *kCurrentLabel;
@@ -23,17 +23,18 @@
 @property (nonatomic, strong) UILabel *fansCount;
 @property (nonatomic, strong) UITextField *commentText;
 @property (nonatomic, strong) UISlider *kPlayabelSlider;
-
+@property (nonatomic, strong) UIButton *episodeBtn;
 
 @property (nonatomic, copy) void (^progressDidBegin)(UISlider *slider);
 @property (nonatomic, copy) void (^progressChanged)(UISlider *slider);
 @property (nonatomic, copy) void (^progressChangeEnd)(UISlider *slider);
 @property (nonatomic, copy) void (^BtnClick)(UIButton *btn);
 @property (nonatomic, copy) void (^FullBtnClick)(UIButton *btn);
+@property (nonatomic, copy) void (^unFullBtnClick)(UIButton *btn);
 @property (nonatomic, copy) void (^changeBottomFrame)(UITextField *textField);
 @property (nonatomic, copy) void (^rechangeBottom)();
 @property (nonatomic, copy) void (^addDanmu)(UIButton *btn);
-
+@property (nonatomic, copy) void (^addEpisodeView)(UIButton *btn);
 
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate;
 

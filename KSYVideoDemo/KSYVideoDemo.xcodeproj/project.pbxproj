@@ -211,6 +211,7 @@
 		E3A9457E1C350D18000F7FB3 /* KSYBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A9457C1C350D18000F7FB3 /* KSYBottomView.m */; };
 		E3A945831C35595B000F7FB3 /* KSYPopularVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A945801C35595B000F7FB3 /* KSYPopularVideoView.m */; };
 		E3A945841C35595B000F7FB3 /* KSYVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A945821C35595B000F7FB3 /* KSYVideoPlayerView.m */; };
+		E3BD280E1C43D8A70026DDE6 /* KSYEpisodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BD280D1C43D8A70026DDE6 /* KSYEpisodeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -494,6 +495,8 @@
 		E3A945801C35595B000F7FB3 /* KSYPopularVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYPopularVideoView.m; sourceTree = "<group>"; };
 		E3A945811C35595B000F7FB3 /* KSYPopularVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYPopularVideoView.h; sourceTree = "<group>"; };
 		E3A945821C35595B000F7FB3 /* KSYVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYVideoPlayerView.m; sourceTree = "<group>"; };
+		E3BD280C1C43D8A70026DDE6 /* KSYEpisodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYEpisodeView.h; sourceTree = "<group>"; };
+		E3BD280D1C43D8A70026DDE6 /* KSYEpisodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYEpisodeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -796,6 +799,8 @@
 				7C5CA4DE1C225514003A92A8 /* KSYProgressToolBar.m */,
 				7C5CA4D71C21638A003A92A8 /* KSYAlertView.h */,
 				7C5CA4D81C21638A003A92A8 /* KSYAlertView.m */,
+				E3BD280C1C43D8A70026DDE6 /* KSYEpisodeView.h */,
+				E3BD280D1C43D8A70026DDE6 /* KSYEpisodeView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1193,6 +1198,7 @@
 				7CDBE5E11C16D1B000D221C7 /* KSYCommentTableView.m in Sources */,
 				7CC3DA6A1C3CF04C0004E6AB /* UIImage+GIF.m in Sources */,
 				7CC3DA031C3A4C880004E6AB /* KSYSetView.m in Sources */,
+				E3BD280E1C43D8A70026DDE6 /* KSYEpisodeView.m in Sources */,
 				E37D16381C285BA70009715A /* KSBarrageView.m in Sources */,
 				E37D161B1C2819C20009715A /* KSYDetalTVCell.m in Sources */,
 				E3A371E01C3E8E2400E9FCD9 /* KSYInterfaceModel.m in Sources */,

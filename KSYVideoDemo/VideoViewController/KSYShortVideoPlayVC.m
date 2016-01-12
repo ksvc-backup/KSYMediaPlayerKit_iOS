@@ -66,8 +66,6 @@
 }
 
 #pragma mark 转到另一个控制器
-
-
 - (void)back
 {
     [ksyShortVideoplayView.videoCell.ksyShortView shutDown];

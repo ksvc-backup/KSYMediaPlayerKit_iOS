@@ -16,7 +16,7 @@
 #import "KSYToolView.h"
 #import "KSYSetView.h"
 #import "KSBarrageView.h"
-
+#import "KSYEpisodeView.h"
 
 
 @interface KSYVideoPlayerView ()
@@ -30,9 +30,11 @@
     KSYToolView *kToolView;
     KSYSetView *kSetView;
     KSBarrageView *kDanmuView;
+    KSYEpisodeView *episodeView;
     BOOL isActive;
     BOOL isOpen;
     CGFloat _HEIGHT;
+    CGRect _keyboardRect;
 }
 
 @property (nonatomic, assign)  KSYGestureType gestureType;
@@ -75,7 +77,13 @@
     }
     return self;
 }
-
+- (void)addEpisodeView{
+    if (!episodeView) {
+        episodeView=[[KSYEpisodeView alloc]initWithFrame:CGRectMake(self.width-200,kToolView.height,200,self.height-kToolView.height-bottomView.height)];
+        episodeView.hidden=YES;
+    }
+    [self addSubview:episodeView];
+}
 - (void)addSetView
 {
     if (!kSetView) {
@@ -160,6 +168,9 @@
     bottomView.FullBtnClick=^(UIButton *btn){
         [weakSelf Fullclick:btn];
     };
+    bottomView.unFullBtnClick=^(UIButton *btn){
+        [weakSelf unFullclick];
+    };
     bottomView.changeBottomFrame=^(UITextField *textField){
         [weakSelf changeBottom:textField];
     };
@@ -169,9 +180,15 @@
     bottomView.addDanmu=^(UIButton *btn){
         [weakSelf addDanmuView:(btn)];
     };
+    bottomView.addEpisodeView=^(UIButton *btn){
+        [weakSelf addEpisode:(btn)];
+    };
     [self addSubview: bottomView];
 }
-
+- (void)addEpisode:(UIButton *)btn{
+    [self addEpisodeView];
+    episodeView.hidden=NO;
+}
 - (void)addDanmuView:(UIButton *)btn
 {
     isOpen=!isOpen;
@@ -197,7 +214,6 @@
 {
     bottomView.alpha=1.0;
     bottomView.frame=CGRectMake(0, self.height/2-40, self.width, 40);
-    
 }
 - (void)rechangeBottom
 {
@@ -518,7 +534,7 @@
             [self hiddenAllControls];
             kSetView.hidden=YES;
             [self rechangeBottom];
-            
+            episodeView.hidden=YES;
         }
         else {
             [self showAllControls];
@@ -555,7 +571,6 @@
                 kLockView.hidden=YES;
                 kToolView.hidden=YES;
                 bottomView.kFullBtn.hidden = NO;
-
                 
             }else{
                 if (_isLock==NO) {
@@ -563,7 +578,9 @@
                     kBrightnessView.hidden=NO;
                     kVoiceView.hidden=NO;
                     kToolView.hidden=NO;
-                    bottomView.kFullBtn.hidden = YES;
+                    if (_playState==KSYVideoOnlinePlay) {
+                        bottomView.kFullBtn.hidden = YES;
+                    }
                 }
                 kLockView.hidden=NO;
             }
@@ -583,15 +600,13 @@
             kVoiceView.hidden=YES;
             kToolView.hidden=YES;
             bottomView.kFullBtn.hidden = NO;
-
         }
         kLockView.hidden=YES;
     } completion:^(BOOL finished) {
         isActive = NO;
     }];
-    
-    
 }
+
 - (void)showORhideProgressView:(NSNumber *)bShowORHide {
     UIView *progressView = [self viewWithTag:kProgressViewTag];
     progressView.hidden = bShowORHide.boolValue;
@@ -605,5 +620,6 @@
     UIView *progressView = [self viewWithTag:kProgressViewTag];
     progressView.hidden = YES;
 }
+
 
 @end

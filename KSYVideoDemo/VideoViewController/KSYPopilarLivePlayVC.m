@@ -26,16 +26,20 @@
     [self changeNavigationStyle];
     ksyPoularLiveView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYPopularLivePlay];
     WeakSelf(KSYPopilarLivePlayVC);
-    ksyPoularLiveView.changeNavigationBarColor=^(){
-        [weakSelf changeNavigationBarCLO];
-        
-    };
     ksyPoularLiveView.lockWindow=^(BOOL isLocked){
         [weakSelf lockWindow:(isLocked)];
+    };
+    ksyPoularLiveView.changeNavigationBarColor=^(){
+        [weakSelf changeNavigationBarCLO];
     };
     [self.view addSubview:ksyPoularLiveView];
     AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
     appDelegate.allowRotation=YES;
+}
+#pragma mark 修改导航栏颜色
+- (void)changeNavigationBarCLO
+{
+    self.navigationController.navigationBar.alpha=0.0;
 }
 #pragma mark 锁屏
 - (void)lockWindow:(BOOL)isLocked
@@ -43,11 +47,7 @@
     AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
     appDelegate.allowRotation=!isLocked;
 }
-#pragma mark 修改导航栏颜色
-- (void)changeNavigationBarCLO
-{
-    self.navigationController.navigationBar.alpha=0.0;
-}
+
 #pragma mark 修改导航栏模式
 - (void)changeNavigationStyle
 {
@@ -85,7 +85,7 @@
 - (void)back
 {
     [ksyPoularLiveView.ksyVideoPlayerView shutDown];
-    [ksyPoularLiveView unregisterObservers];
+    [ksyPoularLiveView unregisterObservers];//在这里要记的注销通知
     [self.navigationController popViewControllerAnimated:YES];
     //修改状态栏颜色
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];

@@ -53,6 +53,7 @@
         [btn setImage:[UIImage imageNamed:array[i]] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag=99-i;
+        btn.showsTouchWhenHighlighted=YES;
     }
 }
 
