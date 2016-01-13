@@ -17,7 +17,7 @@
 #import "KSYSetView.h"
 #import "KSBarrageView.h"
 #import "KSYEpisodeView.h"
-
+#import "KSYBarrageBarView.h"
 
 @interface KSYVideoPlayerView ()
 {
@@ -31,6 +31,7 @@
     KSYSetView *kSetView;
     KSBarrageView *kDanmuView;
     KSYEpisodeView *episodeView;
+    KSYBarrageBarView *kBarrageView;
     BOOL isActive;
     BOOL isOpen;
     CGFloat _HEIGHT;
@@ -68,89 +69,21 @@
         self.playState=playState;
         [self addBottomView];
         [self addTopView];
-        [self addBrightnessVIew];
-        [self addVoiceView];
-        [self addProgressView];
-        [self addLockBtn];
-        [self performSelector:@selector(hiddenAllControls) withObject:nil afterDelay:3.0];
         _HEIGHT=THESCREENWIDTH;
     }
     return self;
 }
-- (void)addEpisodeView{
-    if (!episodeView) {
-        episodeView=[[KSYEpisodeView alloc]initWithFrame:CGRectMake(self.width-200,kToolView.height,200,self.height-kToolView.height-bottomView.height)];
-        episodeView.hidden=YES;
-    }
-    [self addSubview:episodeView];
-}
-- (void)addSetView
-{
-    if (!kSetView) {
-        kSetView=[[KSYSetView alloc]initWithFrame:CGRectMake(self.width/2, 0, self.width/2, self.height)];
-        kSetView.hidden=YES;
-    }
-    [self addSubview:kSetView];
-}
-
-- (KSYToolView *)kToolView
-{
-    WeakSelf(KSYVideoPlayerView);
-    if (!kToolView)
-    {
-        kToolView=[[KSYToolView alloc]initWithFrame:CGRectMake(0, 0, self.width, 50)];
-        kToolView.hidden=YES;
-        kToolView.showSetView=^(UIButton *btn){
-            [weakSelf showSetView:(btn)];
-        };
-        kToolView.backEventBlock = ^(){
-            [weakSelf unFullclick];
-
-        };
-        kToolView.reportBtn=^(UIButton *btn){
-            [weakSelf reportBtnClick:btn];
-        };
-        kToolView.subscribeBtn=^(UIButton *btn){
-            [weakSelf subscribeBtnClick:btn];
-        };
-    }
-    return kToolView;
-}
-- (void)reportBtnClick:(UIButton *)btn{
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"接口已提供" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-}
-- (void)subscribeBtnClick:(UIButton *)btn{
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"接口已提供" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-}
-- (void)addLockBtn
-{
-    WeakSelf(KSYVideoPlayerView);
-    kLockView=[[KSYLockView alloc]initWithFrame:CGRectMake(kCoverLockViewLeftMargin, (self.width - self.width / 6) / 2, self.width / 6, self.width / 6)];
-    kLockView.kLockViewBtn=^(UIButton *btn){
-        [weakSelf lockBtn:btn];
-    };
-    kLockView.hidden=YES;
-    [self addSubview:kLockView];
-}
-
-- (void)addProgressView
-{
-    kProgressView=[[KSYProgressView alloc]initWithFrame:CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 4, kProgressViewWidth, 50)];
-    kProgressView.hidden=YES;
-    [self addSubview:kProgressView];
-}
-
+#pragma mark 添加视图
+//添加TopView
 - (void)addTopView
 {
     topView=[[KSYTopView alloc]initWithFrame:CGRectMake(0, 0, self.width, 40)];
     [self addSubview:topView];
 }
-
+//添加bottomView
 - (void)addBottomView
 {
-        
+    
     WeakSelf(KSYVideoPlayerView);
     bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:_playState];
     bottomView.progressDidBegin=^(UISlider *slider){
@@ -185,31 +118,133 @@
     };
     [self addSubview: bottomView];
 }
-- (void)addEpisode:(UIButton *)btn{
-    [self addEpisodeView];
-    episodeView.hidden=NO;
+//添加亮度调节视图
+- (void)addBrightnessVIew
+{
+    if (!kBrightnessView) {
+        WeakSelf(KSYVideoPlayerView);
+        kBrightnessView=[[KSYBrightnessView alloc]initWithFrame:CGRectMake(kCoverBarLeftMargin, self.height/ 4, kCoverBarWidth, self.height / 2)];
+        kBrightnessView.brightDidBegin=^(UISlider *slider){
+            [weakSelf brightnessDidBegin:slider];
+        };
+        kBrightnessView.brightChanged=^(UISlider *slider){
+            [weakSelf brightnessChanged:slider];
+        };
+        kBrightnessView.brightChangeEnd=^(UISlider *slider){
+            [weakSelf brightnessChangeEnd:slider];
+        };
+        kBrightnessView.hidden=YES;
+        [self addSubview:kBrightnessView];
+    }
 }
+//添加声音调节视图
+- (void)addVoiceView
+{
+    if (!kVoiceView) {
+        kVoiceView=[[KSYVoiceView alloc]initWithFrame:CGRectMake(self.width - kCoverBarWidth - kCoverBarRightMargin, self.height / 4, kCoverBarWidth, self.height / 2)];
+        kVoiceView.hidden=YES;
+        [self addSubview:kVoiceView];
+    }
+}
+//添加选集视图
+- (void)addEpisodeView{
+    if (!episodeView) {
+        WeakSelf(KSYVideoPlayerView);
+        episodeView=[[KSYEpisodeView alloc]initWithFrame:CGRectMake(self.width-200,kToolView.height,200,self.height-kToolView.height-bottomView.height)];
+        episodeView.changeVidoe=^(NSString *str){
+            [weakSelf nextVideo:(str)];
+        };
+        episodeView.hidden=YES;
+        [self addSubview:episodeView];
+    }
+}
+//添加设置视图
+- (void)addSetView
+{
+    if (!kSetView) {
+        kSetView=[[KSYSetView alloc]initWithFrame:CGRectMake(self.width/2, 0, self.width/2, self.height)];
+        kSetView.hidden=YES;
+        [self addSubview:kSetView];
+    }
+}
+//添加工具视图
+- (KSYToolView *)kToolView
+{
+    WeakSelf(KSYVideoPlayerView);
+    if (!kToolView)
+    {
+        kToolView=[[KSYToolView alloc]initWithFrame:CGRectMake(0, 0, self.width, 50)];
+        kToolView.hidden=YES;
+        kToolView.showSetView=^(UIButton *btn){
+            [weakSelf showSetView:(btn)];
+        };
+        kToolView.backEventBlock = ^(){
+            [weakSelf unFullclick];
+            
+        };
+        kToolView.reportBtn=^(UIButton *btn){
+            [weakSelf reportBtnClick:btn];
+        };
+        kToolView.subscribeBtn=^(UIButton *btn){
+            [weakSelf subscribeBtnClick:btn];
+        };
+    }
+    return kToolView;
+}
+//添加锁定视图
+- (void)addLockBtn
+{
+    if (!kLockView) {
+        WeakSelf(KSYVideoPlayerView);
+        kLockView=[[KSYLockView alloc]initWithFrame:CGRectMake(kCoverLockViewLeftMargin, (self.width - self.width / 6) / 2, self.height / 6, self.height / 6)];
+        kLockView.kLockViewBtn=^(UIButton *btn){
+            [weakSelf lockBtn:btn];
+        };
+        kLockView.hidden=YES;
+        [self addSubview:kLockView];
+    }
+}
+//添加seekView
+- (void)addProgressView
+{
+    if (!kProgressView) {
+        kProgressView=[[KSYProgressView alloc]initWithFrame:CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 4, kProgressViewWidth, 50)];
+        kProgressView.hidden=YES;
+        [self addSubview:kProgressView];
+    }
+}
+//添加弹幕
 - (void)addDanmuView:(UIButton *)btn
 {
     isOpen=!isOpen;
     if (isOpen==YES) {
-        kDanmuView = [[KSBarrageView alloc] initWithFrame:CGRectMake(0, 0,self.width, self.height-60)];
-        [self addSubview:kDanmuView];
-        NSDictionary *dict1=[NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"Logo2"],@"avatar",@"djsflkjoiwene",@"content", nil];
-        NSDictionary *dict2=[NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"Logo2"],@"avatar",@"1212341",@"content", nil];
-        NSDictionary *dict3=[NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"Logo2"],@"avatar",@"大家好啊啊啊啊啊啊啊啊啊啊啊啊啊",@"content", nil];
-        NSDictionary *dict4=[NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"Logo2"],@"avatar",@"1212341",@"content", nil];
-        NSDictionary *dict5=[NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageNamed:@"Logo2"],@"avatar",@"2342sdfsjhd束带结发哈斯",@"content", nil];
-        kDanmuView.dataArray=[NSArray arrayWithObjects:dict1,dict2,dict3,dict4,dict5, nil];
-        [kDanmuView setDanmuFont:10];
-        [kDanmuView setDanmuAlpha:0.5];
-        [kDanmuView start];
+        kBarrageView = [[KSYBarrageBarView alloc]initWithFrame:CGRectMake(0, kToolView.bottom,self.width, self.height-120)];
+        [self addSubview:kBarrageView];
+        [kBarrageView start];
     }else{
-        [kDanmuView stop];
-        [kDanmuView removeFromSuperview];
+        [kBarrageView stop];
+        [kBarrageView removeFromSuperview];
     }
 }
+#pragma mark 视频操作
 
+- (void)addEpisode:(UIButton *)btn{
+    [self addEpisodeView];
+    episodeView.hidden=NO;
+}
+- (void)nextVideo:(NSString *)videoStr{
+    if (self.showNextVideo) {
+        self.showNextVideo(videoStr);
+    }
+}
+- (void)reportBtnClick:(UIButton *)btn{
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"接口已提供" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+- (void)subscribeBtnClick:(UIButton *)btn{
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"接口已提供" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
 - (void)changeBottom:(UITextField *)textField
 {
     bottomView.alpha=1.0;
@@ -223,31 +258,6 @@
         bottomView.alpha=0.6;
     }
 }
-
-- (void)addBrightnessVIew
-{
-    WeakSelf(KSYVideoPlayerView);
-    kBrightnessView=[[KSYBrightnessView alloc]initWithFrame:CGRectMake(kCoverBarLeftMargin, THESCREENWIDTH / 4, kCoverBarWidth, THESCREENWIDTH / 2)];
-    kBrightnessView.brightDidBegin=^(UISlider *slider){
-        [weakSelf brightnessDidBegin:slider];
-    };
-    kBrightnessView.brightChanged=^(UISlider *slider){
-        [weakSelf brightnessChanged:slider];
-    };
-    kBrightnessView.brightChangeEnd=^(UISlider *slider){
-        [weakSelf brightnessChangeEnd:slider];
-    };
-    kBrightnessView.hidden=YES;
-    [self addSubview:kBrightnessView];
-}
-
-- (void)addVoiceView
-{
-    kVoiceView=[[KSYVoiceView alloc]initWithFrame:CGRectMake(THESCREENHEIGHT - kCoverBarWidth - kCoverBarRightMargin, THESCREENWIDTH / 4, kCoverBarWidth, THESCREENWIDTH / 2)];
-    kVoiceView.hidden=YES;
-    [self addSubview:kVoiceView];
-}
-
 - (void)brightnessDidBegin:(UISlider *)slider {
 }
 - (void)brightnessChanged:(UISlider *)slider {
@@ -262,7 +272,6 @@
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
-    
 }
 -(void)progChanged:(UISlider *)slider
 {
@@ -308,12 +317,11 @@
         [self pause];
         UIImage *playImg_n = [UIImage imageNamed:@"play"];
         [btn setImage:playImg_n forState:UIControlStateNormal];
-    }
+    } 
     
 }
 -(void)unFullclick
 {
-   
     if (self.clicUnkFullBtn) {
         self.clicUnkFullBtn();
     };
@@ -321,7 +329,6 @@
 }
 -(void)Fullclick:(UIButton *)btn
 {
-    
     if (self.clickFullBtn) {
         self.clickFullBtn();
     };
@@ -388,7 +395,6 @@
         if (self.lockScreen) {
             self.lockScreen(_isLock);
         }
-
     }
 }
 - (void)showSetView:(UIButton *)btn
@@ -396,11 +402,14 @@
     [self addSetView];
     kSetView.hidden=NO;
     [self hiddenAllControls];
-    
 }
 
 - (void)lunchFullScreen
 {
+    [self addBrightnessVIew];
+    [self addVoiceView];
+    [self addProgressView];
+    [self addLockBtn];
     topView.hidden=YES;
 //    bottomView.hidden=YES;
     bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);

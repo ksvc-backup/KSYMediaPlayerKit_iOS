@@ -74,17 +74,17 @@
     //设置用户名的位置
     //设置头像的位置
     CGFloat imageViewX=15,imageViewY=15;
-    CGFloat imageViewWidth=80;
-    CGFloat imageViewHeight=80;
+    CGFloat imageViewWidth=60;
+    CGFloat imageViewHeight=60;
     CGRect imageViewRect=CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
     _imageView.frame=imageViewRect;
     _imageView.layer.masksToBounds=YES;
-    _imageView.layer.cornerRadius=40;
+    _imageView.layer.cornerRadius=30;
     UIImage *image=[UIImage imageNamed:model1.imageName];
     _imageView.image=image;
     //设置起始位置
     CGFloat userNameX=CGRectGetMaxX(_imageView.frame)+SPACING;
-    CGFloat userNameY=imageViewY;
+    CGFloat userNameY=imageViewY-10;
     CGSize userNamesize=[model1.userName sizeWithAttributes:@{NSFontAttributeName :[UIFont systemFontOfSize:USERNAMEFONT]}];
     CGRect userNamerect=CGRectMake(userNameX, userNameY, userNamesize.width, userNamesize.height);
     _userName.text=model1.userName;
@@ -98,7 +98,7 @@
     _time.frame=timeRect;
     //设置评论的位置
     CGFloat contextX=userNameX;
-    CGFloat contentY=CGRectGetMaxY(_userName.frame)+10;
+    CGFloat contentY=CGRectGetMaxY(_userName.frame)+5;
     CGFloat contentWidth=self.frame.size.width-10-CGRectGetMaxX(_imageView.frame);
     CGSize contentSize=[model1.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:CONTENTFONT]} context:nil].size;
     CGRect contenRect=CGRectMake(contextX, contentY, contentSize.width, contentSize.height);

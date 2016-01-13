@@ -31,8 +31,6 @@
     self = [super initWithFrame:frame];//初始化父视图的(frame、url)
     if (self) {
         WeakSelf(KSYPopularVideoView);
-//        _navigationView=[[KSYNavigationView alloc]initWithFrame:CGRectMake(0, -44, self.width, 44)];
-//        [self addSubview:_navigationView];
         self.ksyVideoPlayerView=[[KSYVideoPlayerView alloc]initWithFrame: CGRectMake(0, 0, self.width, self.height/2-60) UrlFromString:urlString playState:playState];
         self.ksyVideoPlayerView.lockScreen=^(BOOL isLocked){
             [weakSelf lockTheScreen:isLocked];
@@ -43,6 +41,9 @@
         self.ksyVideoPlayerView.clicUnkFullBtn=^(){
             [weakSelf unFullScreen];
         };
+        self.ksyVideoPlayerView.showNextVideo=^(NSString *str){
+            [weakSelf nextVideo:(str)];
+        };
         [self addSubview:self.ksyVideoPlayerView];
         [self addDetailView];
         [self addCommtenView];
@@ -52,6 +53,12 @@
     }
     return self;
 
+}
+- (void)nextVideo:(NSString *)str{
+//    [self.ksyVideoPlayerView shutDown];
+//    KSYMoviePlayerController *player = [[KSYMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:str]];
+//    self.ksyVideoPlayerView.player = player;
+//    [self.ksyVideoPlayerView addSubview:self.ksyVideoPlayerView.player.view];
 }
 - (void)hideNavigation{
     if (self.changeNavigationBarColor) {

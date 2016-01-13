@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface KSYEpisodeView : UIView
+
+
+@property (nonatomic, copy) void(^changeVidoe)(NSString  *videoStr);
+
 @property (nonatomic, strong) UITableView *episodeTableView;
+
 @end

@@ -22,6 +22,7 @@
 @property (nonatomic, copy) void (^lockScreen)(BOOL isLocked);
 @property (nonatomic, copy) void (^clickFullBtn)();
 @property (nonatomic, copy) void (^clicUnkFullBtn)();
+@property (nonatomic, copy) void (^showNextVideo)(NSString *str);
 @property (nonatomic, assign) BOOL isLock;
 
 

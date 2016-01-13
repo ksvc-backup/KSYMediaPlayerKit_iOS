@@ -119,9 +119,8 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    UIButton *btn=(UIButton *)[_videoCell.ksyShortView viewWithTag:kBarPlayBtnTag];
-    if (btn.isSelected==NO) {
-        
+    if (!_videoCell.ksyShortView.isPlaying) {
+        return;
     }else{
         if (ksyShortTableView.contentOffset.y>260.0) {
             [_videoCell.ksyShortView pause];

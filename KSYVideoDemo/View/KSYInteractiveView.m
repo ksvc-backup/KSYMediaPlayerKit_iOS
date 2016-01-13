@@ -16,11 +16,9 @@
 #define SCREENHEIGHT   200
 
 
-@interface KSYInteractiveView ()<KSYMessageToolBarDelegate,UIGestureRecognizerDelegate>
-{
+@interface KSYInteractiveView ()<KSYMessageToolBarDelegate,UIGestureRecognizerDelegate>{
     NSInteger   _testNum;
     UITapGestureRecognizer *_gestureRecongizer;
-
 }
 @property (nonatomic, strong)KSYCommentTableView    *commetnTableView;
 @property (nonatomic, strong)KSYSpectatorsTableView *spectatorsTableViews;

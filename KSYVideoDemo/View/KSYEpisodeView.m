@@ -7,12 +7,12 @@
 //
 
 #import "KSYEpisodeView.h"
-
+#import "KSYEpisodeModel.h"
 @interface KSYEpisodeView ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_episodeTableView;
     
-    NSMutableArray *tableArray;
+    NSMutableArray *_tableArray;
     
 }
 @end
@@ -26,21 +26,30 @@
         
         self.backgroundColor=[UIColor clearColor];
         
-        tableArray=[NSMutableArray new];
+        _tableArray=[NSMutableArray new];
         
         _episodeTableView=[[UITableView alloc]initWithFrame:self.bounds];
         _episodeTableView.backgroundColor=[UIColor clearColor];
         [self addSubview:_episodeTableView];
         _episodeTableView.delegate=self;
         _episodeTableView.dataSource=self;
+        [self reloadData];
     }
     return self;
+}
+- (void)reloadData{
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"episodeModel"ofType:@"plist"];
+    NSArray *array=[NSArray arrayWithContentsOfFile:path];
+    
+    for(NSDictionary *dict in array){
+        [_tableArray addObject:dict];
+    }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 8;
+    return _tableArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -54,9 +63,15 @@
         tempView.alpha=0.7;
         cell.backgroundView=tempView;
     }
-    cell.textLabel.text=@"芈月传";
+    KSYEpisodeModel *model=[[KSYEpisodeModel alloc]initWithDictionary:_tableArray[indexPath.row]];
+    cell.textLabel.text=model.name;
     cell.textLabel.textColor=[UIColor whiteColor];
     return cell;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    KSYEpisodeModel *model=[[KSYEpisodeModel alloc]initWithDictionary:_tableArray[indexPath.row]];
+    if (self.changeVidoe) {
+        self.changeVidoe(model.url);
+    }
+}
 @end
