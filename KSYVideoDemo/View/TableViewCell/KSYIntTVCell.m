@@ -69,7 +69,7 @@
 - (void)setModel3:(KSYIntroduceModel *)model3
 {
     //重置图片视图的大小
-    CGFloat imageViewX=15,imageViewY=15;
+    CGFloat imageViewX=10,imageViewY=10;
     CGFloat imageViewWidth=100;
     CGFloat imageViewHeight=80;
     imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);

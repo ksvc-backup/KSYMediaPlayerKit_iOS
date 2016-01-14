@@ -28,7 +28,8 @@
 {
     self.backgroundColor=KSYCOLER(34, 34, 34);
     
-    UITextField *kTextField=[[UITextField alloc]initWithFrame:CGRectMake(10, 5, self.width-10-50, 30)];
+    UITextField *kTextField=[[UITextField alloc]initWithFrame:CGRectMake(10, 5, self.width-10-60, 30)];
+    kTextField.borderStyle=UITextBorderStyleRoundedRect;
     kTextField.tag=kCommentFieldTag;
     [self addSubview:kTextField];
     kTextField.backgroundColor=KSYCOLER(100, 100, 100);
@@ -40,11 +41,7 @@
     kSendBtn.frame=CGRectMake(kTextField.right+10, 5, 40, 30);
     [self addSubview:kSendBtn];
     [kSendBtn setTitle:@"发送"forState:UIControlStateNormal];
-    [kSendBtn setTitleColor:KSYCOLER(32, 223, 232) forState:UIControlStateNormal];
-    kSendBtn.layer.masksToBounds=YES;
-    kSendBtn.layer.borderColor=[KSYCOLER(32, 223, 232)CGColor];
-    kSendBtn.layer.borderWidth=1;
-    kSendBtn.layer.cornerRadius=5;
+    [kSendBtn setTitleColor:THEMECOLOR forState:UIControlStateNormal];
     [kSendBtn addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField

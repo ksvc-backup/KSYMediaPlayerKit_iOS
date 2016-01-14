@@ -221,6 +221,9 @@
         kBarrageView = [[KSYBarrageBarView alloc]initWithFrame:CGRectMake(0, kToolView.bottom,self.width, self.height-120)];
         [self addSubview:kBarrageView];
         [kBarrageView start];
+        [self bringSubviewToFront:kBarrageView];
+        [self bringSubviewToFront:kVoiceView];
+        [self bringSubviewToFront:kLockView];
     }else{
         [kBarrageView stop];
         [kBarrageView removeFromSuperview];
@@ -463,8 +466,6 @@
             [[UIScreen mainScreen] setBrightness: _curBrightness - deltaBright];
             UISlider *brightnessSlider = (UISlider *)[self viewWithTag:kBrightnessSliderTag];
             [brightnessSlider setValue: _curBrightness - deltaBright animated:NO];
-            UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot"];
-            [brightnessSlider setThumbImage:dotImg forState:UIControlStateNormal];
             UIView *brightnessView = [self viewWithTag:kBrightnessViewTag];
             brightnessView.alpha = 1.0;
             self.gestureType = kKSYBrightness;
@@ -531,8 +532,6 @@
                 wardImageView.image = backwardImg;
             }
             progressViewCurLabel.text = strCurTime2;
-            UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot"];
-            [progressSlider setThumbImage:dotImg forState:UIControlStateNormal];
         }
     }
 }

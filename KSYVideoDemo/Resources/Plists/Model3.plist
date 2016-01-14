@@ -12,7 +12,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -24,7 +24,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -36,7 +36,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -48,7 +48,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -60,7 +60,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -72,7 +72,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -84,7 +84,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -96,7 +96,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -108,7 +108,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -120,7 +120,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -132,7 +132,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 	<dict>
 		<key>content</key>
@@ -144,7 +144,7 @@
 		<key>videoName</key>
 		<string>直播名称</string>
 		<key>imageName</key>
-		<string>preview176*100</string>
+		<string>preview176*160</string>
 	</dict>
 </array>
 </plist>

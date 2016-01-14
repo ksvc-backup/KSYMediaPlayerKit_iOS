@@ -57,6 +57,7 @@
     //添加时间
     _time=[[UILabel alloc]init];
     _time.textColor=KSYMODEL1Color;
+    _time.textAlignment=NSTextAlignmentRight;
     [self addSubview:_time];
     _time.font=[UIFont systemFontOfSize:TIMEFONT];
     //添加评论
@@ -66,6 +67,45 @@
     _content.textColor=[UIColor lightGrayColor];
     //因为评论可能有很多需要多行显示
     _content.numberOfLines=0;
+}
+#pragma mark 设置单元格内容
+- (void)setCommentModel:(CoreDataModel *)model
+{
+    //设置用户名的位置
+    //设置头像的位置
+    CGFloat imageViewX=15,imageViewY=15;
+    CGFloat imageViewWidth=60;
+    CGFloat imageViewHeight=60;
+    CGRect imageViewRect=CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
+    _imageView.frame=imageViewRect;
+    _imageView.layer.masksToBounds=YES;
+    _imageView.layer.cornerRadius=30;
+    UIImage *image=[UIImage imageNamed:model.imageName];
+    _imageView.image=image;
+    //设置起始位置
+    CGFloat userNameX=CGRectGetMaxX(_imageView.frame)+SPACING;
+    CGFloat userNameY=imageViewY-10;
+    CGSize userNamesize=[model.userName sizeWithAttributes:@{NSFontAttributeName :[UIFont systemFontOfSize:USERNAMEFONT]}];
+    CGRect userNamerect=CGRectMake(userNameX, userNameY, userNamesize.width, userNamesize.height);
+    _userName.text=model.userName;
+    _userName.frame=userNamerect;
+    //设置时间的位置
+    CGFloat timeX=self.width-100;
+    CGFloat timeY=userNameY;
+    CGRect timeRect=CGRectMake(timeX, timeY+5, 85, 20);
+    _time.text=model.time;
+    _time.frame=timeRect;
+    //设置评论的位置
+    CGFloat contextX=userNameX;
+    CGFloat contentY=CGRectGetMaxY(_userName.frame)+5;
+    CGFloat contentWidth=self.frame.size.width-10-CGRectGetMaxX(_imageView.frame);
+    CGSize contentSize=[model.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:CONTENTFONT]} context:nil].size;
+    CGRect contenRect=CGRectMake(contextX, contentY, contentSize.width, contentSize.height);
+    _content.text=model.content;
+    _content.frame=contenRect;
+    
+    _height=CGRectGetMaxY(_content.frame)+5;
+    
 }
 
 #pragma mark 设置单元格内容
@@ -90,10 +130,9 @@
     _userName.text=model1.userName;
     _userName.frame=userNamerect;
     //设置时间的位置
-    CGFloat timeX=CGRectGetMaxX(_userName.frame)+SPACING;
+    CGFloat timeX=self.width-100;
     CGFloat timeY=userNameY;
-    CGSize timeSize=[model1.time sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:TIMEFONT]}];
-    CGRect timeRect=CGRectMake(timeX, timeY, timeSize.width, timeSize.height);
+    CGRect timeRect=CGRectMake(timeX, timeY+5, 85, 20);
     _time.text=model1.time;
     _time.frame=timeRect;
     //设置评论的位置

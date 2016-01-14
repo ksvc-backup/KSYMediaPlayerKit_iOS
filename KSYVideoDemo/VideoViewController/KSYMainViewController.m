@@ -65,7 +65,7 @@
     
     _httpTextF = [[UITextField alloc] initWithFrame:CGRectMake(httpUrlLabl.right + 5, httpUrlLabl.top,self.view.width-httpUrlLabl.right-10, 20)];
     _httpTextF.adjustsFontSizeToFitWidth = YES;
-    _httpTextF.text = @"http://121.42.58.232:8980/hls_test/1.m3u8";
+    _httpTextF.text = @"http://eflakee.kssws.ks-cdn.com/MP4/San%20Francisco.mov";
     _httpTextF.borderStyle = UITextBorderStyleRoundedRect;
     _httpTextF.returnKeyType = UIReturnKeyDone;
     _httpTextF.font = [UIFont systemFontOfSize:13.0];

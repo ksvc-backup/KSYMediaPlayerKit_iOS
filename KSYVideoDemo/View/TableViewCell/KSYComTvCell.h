@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "KSYCommentModel.h"
+#import "CoreDataModel.h"
 @interface KSYComTvCell : UITableViewCell
 
+
+@property (nonatomic, strong) CoreDataModel *commentModel;
 //状态属性
 @property (nonatomic, strong) KSYCommentModel *model1;
 //高度属性

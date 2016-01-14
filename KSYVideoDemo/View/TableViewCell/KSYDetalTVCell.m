@@ -41,6 +41,7 @@
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        self.userInteractionEnabled=NO;
         [self initSubviews];
     }
     return self;
@@ -145,7 +146,7 @@
     //个人签名
     CGFloat signatureX=hostNameX;
     CGFloat signatureY=CGRectGetMaxY(_hostLevel.frame)+SPACING;
-    CGFloat signatureWidth=self.frame.size.width-CGRectGetMaxX(_hostLevel.frame)-2*SPACING;
+    CGFloat signatureWidth=self.width-_hostLevel.right;
     CGSize signatureSize=[model2.signature boundingRectWithSize:CGSizeMake(signatureWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SIGNATUREFONT]} context:nil].size;
     CGRect signatureRect=CGRectMake(signatureX, signatureY, signatureSize.width, signatureSize.height);
     _signature.text=model2.signature;

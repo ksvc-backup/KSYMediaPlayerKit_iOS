@@ -7,6 +7,14 @@
 //
 
 #import "KSYDetailView.h"
+#import "KSYCommentService.h"
+
+@interface KSYDetailModel (){
+    NSArray *_model;
+    NSMutableArray *_modelsCells;
+}
+
+@end
 
 @implementation KSYDetailView
 
@@ -14,10 +22,33 @@
     self=[super initWithFrame:frame];
     if (self){
         [self addBellowPart];
+        [self addComments];
+        _models=[[NSMutableArray alloc]init];
+        _modelsCells=[[NSMutableArray alloc]init];
     }
     return self;
 }
-
+#pragma mark 加载数据
+- (void)loadData{
+    //每次进来都要重新刷新数据
+    [_models removeAllObjects];
+    [_modelsCells removeAllObjects];
+    //利用代码块遍历
+    NSArray *array=[[KSYCommentService sharedKSYCommentService]getAllCoreDataModel];
+    _models=[NSMutableArray arrayWithArray:array];
+    [_models enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        KSYComTvCell *cell=[[KSYComTvCell alloc]init];
+        cell.commentModel=(CoreDataModel *)obj;
+        [_modelsCells addObject:cell];
+    }];
+}
+- (void)addComments{
+    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"张三丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
+    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"张三" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
+    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"张丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
+    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"三丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
+    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"三丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
+}
 - (void)addBellowPart{
 
     self.backgroundColor=KSYCOLER(90, 90, 90);
@@ -64,8 +95,8 @@
             tempView1.backgroundColor = KSYCOLER(100, 100, 100);
             cell.selectedBackgroundView = tempView1;
         }
-         KSYCommentModel *SKYmodel=_models[indexPath.row];
-        cell.model1=SKYmodel;
+//         KSYCommentModel *SKYmodel=_models[indexPath.row];
+        cell.commentModel=_models[indexPath.row];
         return cell;
     }
     else if (self.kSegmentedCTL.selectedSegmentIndex==1){
@@ -121,7 +152,6 @@
         KSYIntTVCell *cell=_modelsCells[indexPath.row];
         cell.model3=_models[indexPath.row];//这里执行set方法
         return cell.height;
-        
     }
     else
         return 0;
@@ -130,19 +160,7 @@
 - (void)segmentChange:(UISegmentedControl *)segment{
     //如果是评论，加载评论的数据
     if(segment.selectedSegmentIndex==0){
-        //每次进来都要重新刷新数据
-        [_models removeAllObjects];
-        [_modelsCells removeAllObjects];
-        NSString *path=[[NSBundle mainBundle] pathForResource:@"Model1" ofType:@"plist"];
-        NSArray *array=[NSArray arrayWithContentsOfFile:path];
-        _models=[[NSMutableArray alloc]init];
-        _modelsCells=[[NSMutableArray alloc]init];
-        //利用代码块遍历
-        [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [_models addObject:[KSYCommentModel modelWithDictionary:obj]];
-            KSYComTvCell *cell=[[KSYComTvCell alloc]init];
-            [_modelsCells addObject:cell];
-        }];
+        [self loadData];
         [self.kTableView reloadData];
     }
     //如果是详情，获取详情的数据

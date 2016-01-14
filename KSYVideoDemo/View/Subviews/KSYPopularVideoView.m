@@ -132,7 +132,7 @@
 }
 - (void)changeTextFrame
 {
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         CGFloat kCommentViewY=self.height/2-40;
         self.commtenView.frame=CGRectMake(0,  kCommentViewY, self.width, 40);
     } completion:^(BOOL finished) {
