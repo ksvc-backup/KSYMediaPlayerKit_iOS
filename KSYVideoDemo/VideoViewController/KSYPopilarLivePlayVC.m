@@ -9,7 +9,7 @@
 #import "KSYPopilarLivePlayVC.h"
 #import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
-@interface KSYPopilarLivePlayVC ()<UIActionSheetDelegate>
+@interface KSYPopilarLivePlayVC ()<UIActionSheetDelegate,KSYHiddenNavigationBar>
 {
     KSYPopularVideoView *ksyPoularLiveView;
     UIAlertView *alertView;
@@ -25,21 +25,25 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self changeNavigationStyle];
     ksyPoularLiveView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYPopularLivePlay];
+    ksyPoularLiveView.ksyVideoPlayerView.delegate=self;
     WeakSelf(KSYPopilarLivePlayVC);
     ksyPoularLiveView.lockWindow=^(BOOL isLocked){
         [weakSelf lockWindow:(isLocked)];
     };
-    ksyPoularLiveView.changeNavigationBarColor=^(){
-        [weakSelf changeNavigationBarCLO];
+    ksyPoularLiveView.changeNavigationBarColor=^(BOOL hidden){
+        [weakSelf changeNavigationBarCLO:hidden];
     };
     [self.view addSubview:ksyPoularLiveView];
     AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
     appDelegate.allowRotation=YES;
 }
+- (void)hiddenNavigation:(BOOL)hidden{
+    [self changeNavigationBarCLO:hidden];
+}
 #pragma mark 修改导航栏颜色
-- (void)changeNavigationBarCLO
+- (void)changeNavigationBarCLO:(BOOL)hidden
 {
-    self.navigationController.navigationBar.alpha=0.0;
+    self.navigationController.navigationBar.hidden=hidden;
 }
 #pragma mark 锁屏
 - (void)lockWindow:(BOOL)isLocked
@@ -90,6 +94,7 @@
     [self.navigationController popViewControllerAnimated:YES];
     //修改状态栏颜色
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 - (void)menu
 {

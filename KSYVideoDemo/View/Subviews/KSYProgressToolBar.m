@@ -43,7 +43,7 @@
     self.controCommentButton.frame = CGRectMake(10, 5, 34, 34);
     self.playControlButton.frame = CGRectMake(self.controCommentButton.right + 8, 3, 34, 34);
     self.progrossView.frame= CGRectMake(_playControlButton.right + 6, 5, self.frame.size.width - 120 - 36, 30);
-    self.slider.frame = CGRectMake(_playControlButton.right + 6, 5, self.frame.size.width - 120 - 36, 30);
+    self.slider.frame = CGRectMake(_playControlButton.right + 6, 5, self.frame.size.width - 120 - 26, 30);
     self.progrossView.center=self.slider.center;
     self.shareButton.frame = CGRectMake(_slider.right + 10, 5, 34, 34);
     self.timeLabel.frame = CGRectMake(self.slider.left, self.slider.bottom - 10, self.slider.frame.size.width - 8, 20);

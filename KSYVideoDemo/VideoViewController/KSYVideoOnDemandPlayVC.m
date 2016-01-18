@@ -9,7 +9,7 @@
 #import "KSYVideoOnDemandPlayVC.h"
 #import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
-@interface KSYVideoOnDemandPlayVC ()<UIActionSheetDelegate>
+@interface KSYVideoOnDemandPlayVC ()<UIActionSheetDelegate,KSYHiddenNavigationBar>
 {
     KSYPopularVideoView *ksyOnDemandView;
     UIAlertView *alertView;
@@ -24,13 +24,14 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self changeNavigationStayle];
     ksyOnDemandView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYVideoOnlinePlay];
+    ksyOnDemandView.ksyVideoPlayerView.delegate=self;
     ksyOnDemandView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
     WeakSelf(KSYVideoOnDemandPlayVC);
     ksyOnDemandView.lockWindow=^(BOOL isLocked){
         [weakSelf lockTheWindow:(isLocked)];
     };
-    ksyOnDemandView.changeNavigationBarColor=^(){
-        [weakSelf changeNavigationBarCLO];
+    ksyOnDemandView.changeNavigationBarColor=^(BOOL hidden){
+        [weakSelf changeNavigationBarCLO:hidden];
     };
     [self.view addSubview:ksyOnDemandView];
     AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
@@ -42,9 +43,12 @@
     AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
     appDelegate.allowRotation=!isLocked;
 }
-- (void)changeNavigationBarCLO
+- (void)hiddenNavigation:(BOOL)hidden{
+    [self changeNavigationBarCLO:hidden];
+}
+- (void)changeNavigationBarCLO:(BOOL)hidden
 {
-    self.navigationController.navigationBar.alpha=0.0;
+    self.navigationController.navigationBar.hidden=hidden;
 }
 - (void)changeNavigationStayle
 {
@@ -86,6 +90,7 @@
     [ksyOnDemandView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 - (void)menu{
     UIActionSheet *actionSheet = [[UIActionSheet alloc]

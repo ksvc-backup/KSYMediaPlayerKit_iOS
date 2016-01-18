@@ -29,33 +29,10 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
 
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-- (void)registerForKeyboardNotifications
-{
-    //使用NSNotificationCenter 鍵盤出現時
-    [[NSNotificationCenter defaultCenter] addObserver:self
-     
-                                             selector:@selector(keyboardWasShown:)
-     
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    //使用NSNotificationCenter 鍵盤隐藏時
-    [[NSNotificationCenter defaultCenter] addObserver:self
-     
-                                             selector:@selector(keyboardWillBeHidden:)
-     
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
-    
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self registerForKeyboardNotifications];
     self.title = @"KSYPlayer";
     self.view.backgroundColor = [UIColor whiteColor];
     _sesionArr = [[NSArray alloc] initWithObjects:@"传统直播",@"手机直播",@"在线视频点播",@"短视频播放",@"列表浮窗", nil];
@@ -96,7 +73,7 @@
     _rtmpTextF = [[UITextField alloc] initWithFrame:CGRectMake(rtmpUrlLabl.right + 5, rtmpUrlLabl.top, self.view.width-_httpTextF.left-5, 20)];
     _rtmpTextF.adjustsFontSizeToFitWidth = YES;
     _rtmpTextF.text = @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
-//    _rtmpTextF.text = @"rtmp://test.live.ksyun.com/live/6AB180.264";
+//    _rtmpTextF.text = @"rtmp://test.live.ksyun.com/live/yun.265";
     _rtmpTextF.borderStyle = UITextBorderStyleRoundedRect;
     _rtmpTextF.returnKeyType = UIReturnKeyDone;
     _rtmpTextF.font = [UIFont systemFontOfSize:13.0];

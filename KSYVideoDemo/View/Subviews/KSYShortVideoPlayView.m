@@ -46,7 +46,6 @@
         }];
         [self addCommentView];
         commentView.hidden=YES;
-        [self regNotification];
     }
     return self;
 }
@@ -55,8 +54,8 @@
 {
     WeakSelf(KSYShortVideoPlayView);
     commentView=[[KSYCommentView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40)];
-    commentView.textFieldDidBeginEditing=^(){
-        [weakSelf changeCommentViewFrame];
+    commentView.changeFrame=^(CGFloat keyboardHeight){
+        [weakSelf changeCommentViewFrame:keyboardHeight];
     };
     commentView.send=^(){
         [weakSelf rechangeCommentViewFrame];
@@ -158,36 +157,20 @@
 {
     return 0.1;
 }
-- (void)keyboardWillChangeFrame:(NSNotification*)aNotification{
-    NSDictionary* info = [aNotification userInfo];
-    //kbSize即為鍵盤尺寸 (有width, height)
-    
-    CGRect endKeyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
-    
-    CGFloat height = endKeyboardRect.size.height;
-    
+- (void)changeCommentViewFrame:(CGFloat)height
+{
     CGRect newFrame = CGRectMake(0, self.height-height-40, self.width, 40);
     
     [UIView animateWithDuration:0.25 animations:^{
         commentView.frame = newFrame;
     }];
-}
-- (void)regNotification{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
-}
-- (void)unregNotification{
-   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
-}
-- (void)changeCommentViewFrame
-{
-    
+
 }
 - (void)rechangeCommentViewFrame
 {
     UITextField *kTextField=(UITextField *)[self viewWithTag:kCommentFieldTag];
     [kTextField resignFirstResponder];
     commentView.frame=CGRectMake(0, self.height-40, self.width, 40);
-    NSLog(NSStringFromCGRect(commentView.frame));
 }
 
 @end

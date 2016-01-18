@@ -10,7 +10,7 @@
 #import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
 
-@interface KSYPopilarLivePlayBackVC ()<UIActionSheetDelegate>
+@interface KSYPopilarLivePlayBackVC ()<UIActionSheetDelegate,KSYHiddenNavigationBar>
 {
     KSYPopularVideoView *ksyPoularbackView;
     UIAlertView *alertView;
@@ -26,13 +26,14 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self changeNavigationStyle];
     ksyPoularbackView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYPopularPlayBack];
+    ksyPoularbackView.ksyVideoPlayerView.delegate=self;
     ksyPoularbackView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
     WeakSelf(KSYPopilarLivePlayBackVC);
     ksyPoularbackView.lockWindow=^(BOOL isLocked){
         [weakSelf lockTheWindow:(isLocked)];
     };
-    ksyPoularbackView.changeNavigationBarColor=^(){
-        [weakSelf changeNavigationBarCLO];
+    ksyPoularbackView.changeNavigationBarColor=^(BOOL hidden){
+        [weakSelf changeNavigationBarCLO:hidden];
     };
     [self.view addSubview:ksyPoularbackView];
     AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
@@ -43,10 +44,13 @@
     AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
     appDelegate.allowRotation=!isLocked;
 }
+- (void)hiddenNavigation:(BOOL)hidden{
+    [self changeNavigationBarCLO:hidden];
+}
 #pragma mark 修改导航栏颜色
-- (void)changeNavigationBarCLO
+- (void)changeNavigationBarCLO:(BOOL)hidden
 {
-    self.navigationController.navigationBar.alpha=0.0;
+    self.navigationController.navigationBar.hidden=hidden;
 }
 #pragma mark 修改导航栏模式
 - (void)changeNavigationStyle
@@ -90,6 +94,7 @@
     [ksyPoularbackView unregisterObservers];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 - (void)menu{
     UIActionSheet *actionSheet = [[UIActionSheet alloc]

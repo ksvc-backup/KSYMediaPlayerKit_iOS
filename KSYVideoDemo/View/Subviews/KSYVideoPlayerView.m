@@ -222,7 +222,6 @@
     }
 }
 #pragma mark 视频操作
-
 - (void)addEpisode:(UIButton *)btn{
     [self addEpisodeView];
     episodeView.hidden=NO;
@@ -261,7 +260,6 @@
     [UIView animateWithDuration:0.25 animations:^{
         bottomView.frame = newFrame;
     }];
-    self.isLock=YES;
 }
 - (void)rechangeBottom{
     if (_playState==KSYPopularLivePlay) {
@@ -269,7 +267,6 @@
         bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
         bottomView.alpha=0.6;
     }
-    self.isLock=NO;
 }
 - (void)brightnessDidBegin:(UISlider *)slider {
 }
@@ -409,9 +406,9 @@
     kLockView.frame=CGRectMake(kCoverLockViewLeftMargin, (self.height - self.height / 6) / 2, self.height / 6, self.height / 6);
     [self addSubview:self.kToolView];
     self.indicator.center=self.center;
+    bottomView.hidden=YES;
     topView.hidden=YES;
-    kToolView.hidden=NO;
-    bottomView.hidden=NO;
+    kToolView.hidden=YES;
 }
 
 - (void)minFullScreen
@@ -419,13 +416,16 @@
     kBrightnessView.hidden=YES;
     kVoiceView.hidden=YES;
     kLockView.hidden=YES;
-    topView.hidden=NO;
-    kToolView.hidden=YES;
-    bottomView.hidden=NO;
     bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
     [bottomView resetSubviews];
     kProgressView.frame=CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 4, kProgressViewWidth, 50);
+    topView.hidden=NO;
+    kToolView.hidden=YES;
+    bottomView.hidden=NO;
     self.indicator.center=self.center;
+    if ([_delegate performSelector:@selector(hiddenNavigation:)]) {
+        [_delegate hiddenNavigation:NO];
+    }
 }
 
 
@@ -571,7 +571,6 @@
                 kLockView.hidden=YES;
                 kToolView.hidden=YES;
                 bottomView.kFullBtn.hidden = NO;
-                
             }else{
                 if (_isLock==NO) {
                     bottomView.hidden=NO;
@@ -580,6 +579,11 @@
                     kToolView.hidden=NO;
                     if (_playState==KSYVideoOnlinePlay) {
                         bottomView.kFullBtn.hidden = YES;
+                    }
+                    //隐藏状态栏
+                    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+                    if ([_delegate performSelector:@selector(hiddenNavigation:)]) {
+                        [_delegate hiddenNavigation:YES];
                     }
                 }
                 kLockView.hidden=NO;
@@ -600,6 +604,13 @@
             kVoiceView.hidden=YES;
             kToolView.hidden=YES;
             bottomView.kFullBtn.hidden = NO;
+            if (self.height==_HEIGHT){
+                [[UIApplication sharedApplication]setStatusBarHidden:YES];
+                if ([_delegate performSelector:@selector(hiddenNavigation:)]) {
+                    [_delegate hiddenNavigation:YES];
+                }
+            }
+            
         }
         kLockView.hidden=YES;
     } completion:^(BOOL finished) {

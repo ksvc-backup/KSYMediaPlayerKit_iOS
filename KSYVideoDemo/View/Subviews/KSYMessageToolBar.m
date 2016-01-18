@@ -59,7 +59,7 @@
 {
     [super layoutSubviews];
     _controCommentBtn.frame = CGRectMake(10, 5, 34, 34);
-    _inputTexField.frame = CGRectMake(_controCommentBtn.right + 10, 5, self.frame.size.width - 120, 35);
+    _inputTexField.frame = CGRectMake(_controCommentBtn.right + 10, 5, self.width - _inputTexField.left-54, 35);
     _shareBtn.frame = CGRectMake(_inputTexField.right + 10, 5, 34, 34);
 }
 

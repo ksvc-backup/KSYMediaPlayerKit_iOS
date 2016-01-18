@@ -9,6 +9,11 @@
 
 #import "KSYBasePlayView.h"
 
+@protocol KSYHiddenNavigationBar<NSObject>
+
+- (void)hiddenNavigation:(BOOL)hidden;
+
+@end
 
 @interface KSYVideoPlayerView : KSYBasePlayView
 
@@ -24,6 +29,6 @@
 @property (nonatomic, copy) void (^clicUnkFullBtn)();
 @property (nonatomic, copy) void (^showNextVideo)(NSString *str);
 @property (nonatomic, assign) BOOL isLock;
-
+@property (nonatomic, strong) id<KSYHiddenNavigationBar>delegate;
 
 @end

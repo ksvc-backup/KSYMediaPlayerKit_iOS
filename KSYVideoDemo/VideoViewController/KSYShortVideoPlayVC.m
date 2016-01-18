@@ -69,10 +69,10 @@
 - (void)back
 {
     [ksyShortVideoplayView.videoCell.ksyShortView shutDown];
-    [ksyShortVideoplayView unregNotification];
     [ksyShortVideoplayView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 - (void)menu
 {

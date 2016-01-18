@@ -71,7 +71,7 @@
     //重置图片视图的大小
     CGFloat imageViewX=10,imageViewY=10;
     CGFloat imageViewWidth=100;
-    CGFloat imageViewHeight=80;
+    CGFloat imageViewHeight=70;
     imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
     UIImage *image=[UIImage imageNamed:model3.imageName];
     imageView.contentMode=UIViewContentModeScaleAspectFit;

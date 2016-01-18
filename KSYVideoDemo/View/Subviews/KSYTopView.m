@@ -29,8 +29,14 @@
 - (void)addSubViews
 {
 
-    self.backgroundColor=[UIColor blackColor];
-    self.alpha=0.5;
+    self.backgroundColor=[UIColor clearColor];
+    
+    UIView *backgroundView = [[UIView alloc]initWithFrame:self.bounds];
+    backgroundView.backgroundColor = [UIColor blackColor];
+    backgroundView.alpha = 0.5;
+    [self addSubview:backgroundView];
+    
+    
     //用户名和关注按钮
     kUserImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 30, 30)];
     [self addSubview:kUserImageView];

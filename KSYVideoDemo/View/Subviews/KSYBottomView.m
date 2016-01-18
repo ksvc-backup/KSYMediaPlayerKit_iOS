@@ -33,6 +33,7 @@
     if (self)
     {
         self.backgroundColor=[UIColor blackColor];
+        
         self.alpha=0.7;
         _playstate=playstate;
         //播放按钮 播放时间 进度条 总时间
@@ -195,21 +196,21 @@
 {
     UIImage *fullImage=[UIImage imageNamed:@"unfull"];
     if (_playstate==KSYPopularLivePlay) {
-        kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
+        kShortPlayBtn.frame=CGRectMake(10, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);
-        commentText.frame=CGRectMake(fansCount.right+5, 5, self.width-commentText.left-130, 30);
+        commentText.frame=CGRectMake(fansCount.right+5, 5, self.width-commentText.left-145, 30);
         commentText.hidden=NO;
         qualityBtn.hidden=NO;
-        qualityBtn.frame= CGRectMake(commentText.right+5, 5, 40, 30);
+        qualityBtn.frame= CGRectMake(commentText.right+10, 5, 40, 30);
         danmuBtn.hidden=NO;
         danmuBtn.frame=CGRectMake(qualityBtn.right+5, 5, 40, 30);
         kFullBtn.frame=CGRectMake(danmuBtn.right+5, 5, 30, 30);
         [kFullBtn setImage:fullImage forState:UIControlStateNormal];
     }else  {
-        kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
+        kShortPlayBtn.frame=CGRectMake(10, 5, 30, 30);
         kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 55, 30);
-        kprogress.frame=CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-185, 10);
+        kprogress.frame=CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-200, 10);
         [kprogress setLength];
         kTotalLabel.frame=CGRectMake(kprogress.right+5, kShortPlayBtn.center.y-15, 55, 30);
         qualityBtn.hidden=NO;
@@ -243,8 +244,8 @@
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);
-        [commentText resignFirstResponder];
         commentText.frame=CGRectMake(fansCount.right+5, 5, self.width-commentText.left-40, 30);
+        [commentText resignFirstResponder];
         commentText.hidden=YES;
         qualityBtn.hidden=YES;
         danmuBtn.hidden=YES;
@@ -311,6 +312,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 - (void)keyboardWillChangeFrame:(NSNotification*)aNotification{
+    
     NSDictionary* info = [aNotification userInfo];
     
     CGRect endKeyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface KSYCommentView : UIView
-@property (nonatomic, copy) void (^textFieldDidBeginEditing)();
+@property (nonatomic, strong) UITextField *kTextField;
+@property (nonatomic, copy) void (^changeFrame)(CGFloat keyBoardHeight);
 @property (nonatomic, copy) void (^send)();
 @end
