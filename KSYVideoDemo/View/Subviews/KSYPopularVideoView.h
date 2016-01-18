@@ -22,7 +22,7 @@
 - (instancetype)initWithFrame:(CGRect)frame UrlWithString:(NSString *)urlString playState:(KSYPopularLivePlayState)playState;
 
 - (void)unregisterObservers;
-
+- (void)unregNotification;
 
 
 

@@ -18,8 +18,8 @@
 #import "KSBarrageView.h"
 #import "KSYEpisodeView.h"
 #import "KSYBarrageBarView.h"
-
-@interface KSYVideoPlayerView ()
+#import "KSYProgressVI.h"
+@interface KSYVideoPlayerView ()<KSYProgressDelegate>
 {
     KSYTopView *topView;
     KSYBottomView *bottomView;
@@ -68,6 +68,7 @@
         _isLock=NO;
         self.playState=playState;
         [self addBottomView];
+        [self bringSubviewToFront:bottomView];
         [self addTopView];
         _HEIGHT=THESCREENWIDTH;
     }
@@ -86,15 +87,7 @@
     
     WeakSelf(KSYVideoPlayerView);
     bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:_playState];
-    bottomView.progressDidBegin=^(UISlider *slider){
-        [weakSelf progDidBegin:slider];
-    };
-    bottomView.progressChanged=^(UISlider *slider){
-        [weakSelf progChanged:slider];
-    };
-    bottomView.progressChangeEnd=^(UISlider *slider){
-        [weakSelf progChangeEnd:slider];
-    };
+    bottomView.kprogress.delegate=self;
     bottomView.BtnClick=^(UIButton *btn){
         [weakSelf BtnClick:btn];
     };
@@ -104,8 +97,8 @@
     bottomView.unFullBtnClick=^(UIButton *btn){
         [weakSelf unFullclick];
     };
-    bottomView.changeBottomFrame=^(UITextField *textField){
-        [weakSelf changeBottom:textField];
+    bottomView.changeBottomFrame=^(CGFloat keyBoaradHeight){
+        [weakSelf changeBottom:keyBoaradHeight];
     };
     bottomView.rechangeBottom=^(){
         [weakSelf rechangeBottom];
@@ -174,7 +167,6 @@
     if (!kToolView)
     {
         kToolView=[[KSYToolView alloc]initWithFrame:CGRectMake(0, 0, self.width, 50)];
-        kToolView.hidden=YES;
         kToolView.showSetView=^(UIButton *btn){
             [weakSelf showSetView:(btn)];
         };
@@ -221,7 +213,7 @@
         kBarrageView = [[KSYBarrageBarView alloc]initWithFrame:CGRectMake(0, kToolView.bottom,self.width, self.height-120)];
         [self addSubview:kBarrageView];
         [kBarrageView start];
-        [self bringSubviewToFront:kBarrageView];
+        [self bringSubviewToFront:kBrightnessView];
         [self bringSubviewToFront:kVoiceView];
         [self bringSubviewToFront:kLockView];
     }else{
@@ -248,18 +240,36 @@
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"接口已提供" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
-- (void)changeBottom:(UITextField *)textField
-{
-    bottomView.alpha=1.0;
-    bottomView.frame=CGRectMake(0, self.height/2-40, self.width, 40);
+- (void)hiddenBrigthnessView{
+    kBrightnessView.hidden=YES;
 }
-- (void)rechangeBottom
-{
+- (void)hiddenLockView{
+    kLockView.hidden=YES;
+}
+- (void)hiddenVoiceView{
+    kVoiceView.hidden=YES;
+}
+- (void)hiddenToolView{
+    kToolView.hidden=YES;
+}
+- (void)changeBottom:(CGFloat)height{
+    [self hiddenBrigthnessView];
+    [self hiddenVoiceView];
+    [self hiddenLockView];
+    [self hiddenToolView];
+    CGRect newFrame = CGRectMake(0, self.height-height-40, self.width, 40);
+    [UIView animateWithDuration:0.25 animations:^{
+        bottomView.frame = newFrame;
+    }];
+    self.isLock=YES;
+}
+- (void)rechangeBottom{
     if (_playState==KSYPopularLivePlay) {
         [bottomView.commentText resignFirstResponder];
         bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
         bottomView.alpha=0.6;
     }
+    self.isLock=NO;
 }
 - (void)brightnessDidBegin:(UISlider *)slider {
 }
@@ -268,31 +278,29 @@
 }
 - (void)brightnessChangeEnd:(UISlider *)slider {
 }
-- (void)progDidBegin:(UISlider *)slider
-{
+- (void)progDidBegin{
     if ([self.player isPlaying]==YES) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
 }
--(void)progChanged:(UISlider *)slider
-{
+- (void)progChanged{
+    UISlider *slider=(UISlider *)[self viewWithTag:kProgressSliderTag];
     if (![self.player isPreparedToPlay]) {
         slider.value = 0.0f;
         return;
     }
-    UISlider *progressSlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
     UILabel *startLabel = (UILabel *)[self viewWithTag:kProgressCurLabelTag];
-    NSInteger position = progressSlider.value;
+    NSInteger position = slider.value;
     int iMin  = (int)(position / 60);
     int iSec  = (int)(position % 60);
     NSString *strCurTime = [NSString stringWithFormat:@"%02d:%02d", iMin, iSec];
     startLabel.text = strCurTime;
     
 }
-- (void)progChangeEnd:(UISlider *)slider
-{
+- (void)progChangeEnd{
+    UISlider *slider=(UISlider *)[self viewWithTag:kProgressSliderTag];
     if (![self.player isPreparedToPlay]) {
         slider.value=0.0f;
         return;
@@ -339,28 +347,11 @@
 }
 
 - (void)updateCurrentTime{
-    UILabel *kCurrentLabe = (UILabel *)[self viewWithTag:kProgressCurLabelTag];
-    UILabel *kTotalLabel = (UILabel *)[self viewWithTag:kProgressMaxLabelTag];
-    UISlider *kPlaySlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
-    NSInteger duration = self.duration;
-    NSInteger position = self.currentPlaybackTime;
-    
-    int iMin  = (int)(position / 60);
-    int iSec  = (int)(position % 60);
-    
-    kCurrentLabe.text = [NSString stringWithFormat:@"%02d:%02d", iMin, iSec];
-
-    int iDuraMin  = (int)(duration / 60);
-    int iDuraSec  = (int)(duration % 3600 % 60);
-    kTotalLabel.text = [NSString stringWithFormat:@"%02d:%02d", iDuraMin, iDuraSec];
-    kPlaySlider.value = position;
-    kPlaySlider.maximumValue = duration;
     if ([self.player isPlaying]) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         [bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];
     }
-    bottomView.kPlayabelSlider.value=self.player.playableDuration;
-    bottomView.kPlayabelSlider.maximumValue=self.player.duration;
+    [bottomView updateCurrentDuration:self.duration Position:self.currentPlaybackTime playAbleDuration:self.player.playableDuration];
 }
 - (void)moviePlayerFinishState:(MPMoviePlaybackState)finishState
 {
@@ -406,21 +397,21 @@
     kSetView.hidden=NO;
     [self hiddenAllControls];
 }
-
 - (void)lunchFullScreen
 {
     [self addBrightnessVIew];
     [self addVoiceView];
     [self addProgressView];
     [self addLockBtn];
-    topView.hidden=YES;
-//    bottomView.hidden=YES;
     bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
     [bottomView setSubviews];
     kProgressView.frame=CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 2, kProgressViewWidth, 50);
     kLockView.frame=CGRectMake(kCoverLockViewLeftMargin, (self.height - self.height / 6) / 2, self.height / 6, self.height / 6);
     [self addSubview:self.kToolView];
     self.indicator.center=self.center;
+    topView.hidden=YES;
+    kToolView.hidden=NO;
+    bottomView.hidden=NO;
 }
 
 - (void)minFullScreen
@@ -428,11 +419,12 @@
     kBrightnessView.hidden=YES;
     kVoiceView.hidden=YES;
     kLockView.hidden=YES;
+    topView.hidden=NO;
+    kToolView.hidden=YES;
+    bottomView.hidden=NO;
     bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
     [bottomView resetSubviews];
-    bottomView.hidden=YES;
     kProgressView.frame=CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 4, kProgressViewWidth, 50);
-    kToolView.hidden=YES;
     self.indicator.center=self.center;
 }
 

@@ -7,10 +7,9 @@
 //
 
 #import "KSYComTvCell.h"
-#define KSYCOLOR(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
-#define USERNAMEFONT 22
-#define TIMEFONT 21
-#define CONTENTFONT 20
+#define USERNAMEFONT 18
+#define TIMEFONT 16
+#define CONTENTFONT 16
 #define SJColor(r,g,b) [UIColor colorWithHue:r/255.0 saturation:g/255.0 brightness:b/255.0 alpha:1] //颜色宏定义
 #define KSYMODEL1Color [UIColor whiteColor]
 #define SPACING 10
@@ -32,8 +31,7 @@
 @implementation KSYComTvCell
 
 #pragma mark 初始化单元格
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
@@ -56,7 +54,7 @@
     _userName.font=[UIFont systemFontOfSize:USERNAMEFONT];
     //添加时间
     _time=[[UILabel alloc]init];
-    _time.textColor=KSYMODEL1Color;
+    _time.textColor=[UIColor lightGrayColor];;
     _time.textAlignment=NSTextAlignmentRight;
     [self addSubview:_time];
     _time.font=[UIFont systemFontOfSize:TIMEFONT];
@@ -90,22 +88,29 @@
     _userName.text=model.userName;
     _userName.frame=userNamerect;
     //设置时间的位置
-    CGFloat timeX=self.width-100;
+    CGFloat timeX=THESCREENWIDTH-100;
     CGFloat timeY=userNameY;
     CGRect timeRect=CGRectMake(timeX, timeY+5, 85, 20);
-    _time.text=model.time;
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat=@"HH:mm";
+    NSString *datestr=[dateFormatter stringFromDate:model.time];
+    _time.text=datestr;
     _time.frame=timeRect;
     //设置评论的位置
     CGFloat contextX=userNameX;
     CGFloat contentY=CGRectGetMaxY(_userName.frame)+5;
-    CGFloat contentWidth=self.frame.size.width-10-CGRectGetMaxX(_imageView.frame);
+    CGFloat contentWidth=THESCREENWIDTH-20-_imageView.right;
     CGSize contentSize=[model.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:CONTENTFONT]} context:nil].size;
     CGRect contenRect=CGRectMake(contextX, contentY, contentSize.width, contentSize.height);
     _content.text=model.content;
     _content.frame=contenRect;
     
-    _height=CGRectGetMaxY(_content.frame)+5;
     
+    if ((int)_imageView.bottom>(int)_content.bottom) {
+        _height=_imageView.bottom+10;
+    }else{
+        _height=_content.bottom+5;
+    }
 }
 
 #pragma mark 设置单元格内容
@@ -130,7 +135,7 @@
     _userName.text=model1.userName;
     _userName.frame=userNamerect;
     //设置时间的位置
-    CGFloat timeX=self.width-100;
+    CGFloat timeX=THESCREENWIDTH-100;
     CGFloat timeY=userNameY;
     CGRect timeRect=CGRectMake(timeX, timeY+5, 85, 20);
     _time.text=model1.time;
@@ -138,13 +143,20 @@
     //设置评论的位置
     CGFloat contextX=userNameX;
     CGFloat contentY=CGRectGetMaxY(_userName.frame)+5;
-    CGFloat contentWidth=self.frame.size.width-10-CGRectGetMaxX(_imageView.frame);
+    CGFloat contentWidth=THESCREENWIDTH-10-CGRectGetMaxX(_imageView.frame);
     CGSize contentSize=[model1.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:CONTENTFONT]} context:nil].size;
     CGRect contenRect=CGRectMake(contextX, contentY, contentSize.width, contentSize.height);
     _content.text=model1.content;
     _content.frame=contenRect;
     
-    _height=CGRectGetMaxY(_content.frame)+5;
+    
+    //判断一下
+    if (_imageView.bottom>_content.bottom) {
+        _height = _imageView.bottom+5;
+    }else{
+        _height=_content.bottom+5;
+    }
+    
     
 }
 

@@ -10,7 +10,7 @@
 #import "KSYTopView.h"
 #import "KSYBottomView.h"
 
-@interface KSYShortView (){
+@interface KSYShortView ()<KSYProgressDelegate>{
     KSYTopView *_topView;
     KSYBottomView *_bottomView;
     BOOL _showORhidden;
@@ -56,59 +56,31 @@
             [self addSubview:self.bottomView];
             _bottomView.backgroundColor=[UIColor blackColor];
             _bottomView.alpha=0.5;
-            _bottomView.kFullBtn.hidden=YES;
         }
     }
-    UILabel *kCurrentLabe = (UILabel *)[self viewWithTag:kProgressCurLabelTag];
-    UILabel *kTotalLabel = (UILabel *)[self viewWithTag:kProgressMaxLabelTag];
-    UISlider *kPlaySlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
-    NSInteger duration = self.duration;
-    NSInteger position = self.currentPlaybackTime;
-    
-    int iMin  = (int)(position / 60);
-    int iSec  = (int)(position % 60);
-    
-    kCurrentLabe.text = [NSString stringWithFormat:@"%02d:%02d", iMin, iSec];
-    
-    int iDuraMin  = (int)(duration / 60);
-    int iDuraSec  = (int)(duration % 3600 % 60);
-    kTotalLabel.text = [NSString stringWithFormat:@"%02d:%02d", iDuraMin, iDuraSec];
-    kPlaySlider.value = position;
-    kPlaySlider.maximumValue = duration;
     if ([self.player isPlaying]) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         [_bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];
     }
+    [_bottomView updateCurrentDuration:self.duration Position:self.currentPlaybackTime playAbleDuration:self.player.playableDuration];
     
-    _bottomView.kPlayabelSlider.value=self.player.playableDuration;
-    _bottomView.kPlayabelSlider.maximumValue=self.player.duration;
-    
-    _slider.value=position;
-    _slider.maximumValue=duration;
+    _slider.value=self.currentPlaybackTime;
+    _slider.maximumValue=self.duration;
 }
 - (UIView *)bottomView{
     if (!_bottomView) {
         WeakSelf(KSYShortView);
         _bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:kSYShortVideoPlay];
         _bottomView.kTotalLabel.frame=CGRectMake(self.right-60, 5, 50, 30);
-        _bottomView.kPlaySlider.width=self.width-_bottomView.kCurrentLabel.right-10-70;
-        _bottomView.progressDidBegin=^(UISlider *slider){
-            [weakSelf progDidBegin:slider];
-        };
-        _bottomView.progressChanged=^(UISlider *slider){
-            [weakSelf progChanged:slider];
-        };
-        _bottomView.progressChangeEnd=^(UISlider *slider){
-            [weakSelf progChangeEnd:slider];
-        };
+        _bottomView.kprogress.width=self.width-_bottomView.kCurrentLabel.right;
+        _bottomView.kprogress.delegate=self;
         _bottomView.BtnClick=^(UIButton *btn){
             [weakSelf BtnClick:btn];
         };
     }
     return _bottomView;
 }
-- (void)progDidBegin:(UISlider *)slider
-{
+- (void)progDidBegin{
     if ([self.player isPlaying]==YES) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
@@ -116,13 +88,12 @@
     }
     
 }
--(void)progChanged:(UISlider *)slider
-{
+-(void)progChanged{
+    UISlider *progressSlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
     if (![self.player isPreparedToPlay]) {
-        slider.value = 0.0f;
+        progressSlider.value = 0.0f;
         return;
     }
-    UISlider *progressSlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
     UILabel *startLabel = (UILabel *)[self viewWithTag:kProgressCurLabelTag];
     NSInteger position = progressSlider.value;
     int iMin  = (int)(position / 60);
@@ -131,10 +102,10 @@
     startLabel.text = strCurTime;
     
 }
-- (void)progChangeEnd:(UISlider *)slider
-{
+- (void)progChangeEnd{
+    UISlider *progressSlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
     if (![self.player isPreparedToPlay]) {
-        slider.value=0.0f;
+        progressSlider.value=0.0f;
         return;
     }
     if ([self.player isPlaying]==YES) {
@@ -142,8 +113,7 @@
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
-    
-    [self moviePlayerSeekTo: slider.value];
+    [self moviePlayerSeekTo: progressSlider.value];
 }
 - (void)BtnClick:(UIButton *)btn
 {

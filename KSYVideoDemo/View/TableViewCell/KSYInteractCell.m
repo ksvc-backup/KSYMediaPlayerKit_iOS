@@ -65,11 +65,12 @@
 }
 - (void)addLabels{
     for (int i=0; i<4; i++) {
-        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(30+i*60, 45, 30, 30)];
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(25+i*60, 45, 40, 30)];
         [self addSubview:label];
         label.textColor=[UIColor whiteColor];
         label.text=@"200";
         label.tag=165+i;
+        label.textAlignment=NSTextAlignmentCenter;
     }
 }
 - (void)clickBtn:(UIButton *)btn{

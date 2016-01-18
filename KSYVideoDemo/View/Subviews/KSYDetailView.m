@@ -21,10 +21,10 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if (self){
-        [self addBellowPart];
-        [self addComments];
         _models=[[NSMutableArray alloc]init];
         _modelsCells=[[NSMutableArray alloc]init];
+        self.backgroundColor=[UIColor clearColor];
+        [self addBellowPart];
     }
     return self;
 }
@@ -42,16 +42,13 @@
         [_modelsCells addObject:cell];
     }];
 }
-- (void)addComments{
-    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"张三丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
-    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"张三" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
-    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"张丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
-    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"三丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
-    [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"三丰" Time:[NSDate date] Content:@"评论内容评论内容评论内容评论内容"];
+- (void)removeAllModel{
+    [_models enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CoreDataModel * commentModel=(CoreDataModel *)obj;
+        [[KSYCommentService sharedKSYCommentService]removeCoreDateModel:commentModel];
+    }];
 }
 - (void)addBellowPart{
-
-    self.backgroundColor=KSYCOLER(90, 90, 90);
     //初始化分段控制器
     NSArray *segmentedArray=[NSArray arrayWithObjects:@"评论",@"详情",@"推荐", nil];
     self.kSegmentedCTL=[[UISegmentedControl alloc]initWithItems:segmentedArray];
@@ -60,17 +57,22 @@
     [self addSubview:self.kSegmentedCTL];
     [self.kSegmentedCTL addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     self.kSegmentedCTL.selectedSegmentIndex=0;
+    
     //添加一个分割线
     UILabel *lineLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.kSegmentedCTL.frame)+10, THESCREENWIDTH, 1)];
-    lineLabel.backgroundColor=[UIColor whiteColor];
+    lineLabel.backgroundColor=[UIColor lightGrayColor];
     [self addSubview:lineLabel];
+    
     //初始化表视图 只要你在做你就在想
     _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(lineLabel.frame), THESCREENWIDTH, THESCREENHEIGHT/2-62) style:UITableViewStylePlain];
-    self.kTableView.backgroundColor = [UIColor blackColor];
+    self.kTableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.kTableView];
     self.kTableView.delegate=self;
     self.kTableView.dataSource=self;
+    
+    //刷新数据
     [self segmentChange:self.kSegmentedCTL];
+
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -86,28 +88,46 @@
     static NSString *subscribeIdentify=@"subscribeIdentify";
     if (self.kSegmentedCTL.selectedSegmentIndex==0){
         KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:commentIdentify];
-        if (cell==nil){
+        if (!cell){
             cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:commentIdentify];
+            cell.backgroundColor=[UIColor clearColor];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
-            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            tempView.backgroundColor =DEEPCOLOR;
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
-            UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
-            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
-            cell.selectedBackgroundView = tempView1;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-//         KSYCommentModel *SKYmodel=_models[indexPath.row];
-        cell.commentModel=_models[indexPath.row];
+        KSYCommentModel *SKYmodel=_models[indexPath.row];
+        cell.model1=SKYmodel;
         return cell;
+//        KSYCommentModel *SKYmodel=_models[indexPath.row];
+//        cell.model1=SKYmodel;
+//        return cell;
+//        KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:commentIdentify];
+//        if (cell==nil){
+//            cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:commentIdentify];
+//            cell.backgroundColor=[UIColor clearColor];
+//            UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
+//            tempView.backgroundColor =DEEPCOLOR;
+//            cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
+//            UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
+//            tempView1.backgroundColor = DEEPCOLOR;
+//            cell.selectedBackgroundView = tempView1;
+//        }
+//         KSYCommentModel *SKYmodel=_models[indexPath.row];
+//        cell.commentModel=_models[indexPath.row];
+//        cell.userInteractionEnabled=NO;
+//        return cell;
     }
     else if (self.kSegmentedCTL.selectedSegmentIndex==1){
         KSYDetalTVCell *cell=[tableView dequeueReusableCellWithIdentifier:detailIdentify];
         if (cell==nil){
             cell=[[KSYDetalTVCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:detailIdentify];
+            cell.backgroundColor=[UIColor clearColor];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
-            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            tempView.backgroundColor =DEEPCOLOR;
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
             UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
-            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
+            tempView1.backgroundColor = DEEPCOLOR;
             cell.selectedBackgroundView = tempView1;
         }
         KSYDetailModel *SKYmodel=_models[indexPath.row];
@@ -119,11 +139,12 @@
         KSYIntTVCell *cell=[tableView dequeueReusableCellWithIdentifier:subscribeIdentify];
         if (cell==nil){
             cell=[[KSYIntTVCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:subscribeIdentify];
+            cell.backgroundColor=[UIColor clearColor];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
-            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            tempView.backgroundColor = DEEPCOLOR;
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
             UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
-            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
+            tempView1.backgroundColor = DEEPCOLOR;
             cell.selectedBackgroundView = tempView1;
         }
         KSYIntroduceModel *SKYmodel=_models[indexPath.row];
@@ -158,34 +179,35 @@
 }
 
 - (void)segmentChange:(UISegmentedControl *)segment{
+    //根据路径获得字典
+    [_models removeAllObjects];
+    [_modelsCells removeAllObjects];
     //如果是评论，加载评论的数据
     if(segment.selectedSegmentIndex==0){
-        [self loadData];
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"Model1" ofType:@"plist"];
+        NSArray *array=[NSArray arrayWithContentsOfFile:path];
+        [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [_models addObject:[KSYCommentModel modelWithDictionary:obj]];
+            KSYComTvCell *cell=[[KSYComTvCell alloc]init];
+            [_modelsCells addObject:cell];
+        }];
         [self.kTableView reloadData];
     }
     //如果是详情，获取详情的数据
     else if(segment.selectedSegmentIndex==1){
-        //根据路径获得字典
-        [_models removeAllObjects];
-        [_modelsCells removeAllObjects];
         NSString *path=[[NSBundle mainBundle]pathForResource:@"Model2" ofType:@"plist"];
         NSDictionary *dict=[NSDictionary dictionaryWithContentsOfFile:path];
         [_models addObject:[KSYDetailModel modelWithDictionary:dict]];
         KSYDetalTVCell *cell=[[KSYDetalTVCell alloc]init];
         [_modelsCells addObject:cell];
         //这样做复杂啦换一种方法
-        
         [self.kTableView reloadData];
         
     }
     //如果是推荐，获取推荐的数据
     else if(segment.selectedSegmentIndex==2){
-        [_models removeAllObjects];
-        [_modelsCells removeAllObjects];
         NSString *path=[[NSBundle mainBundle] pathForResource:@"Model3" ofType:@"plist"];
         NSArray *array=[NSArray arrayWithContentsOfFile:path];
-        _models=[[NSMutableArray alloc]init];
-        _modelsCells=[[NSMutableArray alloc]init];
         //利用代码块遍历
         [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [_models addObject:[KSYIntroduceModel modelWithDictionary:obj]];
@@ -193,7 +215,6 @@
             [_modelsCells addObject:cell];
         }];
         [self.kTableView reloadData];
-        
     }
 }
 

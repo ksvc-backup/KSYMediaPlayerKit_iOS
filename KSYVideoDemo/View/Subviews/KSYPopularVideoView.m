@@ -8,11 +8,10 @@
 
 #import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
-#import "KSYNavigationView.h"
+#import "KSYCommentService.h"
 @interface KSYPopularVideoView (){
     CGFloat _WIDTH;
     CGFloat _HEIGHT;
-    KSYNavigationView *_navigationView;
 }
 
 @property (nonatomic,strong) KSYDetailView *detailView;
@@ -30,6 +29,7 @@
 
     self = [super initWithFrame:frame];//初始化父视图的(frame、url)
     if (self) {
+        self.backgroundColor=DEEPCOLOR;
         WeakSelf(KSYPopularVideoView);
         self.ksyVideoPlayerView=[[KSYVideoPlayerView alloc]initWithFrame: CGRectMake(0, 0, self.width, self.height/2-60) UrlFromString:urlString playState:playState];
         self.ksyVideoPlayerView.lockScreen=^(BOOL isLocked){
@@ -94,17 +94,19 @@
     self.ksyVideoPlayerView.frame=self.frame;
     [self.ksyVideoPlayerView lunchFullScreen];
     self.detailView.hidden=YES;
-    self.commtenView.hidden=YES;
+    [self.commtenView removeFromSuperview];
 }
 - (void)unLunchFull{
-    if (self.ksyVideoPlayerView.isLock) {
+    if (!self.ksyVideoPlayerView.isLock) {
         return;
     }
     self.frame=CGRectMake(0, 64, _WIDTH,_HEIGHT-64);
+    UITextField *textField=(UITextField *)[self viewWithTag:kCommentFieldTag];
+    [textField resignFirstResponder];
     self.ksyVideoPlayerView.frame=CGRectMake(0, 0, self.width, self.height/2-60);
     [self.ksyVideoPlayerView minFullScreen];
     self.detailView.hidden=NO;
-    self.commtenView.hidden=NO;
+    [self addCommtenView];
 }
 - (void)lockTheScreen:(BOOL)islocked{
     if (self.lockWindow) {
@@ -132,19 +134,40 @@
 }
 - (void)changeTextFrame
 {
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        CGFloat kCommentViewY=self.height/2-40;
-        self.commtenView.frame=CGRectMake(0,  kCommentViewY, self.width, 40);
-    } completion:^(BOOL finished) {
-        NSLog(@"Animation Over!");
-    }];
     
+}
+- (void)keyboardWillChangeFrame:(NSNotification*)aNotification{
+    NSDictionary* info = [aNotification userInfo];
+    //kbSize即為鍵盤尺寸 (有width, height)
+    
+    CGRect endKeyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
+    
+    CGFloat height = endKeyboardRect.size.height;
+    
+    CGRect newFrame = CGRectMake(0, self.height-height-40, self.width, 40);
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        _commtenView.frame = newFrame;
+    }];
 }
 - (void)resetTextFrame
 {
+//    //设置时间格式
+//    NSDate *date=[NSDate date];
+//    UITextField *textField=(UITextField *)[self viewWithTag:kCommentFieldTag];
+//    [textField resignFirstResponder];
+//    if (![textField.text isEqualToString:@""]) {
+//        //向数据库中添加数据
+//        [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"孙健" Time:date Content:textField.text];
+//        //刷新数据库
+//        [self.detailView loadData];
+//        [self.detailView.kTableView reloadData];
+//        [self.detailView.kTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.detailView.models.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//    }
+    //重置评论视图的frame
     UITextField *textField=(UITextField *)[self viewWithTag:kCommentFieldTag];
     [textField resignFirstResponder];
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.commtenView.frame=CGRectMake(0, self.height-40, self.width, 40);
     } completion:^(BOOL finished) {
         NSLog(@"Animation Over!");
@@ -158,6 +181,8 @@
                                              selector:@selector(orientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+
 }
 
 - (void)unregisterObservers
@@ -165,6 +190,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIDeviceOrientationDidChangeNotification
                                                   object:nil];
+     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 - (void)orientationChanged:(NSNotification *)notification
 {

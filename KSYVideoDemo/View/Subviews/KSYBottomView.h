@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "KSYProgressVI.h"
 @interface KSYBottomView : UIView<UITextFieldDelegate>
 {
     KSYPopularLivePlayState _playstate;
 }
 @property (nonatomic, strong) UIButton *kShortPlayBtn;
 @property (nonatomic, strong) UILabel *kCurrentLabel;
-@property (nonatomic, strong) UISlider *kPlaySlider;
 @property (nonatomic, strong) UILabel *kTotalLabel;
 @property (nonatomic, strong) UIButton *kFullBtn;
 @property (nonatomic, strong) UIButton *danmuBtn;
@@ -22,7 +21,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *fansCount;
 @property (nonatomic, strong) UITextField *commentText;
-@property (nonatomic, strong) UISlider *kPlayabelSlider;
+@property (nonatomic, strong) KSYProgressVI *kprogress;
 @property (nonatomic, strong) UIButton *episodeBtn;
 
 @property (nonatomic, copy) void (^progressDidBegin)(UISlider *slider);
@@ -31,14 +30,14 @@
 @property (nonatomic, copy) void (^BtnClick)(UIButton *btn);
 @property (nonatomic, copy) void (^FullBtnClick)(UIButton *btn);
 @property (nonatomic, copy) void (^unFullBtnClick)(UIButton *btn);
-@property (nonatomic, copy) void (^changeBottomFrame)(UITextField *textField);
+@property (nonatomic, copy) void (^changeBottomFrame)(CGFloat keyBoardHeight);
 @property (nonatomic, copy) void (^rechangeBottom)();
 @property (nonatomic, copy) void (^addDanmu)(UIButton *btn);
 @property (nonatomic, copy) void (^addEpisodeView)(UIButton *btn);
 
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate;
 
-
+- (void)updateCurrentDuration:(NSInteger)duration Position:(NSInteger)currentPlaybackTime playAbleDuration:(NSInteger)playableDuration;
 - (void)setSubviews;
 - (void)resetSubviews;
 @end

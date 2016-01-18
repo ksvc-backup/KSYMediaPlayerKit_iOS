@@ -271,7 +271,7 @@
     int iSec  = (int)(position % 60);
     _curentTimeLab.text = [NSString stringWithFormat:@"%02d:%02d", iMin, iSec];
     if (self.playState == KSYPhoneLivePlayBack) {
-        [self.interactiveView updateProgressWithCurentTime:self.currentPlaybackTime duration:self.duration];
+        [self.interactiveView updateProgressWithCurentTime:self.currentPlaybackTime duration:self.duration  playabeDuration:self.player.playableDuration];
     }
 
 }

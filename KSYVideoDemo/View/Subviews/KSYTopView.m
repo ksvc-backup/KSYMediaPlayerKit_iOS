@@ -30,7 +30,7 @@
 {
 
     self.backgroundColor=[UIColor blackColor];
-    self.alpha=0.7;
+    self.alpha=0.5;
     //用户名和关注按钮
     kUserImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 30, 30)];
     [self addSubview:kUserImageView];
@@ -48,14 +48,15 @@
     
     
     
-    kForcBtn=[[UIButton alloc]initWithFrame:CGRectMake(self.right-70, 5, 60, 30)];
+    kForcBtn=[[UIButton alloc]initWithFrame:CGRectMake(self.right-65, 7.5, 55, 25)];
     [self addSubview:kForcBtn];
     [kForcBtn setTitle:@"＋关注" forState:UIControlStateNormal];
-    [kForcBtn setTitleColor:KSYCOLER(92, 223, 232) forState:UIControlStateNormal];
+    [kForcBtn setTitleColor:THEMECOLOR forState:UIControlStateNormal];
+    kForcBtn.titleLabel.font=[UIFont systemFontOfSize:WORDFONT16];
     //设置边框
     kForcBtn.layer.masksToBounds=YES;
     kForcBtn.layer.cornerRadius=5;
-    kForcBtn.layer.borderColor=[KSYCOLER(92, 223, 232)CGColor];
+    kForcBtn.layer.borderColor=[THEMECOLOR CGColor];
     kForcBtn.layer.borderWidth=1;
     [kForcBtn addTarget:self action:@selector(clickForceBtn:) forControlEvents:UIControlEventTouchUpInside];
 }

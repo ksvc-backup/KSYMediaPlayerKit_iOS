@@ -88,7 +88,6 @@
 {
     [ksyPoularbackView.ksyVideoPlayerView shutDown];
     [ksyPoularbackView unregisterObservers];
-    [ksyPoularbackView unregisterObservers];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
 }

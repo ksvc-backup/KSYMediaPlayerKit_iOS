@@ -8,7 +8,7 @@
 
 #import "KSYIntTVCell.h"
 #define SPACING 5
-#define BIGFONT 22
+#define BIGFONT 18
 #define SMALLFONT 16
 @interface KSYIntTVCell ()
 {
@@ -83,7 +83,7 @@
     videoName.frame=CGRectMake(videoNameX, videoNameY, videoSize.width, videoSize.height);
     videoName.text=model3.videoName;
     //设置时间
-    CGFloat timeX=self.right-80;
+    CGFloat timeX=THESCREENWIDTH-80;
     CGFloat timeY=videoName.top+2;
     CGSize timeSize=[model3.time sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SMALLFONT]}];
     time.frame=CGRectMake(timeX, timeY, timeSize.width, timeSize.height);
@@ -98,7 +98,7 @@
     //内容简介
     CGFloat contentX=videoNameX;
     CGFloat contentY=CGRectGetMaxY(customerCount.frame)+SPACING;
-    CGFloat contentWidth=self.right-imageView.right-2*SPACING;
+    CGFloat contentWidth=THESCREENWIDTH-imageView.right-2*SPACING;
     CGSize contentSize=[model3.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SMALLFONT]} context:nil].size;
     content.frame=CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
     content.text=model3.content;

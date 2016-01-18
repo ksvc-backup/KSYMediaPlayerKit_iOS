@@ -119,6 +119,7 @@ typedef enum KSYGestureType KSYGestureType;
 #define WORDFONT16 16
 #define WORDFONT18 18
 #define THEMECOLOR [UIColor colorWithRed:92/255.0 green:232/255.0 blue:223/255.0 alpha:1.0]
+#define DEEPCOLOR [UIColor colorWithRed:43/255.0 green:43/255.0 blue:43/255.0 alpha:1.0]
 #define ALPHA 0.7
 
 

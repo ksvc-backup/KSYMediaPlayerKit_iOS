@@ -17,7 +17,6 @@
 
 @implementation KSYBottomView
 @synthesize kCurrentLabel;
-@synthesize kPlaySlider;
 @synthesize kShortPlayBtn;
 @synthesize kTotalLabel;
 @synthesize kFullBtn;
@@ -26,7 +25,7 @@
 @synthesize imageView;
 @synthesize fansCount;
 @synthesize commentText;
-@synthesize kPlayabelSlider;
+@synthesize kprogress;
 @synthesize episodeBtn;
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate
 {
@@ -85,7 +84,7 @@
         }else {
            
             //播放时间
-            kCurrentLabel=[[UILabel alloc]initWithFrame:CGRectMake(kShortPlayBtn.right+10, kShortPlayBtn.center.y-15, 50, 30)];
+            kCurrentLabel=[[UILabel alloc]initWithFrame:CGRectMake(kShortPlayBtn.right, kShortPlayBtn.center.y-15, 50, 30)];
             [self addSubview:kCurrentLabel];
             kCurrentLabel.text=@"00:00";
             kCurrentLabel.textColor=[UIColor whiteColor];
@@ -93,31 +92,29 @@
             kCurrentLabel.tag= kProgressCurLabelTag;
             kCurrentLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
-            //缓冲进度条
-            kPlayabelSlider=[[UISlider alloc]initWithFrame:CGRectMake(kCurrentLabel.right+10, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-10-90, 10)];
-            [kPlayabelSlider setMinimumTrackTintColor:[UIColor whiteColor]];
-            [kPlayabelSlider setMaximumTrackTintColor:[UIColor clearColor]];
-            [kPlayabelSlider setThumbTintColor:[UIColor clearColor]];
-            kPlayabelSlider.value = 0.0;
-            [self addSubview:kPlayabelSlider];
-            //进度条
-            UIImage *dotImg = [UIImage imageNamed:@"Oval"];
-            kPlaySlider=[[UISlider alloc]initWithFrame:CGRectMake(kCurrentLabel.right+10, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-10-90, 10)];
-            [kPlaySlider setMinimumTrackTintColor:KSYCOLER(92, 232, 223)];
-            [kPlaySlider setBackgroundColor:[UIColor blackColor]];
-            [kPlaySlider setAlpha:0.7];
-            [kPlaySlider setThumbImage:dotImg forState:UIControlStateNormal];
-            [kPlaySlider addTarget:self action:@selector(progressDidBegin:) forControlEvents:UIControlEventTouchDown];
-            [kPlaySlider addTarget:self action:@selector(progressChanged:) forControlEvents:UIControlEventValueChanged];
-            [kPlaySlider addTarget:self action:@selector(progressChangeEnd:) forControlEvents:(UIControlEventTouchUpOutside | UIControlEventTouchCancel|UIControlEventTouchUpInside)];
-            kPlaySlider.value = 0.0;
-            kPlaySlider.tag =kProgressSliderTag;
-            [self addSubview:kPlaySlider];
-
+            if (_playstate==kSYShortVideoPlay) {
+               kprogress=[[KSYProgressVI alloc]initWithFrame:CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-70, 10)];
+                //总时间
+                kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kprogress.right+5, kprogress.center.y-15, 50, 30)];
+                //全屏按钮
+                kFullBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+                CGRect kFullBtnRect = CGRectMake(kTotalLabel.right, 5, 30, 30);
+                kFullBtn.frame = kFullBtnRect;
+                kFullBtn.hidden=YES;
+            }else{
+                kprogress=[[KSYProgressVI alloc]initWithFrame:CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-10-85, 10)];
+                //总时间
+                kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kprogress.right+5, kprogress.center.y-15, 50, 30)];
+                //全屏按钮
+                kFullBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+                CGRect kFullBtnRect = CGRectMake(kTotalLabel.right, 5, 30, 30);
+                kFullBtn.frame = kFullBtnRect;
+            }
+            
+            [self addSubview:kprogress];
             
             
-            //总时间
-            kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kPlaySlider.right+5, kShortPlayBtn.center.y-15, 50, 30)];
+            
             kTotalLabel.tag=kProgressMaxLabelTag;
             [self addSubview:kTotalLabel];
             kTotalLabel.textAlignment = NSTextAlignmentCenter;
@@ -126,12 +123,9 @@
             kTotalLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
             
-            //全屏按钮
-            kFullBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-            CGRect kFullBtnRect = CGRectMake(kTotalLabel.right, 5, 30, 30);
+           
             UIImage *fullImg = [UIImage imageNamed:@"full"];
             [kFullBtn setImage:fullImg forState:UIControlStateNormal];
-            kFullBtn.frame = kFullBtnRect;
             kFullBtn.tag = kFullScreenBtnTag;
             [kFullBtn addTarget:self action:@selector(clickFullBtn:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:kFullBtn];
@@ -159,7 +153,6 @@
         [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
         [danmuBtn addTarget:self action:@selector(clickDanmuBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:danmuBtn];
-       
     }
     return self;
 }
@@ -205,7 +198,7 @@
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);
-        commentText.frame=CGRectMake(fansCount.right+5, 5, self.width-commentText.left-125, 30);
+        commentText.frame=CGRectMake(fansCount.right+5, 5, self.width-commentText.left-130, 30);
         commentText.hidden=NO;
         qualityBtn.hidden=NO;
         qualityBtn.frame= CGRectMake(commentText.right+5, 5, 40, 30);
@@ -216,14 +209,15 @@
     }else  {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 55, 30);
-        kPlaySlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-195, 10);
-        kPlayabelSlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-195, 10);
-        kTotalLabel.frame=CGRectMake(self.right-190, kShortPlayBtn.center.y-15, 55, 30);
+        kprogress.frame=CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-185, 10);
+        [kprogress setLength];
+        kTotalLabel.frame=CGRectMake(kprogress.right+5, kShortPlayBtn.center.y-15, 55, 30);
         qualityBtn.hidden=NO;
         qualityBtn.frame= CGRectMake(kTotalLabel.right+5, 5, 40, 30);
         danmuBtn.hidden=NO;
         danmuBtn.frame=CGRectMake(qualityBtn.right+5, 5, 40, 30);
         if (_playstate==KSYVideoOnlinePlay) {
+
             if (!episodeBtn) {
                 //选集
                 episodeBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -249,6 +243,7 @@
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);
+        [commentText resignFirstResponder];
         commentText.frame=CGRectMake(fansCount.right+5, 5, self.width-commentText.left-40, 30);
         commentText.hidden=YES;
         qualityBtn.hidden=YES;
@@ -257,13 +252,13 @@
         [kFullBtn setImage:unFullImage forState:UIControlStateNormal];
     }else {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
-        kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right+5, kShortPlayBtn.center.y-15, 60, 30);
-        kPlaySlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-100, 10);
-        kPlayabelSlider.frame= CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-100, 10);
-        kTotalLabel.frame=CGRectMake(self.right-95, kShortPlayBtn.center.y-15, 60, 30);
+        kCurrentLabel.frame= CGRectMake(kShortPlayBtn.right, kShortPlayBtn.center.y-15, 50, 30);
+        kprogress.frame=CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-10-85 ,10);
+        [kprogress setLength];
+        kTotalLabel.frame=CGRectMake(kprogress.right+5, kprogress.center.y-15, 50, 30);
         qualityBtn.hidden=YES;
         danmuBtn.hidden=YES;
-        kFullBtn.frame=CGRectMake(kTotalLabel.right+5, 5, 30, 30);
+        kFullBtn.frame=CGRectMake(kTotalLabel.right, 5, 30, 30);
         [kFullBtn setImage:unFullImage forState:UIControlStateNormal];
         episodeBtn.hidden=YES;
     }
@@ -281,12 +276,11 @@
         }
     }
 }
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    //通过代码块改变bottom的位置
-    if (self.changeBottomFrame) {
-        self.changeBottomFrame(textField);
-    }
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [self regNotification];
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self unregNotification];
 }
 - (void)clickQualityBtn
 {
@@ -300,4 +294,34 @@
         self.addDanmu(btn);
     }
 }
+- (void)updateCurrentDuration:(NSInteger)duration Position:(NSInteger)currentPlaybackTime playAbleDuration:(NSInteger)playableDuration{
+    
+    int iMin  = (int)(currentPlaybackTime / 60);
+    int iSec  = (int)(currentPlaybackTime % 60);
+    kCurrentLabel.text = [NSString stringWithFormat:@"%02d:%02d", iMin, iSec];
+    int iDuraMin  = (int)(duration / 60);
+    int iDuraSec  = (int)(duration % 3600 % 60);
+    kTotalLabel.text = [NSString stringWithFormat:@"%02d:%02d", iDuraMin, iDuraSec];
+    [kprogress updateProgress:duration Position:currentPlaybackTime playAbleDuration:playableDuration];
+}
+- (void)regNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+- (void)unregNotification{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+- (void)keyboardWillChangeFrame:(NSNotification*)aNotification{
+    NSDictionary* info = [aNotification userInfo];
+    
+    CGRect endKeyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
+    
+    CGFloat height = endKeyboardRect.size.height;
+    
+    //通过代码块改变bottom的位置
+    if (self.changeBottomFrame) {
+        self.changeBottomFrame(height);
+    }
+}
+
+
 @end

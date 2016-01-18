@@ -12,6 +12,9 @@
 @interface KSYShortVideoPlayView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame UrlPathString:(NSString *)urlPathString;
+- (void)unregNotification;
+
+
 
 @property (nonatomic, strong) NSMutableArray *models;
 @property (nonatomic, strong) NSMutableArray *modelsCells;

@@ -28,8 +28,9 @@
     //重置播放界面的大小
     self = [super initWithFrame:frame];//初始化父视图的(frame、url)
     if (self) {
+        self.backgroundColor=DEEPCOLOR;
         ksyShortTableView=[[UITableView alloc]initWithFrame:frame style:UITableViewStyleGrouped];
-        ksyShortTableView.backgroundColor=[UIColor blackColor];
+        ksyShortTableView.backgroundColor=[UIColor clearColor];
         ksyShortTableView.delegate=self;
         ksyShortTableView.dataSource=self;
         [self addSubview:ksyShortTableView];
@@ -45,6 +46,7 @@
         }];
         [self addCommentView];
         commentView.hidden=YES;
+        [self regNotification];
     }
     return self;
 }
@@ -89,12 +91,13 @@
         if (!cell){
             cell=[[KSYInteractCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId1];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
-            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            cell.backgroundColor=[UIColor clearColor];
+            tempView.backgroundColor =DEEPCOLOR;
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
             UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
-            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
+            tempView1.backgroundColor = DEEPCOLOR;
             cell.selectedBackgroundView = tempView1;
-            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         return cell;
 
@@ -103,13 +106,11 @@
         KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId2];
         if (!cell){
             cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId2];
+            cell.backgroundColor=[UIColor clearColor];
             UIView* tempView=[[UIView alloc] initWithFrame:cell.frame];
-            tempView.backgroundColor =KSYCOLER(90, 90, 90);
+            tempView.backgroundColor =DEEPCOLOR;
             cell.backgroundView = tempView;  //更换背景色     不能直接设置backgroundColor
-            UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
-            tempView1.backgroundColor = KSYCOLER(100, 100, 100);
-            cell.selectedBackgroundView = tempView1;
-            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         KSYCommentModel *SKYmodel=_models[indexPath.row];
         cell.model1=SKYmodel;
@@ -120,6 +121,13 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (!_videoCell.ksyShortView.isPlaying) {
+        //获得播放按钮
+        UIButton *playBtn=(UIButton *)[self viewWithTag:kBarPlayBtnTag];
+        if (playBtn.selected==NO) {
+            return;
+        }else{
+            [_videoCell.ksyShortView play];
+        }
         return;
     }else{
         if (ksyShortTableView.contentOffset.y>260.0) {
@@ -150,14 +158,36 @@
 {
     return 0.1;
 }
+- (void)keyboardWillChangeFrame:(NSNotification*)aNotification{
+    NSDictionary* info = [aNotification userInfo];
+    //kbSize即為鍵盤尺寸 (有width, height)
+    
+    CGRect endKeyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue];
+    
+    CGFloat height = endKeyboardRect.size.height;
+    
+    CGRect newFrame = CGRectMake(0, self.height-height-40, self.width, 40);
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        commentView.frame = newFrame;
+    }];
+}
+- (void)regNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+- (void)unregNotification{
+   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+}
 - (void)changeCommentViewFrame
 {
-    commentView.frame=CGRectMake(0, self.height/2-8, self.width, 40);
+    
 }
 - (void)rechangeCommentViewFrame
 {
-    commentView.frame=CGRectMake(0, self.height-40, self.width, 40);
     UITextField *kTextField=(UITextField *)[self viewWithTag:kCommentFieldTag];
     [kTextField resignFirstResponder];
+    commentView.frame=CGRectMake(0, self.height-40, self.width, 40);
+    NSLog(NSStringFromCGRect(commentView.frame));
 }
+
 @end

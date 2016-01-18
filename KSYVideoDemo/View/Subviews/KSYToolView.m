@@ -49,7 +49,7 @@
     for (int i=0; i<3; i++) {
         UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
         [self addSubview:btn];
-        btn.frame=CGRectMake(self.width-(170-50*i), TOPSPACING, 80, 40);
+        btn.frame=CGRectMake(self.width-(110-40*i), TOPSPACING, 30, 30);
         [btn setImage:[UIImage imageNamed:array[i]] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag=99-i;

@@ -86,8 +86,6 @@
         _spectatorsComeLabel.layer.cornerRadius = 8;
         _spectatorsComeLabel.layer.masksToBounds = YES;
         _spectatorsComeLabel.hidden = YES;
-        
-
     }
     return _spectatorsComeLabel;
 }
@@ -274,9 +272,9 @@
     }
 }
 
-- (void)updateProgressWithCurentTime:(NSTimeInterval)time duration:(NSTimeInterval)duration
+- (void)updateProgressWithCurentTime:(NSTimeInterval)time duration:(NSTimeInterval)duration playabeDuration:(NSTimeInterval)playableduration
 {
-    [self.progressToolBar updataSliderWithPosition:time duration:duration];
+    [self.progressToolBar updataSliderWithPosition:time duration:duration playableDuration:playableduration ];
 }
 
 - (void)playerStop:(BOOL)isStop

@@ -31,10 +31,31 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)registerForKeyboardNotifications
+{
+    //使用NSNotificationCenter 鍵盤出現時
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWasShown:)
+     
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    //使用NSNotificationCenter 鍵盤隐藏時
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWillBeHidden:)
+     
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self registerForKeyboardNotifications];
     self.title = @"KSYPlayer";
     self.view.backgroundColor = [UIColor whiteColor];
     _sesionArr = [[NSArray alloc] initWithObjects:@"传统直播",@"手机直播",@"在线视频点播",@"短视频播放",@"列表浮窗", nil];
@@ -65,7 +86,7 @@
     
     _httpTextF = [[UITextField alloc] initWithFrame:CGRectMake(httpUrlLabl.right + 5, httpUrlLabl.top,self.view.width-httpUrlLabl.right-10, 20)];
     _httpTextF.adjustsFontSizeToFitWidth = YES;
-    _httpTextF.text = @"http://eflakee.kssws.ks-cdn.com/MP4/San%20Francisco.mov";
+    _httpTextF.text = @"http://eflakee.kssws.ks-cdn.com/MP4/My%20Love.mp4";
     _httpTextF.borderStyle = UITextBorderStyleRoundedRect;
     _httpTextF.returnKeyType = UIReturnKeyDone;
     _httpTextF.font = [UIFont systemFontOfSize:13.0];

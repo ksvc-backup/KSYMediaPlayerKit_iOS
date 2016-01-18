@@ -138,23 +138,28 @@
     [_focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
     _focusBtn.layer.masksToBounds=YES;
     _focusBtn.layer.cornerRadius=5;
-    [_focusBtn setTitleColor:KSYCOLOR(92, 222, 231) forState:UIControlStateNormal];
-    _focusBtn.layer.borderColor=[KSYCOLOR(92, 222, 231)CGColor];
+    [_focusBtn setTitleColor:THEMECOLOR forState:UIControlStateNormal];
+    _focusBtn.layer.borderColor=[THEMECOLOR CGColor];
     _focusBtn.layer.borderWidth = 0.5;
-
+ 
     
     //个人签名
     CGFloat signatureX=hostNameX;
-    CGFloat signatureY=CGRectGetMaxY(_hostLevel.frame)+SPACING;
-    CGFloat signatureWidth=self.width-_hostLevel.right;
+    CGFloat signatureY=_hostLevel.bottom+SPACING;
+    CGFloat signatureWidth=THESCREENWIDTH-_hostLevel.left-10;
     CGSize signatureSize=[model2.signature boundingRectWithSize:CGSizeMake(signatureWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SIGNATUREFONT]} context:nil].size;
     CGRect signatureRect=CGRectMake(signatureX, signatureY, signatureSize.width, signatureSize.height);
     _signature.text=model2.signature;
     _signature.frame=signatureRect;
                          
-    
-    //添加下划线
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_focusBtn.frame)+SPACING, self.frame.size.width, 1)];
+    CGFloat labelY;
+    //添加下划线 这里需要判断
+    if (_focusBtn.bottom>_signature.bottom) {
+        labelY =_focusBtn.bottom+10;
+    }else{
+        labelY=_signature.bottom+10;
+    }
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, labelY, THESCREENWIDTH, 1)];
     label.backgroundColor=[UIColor lightGrayColor];
     [self addSubview:label];
     
@@ -179,7 +184,7 @@
     //时间
     CGFloat timeX=CGRectGetMaxX(createTime.frame)+SPACING;
     CGFloat timeY=createtimeY;
-    CGRect timeRect=CGRectMake(timeX, timeY, self.frame.size.width-timeX-10, 30);
+    CGRect timeRect=CGRectMake(timeX, timeY, THESCREENWIDTH-timeX-10, 30);
     _time.frame=timeRect;
     _time.text=model2.time;
     
@@ -212,7 +217,7 @@
     //时间
     CGFloat contentX=timeX;
     CGFloat contentY=ctentY-5;
-    CGFloat contentWidth=self.frame.size.width-contentX-20;
+    CGFloat contentWidth=THESCREENWIDTH-contentX-20;
     CGSize contentSize=[model2.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:HOSTLEVELFONT]} context:nil].size;
     CGRect contentRec=CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
     _content.frame=contentRec;

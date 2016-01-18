@@ -27,7 +27,7 @@ singleton_implementation(KSYDBManager)
     NSManagedObjectModel *model=[NSManagedObjectModel mergedModelFromBundles:nil];
     //创建解析器
     NSPersistentStoreCoordinator *storeCoordinator=[[NSPersistentStoreCoordinator alloc]initWithManagedObjectModel:model];
-    //创建数据库保存路径
+    //创建数据库保存路径 沙盒路径
     NSString *dir=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject];
     NSString *path=[dir stringByAppendingPathComponent:@"myDatabase.db"];
     NSURL *url=[NSURL fileURLWithPath:path];

@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIButton  *shareButton;
 @property (strong, nonatomic) UIButton  *playControlButton;
 @property (strong, nonatomic) UISlider  *slider;
+@property (strong, nonatomic) UIProgressView *progrossView;
 @property (strong, nonatomic) UILabel   *timeLabel;
 @end
 
@@ -29,6 +30,7 @@
         [self addSubview:self.controCommentButton];
         [self addSubview:self.shareButton];
         [self addSubview:self.playControlButton];
+        [self addSubview:self.progrossView];
         [self addSubview:self.slider];
         [self addSubview:self.timeLabel];
     }
@@ -40,8 +42,9 @@
     [super layoutSubviews];
     self.controCommentButton.frame = CGRectMake(10, 5, 34, 34);
     self.playControlButton.frame = CGRectMake(self.controCommentButton.right + 8, 3, 34, 34);
-
+    self.progrossView.frame= CGRectMake(_playControlButton.right + 6, 5, self.frame.size.width - 120 - 36, 30);
     self.slider.frame = CGRectMake(_playControlButton.right + 6, 5, self.frame.size.width - 120 - 36, 30);
+    self.progrossView.center=self.slider.center;
     self.shareButton.frame = CGRectMake(_slider.right + 10, 5, 34, 34);
     self.timeLabel.frame = CGRectMake(self.slider.left, self.slider.bottom - 10, self.slider.frame.size.width - 8, 20);
 }
@@ -82,7 +85,13 @@
     }
     return _playControlButton;
 }
-
+- (UIProgressView *)progrossView{
+    if (!_progrossView) {
+        _progrossView = [UIProgressView new];
+        _progrossView.progressTintColor=[UIColor whiteColor];
+    }
+        return _progrossView;
+}
 - (UISlider *)slider
 {
     if (!_slider) {
@@ -92,7 +101,8 @@
         [_slider addTarget:self action:@selector(progressChangeEnd:) forControlEvents:(UIControlEventTouchUpOutside | UIControlEventTouchCancel|UIControlEventTouchUpInside)];
         _slider.value = 0.0;
 
-        _slider.maximumTrackTintColor = [UIColor whiteColor];
+        _slider.maximumTrackTintColor = [UIColor clearColor];
+        _slider.minimumTrackTintColor = THEMECOLOR;
         [[KSYThemeManager sharedInstance] changeTheme:@"red"];
 
         UIImage *dotImg = [[KSYThemeManager sharedInstance] imageInCurThemeWithName:@"img_dot"];
@@ -113,10 +123,11 @@
     }
     return _timeLabel;
 }
-- (void)updataSliderWithPosition:(NSInteger)position duration:(NSInteger)duration
+- (void)updataSliderWithPosition:(NSInteger)position duration:(NSInteger)duration playableDuration:(NSInteger)playableduration
 {
     self.slider.value = position;
     self.slider.maximumValue = duration;
+    self.progrossView.progress = (CGFloat)playableduration/duration;
     int iDuraMin  = (int)(duration / 60);
     int iDuraSec  = (int)(duration % 3600 % 60);
     
@@ -124,7 +135,7 @@
     int iPosSec  = (int)(position % 3600 % 60);
 
     _timeLabel.text = [NSString stringWithFormat:@"%02d:%02d / %02d:%02d ",iPosMin,iPosSec, iDuraMin, iDuraSec];
-
+    
 }
 
 - (void)playControlButtonEvent:(UIButton *)button

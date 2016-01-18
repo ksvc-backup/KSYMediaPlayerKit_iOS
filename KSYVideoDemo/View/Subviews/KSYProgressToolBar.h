@@ -15,7 +15,7 @@
 @property (nonatomic, copy)void (^seekToBlock)(double position);
 @property (strong ,nonatomic) void (^userEventBlock)(NSInteger index);
 
-- (void)updataSliderWithPosition:(NSInteger)position duration:(NSInteger)duration;
+- (void)updataSliderWithPosition:(NSInteger)position duration:(NSInteger)duration playableDuration:(NSInteger)playableduration;
 - (void)playerIsStop:(BOOL)isStop;
 
 @end

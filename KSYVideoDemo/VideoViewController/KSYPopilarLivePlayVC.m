@@ -82,6 +82,7 @@
     self.navigationItem.rightBarButtonItem=rightItem;
     
 }
+
 - (void)back
 {
     [ksyPoularLiveView.ksyVideoPlayerView shutDown];
@@ -109,8 +110,6 @@
             break;
     }
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

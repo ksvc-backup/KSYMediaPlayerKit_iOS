@@ -18,4 +18,6 @@
 //高度属性
 @property (nonatomic, assign) CGFloat height;
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifie;
+
 @end

@@ -30,6 +30,6 @@ typedef enum : NSUInteger {
 - (void)onPraiseWithSpectatorsInteractiveType:(SpectatorsInteractiveType)type;
 - (void)messageToolBarInputResignFirstResponder;
 
-- (void)updateProgressWithCurentTime:(NSTimeInterval)time duration:(NSTimeInterval)duration;
+- (void)updateProgressWithCurentTime:(NSTimeInterval)time duration:(NSTimeInterval)duration playabeDuration:(NSTimeInterval)playableduration;
 - (void)playerStop:(BOOL)isStop;
 @end
