@@ -64,7 +64,7 @@
     [self addSubview:lineLabel];
     
     //初始化表视图 只要你在做你就在想
-    _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(lineLabel.frame), THESCREENWIDTH, THESCREENHEIGHT/2-62) style:UITableViewStylePlain];
+    _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(lineLabel.frame), THESCREENWIDTH, THESCREENHEIGHT/2-25) style:UITableViewStylePlain];
     self.kTableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.kTableView];
     self.kTableView.delegate=self;
@@ -202,7 +202,6 @@
         [_modelsCells addObject:cell];
         //这样做复杂啦换一种方法
         [self.kTableView reloadData];
-        
     }
     //如果是推荐，获取推荐的数据
     else if(segment.selectedSegmentIndex==2){
@@ -217,5 +216,9 @@
         [self.kTableView reloadData];
     }
 }
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (self.showCommentView) {
+        self.showCommentView(_kSegmentedCTL.selectedSegmentIndex,_kTableView.contentOffset.y);
+    }
+}
 @end

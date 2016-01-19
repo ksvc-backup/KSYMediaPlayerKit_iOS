@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-
-
 @interface KSYDetailView : UIView<UITableViewDataSource,UITableViewDelegate>
 #pragma mark 属性
 @property (nonatomic, strong) NSMutableArray *models;
 @property (nonatomic, strong) NSMutableArray *modelsCells;
 @property (nonatomic, strong) UISegmentedControl *kSegmentedCTL;
 @property (nonatomic, strong) UITableView * kTableView;
+@property (nonatomic, copy) void (^showCommentView)(NSInteger selectedSegmentIndex,CGFloat contentoffsetY);
+
 #pragma mark 方法
 - (void)loadData;
 @end

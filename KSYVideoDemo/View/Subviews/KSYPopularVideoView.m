@@ -118,10 +118,21 @@
         self.lockWindow(islocked);
     }
 }
-
+- (void)showCommentView:(NSInteger)selectedSegmentIndex contentOffset:(CGFloat)contentoffset
+{
+    if(selectedSegmentIndex==0&&contentoffset>100){
+        _commtenView.hidden=NO;
+    }else{
+        _commtenView.hidden=YES;
+    }
+}
 - (void)addDetailView
 {
-    _detailView=[[KSYDetailView alloc]initWithFrame:CGRectMake(0, self.ksyVideoPlayerView.bottom,self.width,self.height/2-40)];
+    WeakSelf(KSYPopularVideoView);
+    _detailView=[[KSYDetailView alloc]initWithFrame:CGRectMake(0, self.ksyVideoPlayerView.bottom,self.width,self.height/2)];
+    _detailView.showCommentView=^(NSInteger selectedSegmentIndex,CGFloat contentoffset){
+        [weakSelf showCommentView:selectedSegmentIndex contentOffset:contentoffset];
+    };
     [self addSubview: _detailView];
 }
 
@@ -129,6 +140,7 @@
 {
     WeakSelf(KSYPopularVideoView);
     _commtenView=[[KSYCommentView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40)];
+    _commtenView.hidden=YES;
     _commtenView.send=^{
         [weakSelf resetTextFrame];
     };
