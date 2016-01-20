@@ -10,7 +10,7 @@
 #import "KSYTopView.h"
 #import "KSYBottomView.h"
 
-@interface KSYShortView ()<KSYProgressDelegate>{
+@interface KSYShortView (){
     KSYTopView *_topView;
     KSYBottomView *_bottomView;
     BOOL _showORhidden;
@@ -35,7 +35,6 @@
 - (void)addTopView
 {
     if (!_topView) {
-        WeakSelf(KSYShortView);
         _topView=[[KSYTopView alloc]initWithFrame:CGRectMake(0, 0, self.width, 40)];
         _topView.backgroundColor=[UIColor blackColor];
         _topView.alpha=0.5;
@@ -67,14 +66,22 @@
         _bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:kSYShortVideoPlay];
         _bottomView.kTotalLabel.frame=CGRectMake(self.right-60, 5, 50, 30);
         _bottomView.kprogress.width=self.width-_bottomView.kCurrentLabel.right;
-        _bottomView.kprogress.delegate=self;
         _bottomView.BtnClick=^(UIButton *btn){
             [weakSelf BtnClick:btn];
+        };
+        _bottomView.progressDidBegin=^(UISlider *slider){
+            [weakSelf progDidBegin:slider];
+        };
+        _bottomView.progressDidBegin=^(UISlider *slider){
+            [weakSelf progChanged:slider];
+        };
+        _bottomView.progressDidBegin=^(UISlider *slider){
+            [weakSelf progChangeEnd:slider];
         };
     }
     return _bottomView;
 }
-- (void)progDidBegin{
+- (void)progDidBegin:(UISlider *)slider{
     if ([self.player isPlaying]==YES) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
@@ -82,24 +89,23 @@
     }
     
 }
--(void)progChanged{
-    UISlider *progressSlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
+-(void)progChanged:(UISlider *)slider{
+
     if (![self.player isPreparedToPlay]) {
-        progressSlider.value = 0.0f;
+        slider.value = 0.0f;
         return;
     }
     UILabel *startLabel = (UILabel *)[self viewWithTag:kProgressCurLabelTag];
-    NSInteger position = progressSlider.value;
+    NSInteger position = slider.value;
     int iMin  = (int)(position / 60);
     int iSec  = (int)(position % 60);
     NSString *strCurTime = [NSString stringWithFormat:@"%02d:%02d", iMin, iSec];
     startLabel.text = strCurTime;
     
 }
-- (void)progChangeEnd{
-    UISlider *progressSlider = (UISlider *)[self viewWithTag:kProgressSliderTag];
+- (void)progChangeEnd:(UISlider *)slider{
     if (![self.player isPreparedToPlay]) {
-        progressSlider.value=0.0f;
+        slider.value=0.0f;
         return;
     }
     if ([self.player isPlaying]==YES) {
@@ -107,7 +113,7 @@
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
-    [self moviePlayerSeekTo: progressSlider.value];
+    [self moviePlayerSeekTo: slider.value];
 }
 - (void)BtnClick:(UIButton *)btn
 {
@@ -165,5 +171,8 @@
     //设置slider的相关属性
     [_slider setMinimumTrackTintColor:THEMECOLOR];
     _slider.thumbTintColor=[UIColor clearColor];
+}
+-(void)dealloc{
+    
 }
 @end

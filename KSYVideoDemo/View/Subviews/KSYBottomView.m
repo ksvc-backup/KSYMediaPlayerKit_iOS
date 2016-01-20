@@ -11,11 +11,13 @@
 
 @interface KSYBottomView (){
     BOOL isFull;
+    KSYPopularLivePlayState thisPlaystate;
 }
 
 @end
 
 @implementation KSYBottomView
+
 @synthesize backgroundView;
 @synthesize kCurrentLabel;
 @synthesize kShortPlayBtn;
@@ -35,13 +37,10 @@
     self=[super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor=[UIColor clearColor];
-        backgroundView = [[UIView alloc]initWithFrame:self.bounds];
-        backgroundView.backgroundColor = [UIColor blackColor];
-        backgroundView.alpha = 0.5;
-        [self addSubview:backgroundView];
+        self.backgroundColor=[UIColor blackColor];
+        self.alpha = 0.5;
         
-        _playstate=playstate;
+        thisPlaystate=playstate;
         //播放按钮 播放时间 进度条 总时间
         kShortPlayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *pauseImg_n = [UIImage imageNamed:@"play"];
@@ -51,7 +50,7 @@
         [self addSubview:kShortPlayBtn];
         kShortPlayBtn.tag=kBarPlayBtnTag;
         
-        if (_playstate==KSYPopularLivePlay) {
+        if (thisPlaystate==KSYPopularLivePlay) {
             //添加用户头像
             imageView=[[UIImageView alloc]initWithFrame:CGRectMake(kShortPlayBtn.right+5, 5, 30, 30)];
             [self addSubview:imageView];
@@ -97,9 +96,19 @@
             kCurrentLabel.textAlignment = NSTextAlignmentCenter;
             kCurrentLabel.tag= kProgressCurLabelTag;
             kCurrentLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
-
-            if (_playstate==kSYShortVideoPlay) {
-               kprogress=[[KSYProgressVI alloc]initWithFrame:CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-70, 10)];
+            
+            if (thisPlaystate==kSYShortVideoPlay) {
+                WeakSelf(KSYBottomView);
+                kprogress=[[KSYProgressVI alloc]initWithFrame:CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-70, 10)];
+                kprogress.progDidBegin=^(UISlider *slider){
+                    [weakSelf progressDidBegin:slider];
+                };
+                kprogress.progChanged=^(UISlider *slider){
+                     [weakSelf progressChanged:slider];
+                };
+                kprogress.progChangeEnd=^(UISlider *slider){
+                    [weakSelf progressChangeEnd:slider];
+                };
                 //总时间
                 kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kprogress.right+5, kprogress.center.y-15, 50, 30)];
                 //全屏按钮
@@ -198,9 +207,8 @@
 }
 - (void)setSubviews
 {
-    backgroundView.frame = CGRectMake(self.origin.x, self.origin.y, self.width, self.height);
     UIImage *fullImage=[UIImage imageNamed:@"unfull"];
-    if (_playstate==KSYPopularLivePlay) {
+    if (thisPlaystate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(10, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);
@@ -222,7 +230,7 @@
         qualityBtn.frame= CGRectMake(kTotalLabel.right+5, 5, 40, 30);
         danmuBtn.hidden=NO;
         danmuBtn.frame=CGRectMake(qualityBtn.right+5, 5, 40, 30);
-        if (_playstate==KSYVideoOnlinePlay) {
+        if (thisPlaystate==KSYVideoOnlinePlay) {
 
             if (!episodeBtn) {
                 //选集
@@ -236,7 +244,7 @@
             }
             episodeBtn.hidden=NO;
             kFullBtn.hidden=YES; 
-        }else if (_playstate==KSYPopularPlayBack){
+        }else if (thisPlaystate==KSYPopularPlayBack){
             kFullBtn.frame=CGRectMake(danmuBtn.right+5, 5, 30, 30);
             [kFullBtn setImage:fullImage forState:UIControlStateNormal];
         }
@@ -244,9 +252,9 @@
 }
 - (void)resetSubviews
 {
-    backgroundView.frame = CGRectMake(self.origin.x, self.origin.y, self.width, self.height);
+
     UIImage *unFullImage=[UIImage imageNamed:@"full"];
-    if (_playstate==KSYPopularLivePlay) {
+    if (thisPlaystate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
         imageView.frame= CGRectMake(kShortPlayBtn.right+5, 5, 30, 30);
         fansCount.frame= CGRectMake(imageView.right+5, 5, 45, 30);

@@ -17,7 +17,10 @@
 @end
 
 @implementation KSYPopilarLivePlayBackVC
-
+- (void)dealloc
+{
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
@@ -25,7 +28,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self changeNavigationStyle];
     ksyPoularbackView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYPopularPlayBack];
-    ksyPoularbackView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
+//    ksyPoularbackView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
     WeakSelf(KSYPopilarLivePlayBackVC);
     ksyPoularbackView.lockWindow=^(BOOL isLocked){
         [weakSelf lockTheWindow:(isLocked)];
@@ -88,9 +91,6 @@
     [ksyPoularbackView.ksyVideoPlayerView shutDown];
     [ksyPoularbackView unregisterObservers];
     [ksyPoularbackView removeFromSuperview];
-//    if (ksyPoularbackView) {
-//        ksyPoularbackView=nil;
-//    }
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
@@ -104,7 +104,6 @@
                                   cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:@"订阅"
                                   otherButtonTitles:@"举报",nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     [actionSheet showInView:self.view];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -121,10 +120,6 @@
             break;
     }
 }
-- (void)dealloc
-{
-    AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
-    appDelegate.allowRotation=NO;
-}
+
 
 @end

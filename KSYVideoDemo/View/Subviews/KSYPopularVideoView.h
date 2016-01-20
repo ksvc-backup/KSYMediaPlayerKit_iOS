@@ -15,6 +15,7 @@
 
 
 
+
 @property (nonatomic, copy) void (^changeNavigationBarColor)(BOOL hidden);
 @property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;
 @property (nonatomic, strong)  KSYDetailView *detailView;

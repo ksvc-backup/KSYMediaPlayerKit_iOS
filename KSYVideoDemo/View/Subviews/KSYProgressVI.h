@@ -8,18 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol KSYProgressDelegate <NSObject>
-
-- (void)progDidBegin;
-- (void)progChanged;
-- (void)progChangeEnd;
-
-@end
-
-
 @interface KSYProgressVI : UIView
 
-@property (nonatomic, strong) id<KSYProgressDelegate>delegate;
+@property (nonatomic, copy) void (^progDidBegin)(UISlider *slider);
+@property (nonatomic, copy) void (^progChanged)(UISlider *slider);
+@property (nonatomic, copy) void (^progChangeEnd)(UISlider *slider);
 @property (nonatomic, strong) UISlider *kPlaySlider;
 @property (nonatomic, strong) UIProgressView *kProgressView;
 

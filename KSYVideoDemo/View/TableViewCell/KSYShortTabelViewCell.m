@@ -19,12 +19,14 @@
 {
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        if (!self.ksyShortView) {
-            self.ksyShortView=[[KSYShortView alloc]initWithFrame:frame urlShortString:urlstring];
-            [self addSubview:self.ksyShortView];
+        if (!_ksyShortView) {
+            _ksyShortView=[[KSYShortView alloc]initWithFrame:frame urlShortString:urlstring];
+            [self addSubview:_ksyShortView];
         }
     }
     return self;
 }
+-(void)dealloc{
 
+}
 @end

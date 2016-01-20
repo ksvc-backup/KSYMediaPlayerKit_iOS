@@ -12,13 +12,14 @@
 @interface KSYDetailModel (){
     NSArray *_model;
     NSMutableArray *_modelsCells;
-    
 }
 
 @end
 
 @implementation KSYDetailView{
     BOOL _scrollUpOrDown;
+    CGFloat _SHeight;
+    CGFloat _LHeight;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -65,13 +66,15 @@
     UILabel *lineLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.kSegmentedCTL.frame)+10, THESCREENWIDTH, 1)];
     lineLabel.backgroundColor=[UIColor lightGrayColor];
     [self addSubview:lineLabel];
-    
+
     //初始化表视图 只要你在做你就在想
     _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(lineLabel.frame), THESCREENWIDTH, THESCREENHEIGHT/2-25) style:UITableViewStylePlain];
     self.kTableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.kTableView];
     self.kTableView.delegate=self;
     self.kTableView.dataSource=self;
+    _LHeight = _kTableView.height;
+    _SHeight  = _kTableView.height-40;
     //刷新数据
     [self segmentChange:self.kSegmentedCTL];
 
@@ -225,28 +228,17 @@
     if (self.showCommentView) {
         self.showCommentView(_kSegmentedCTL.selectedSegmentIndex,_kTableView.contentOffset.y);
     }
-    static float newx = 0;
-    static float oldx = 0;
-    newx= scrollView.contentOffset.x ;
-    if (newx != oldx ) {
-        //Down-YES,Up-NO
-        if (newx > oldx) {
-            _scrollUpOrDown = NO;
-        }else if(newx < oldx){
-            _scrollUpOrDown = YES;
-        }
-        oldx = newx;
-    }
 }
 - (void)resetTableViewFrame:(NSInteger)selectedIndex{
-//    if (selectedIndex==0) {
-//        static CGRect rect = self
-//        if (_scrollUpOrDown) {
-//
-//        }else{
-//            _kTableView.height -= 40;
-//            _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _kTableView.height);
-//        }
-//    }
+    CGFloat currentY= _kTableView.contentOffset.y+_kTableView.height ;
+    NSLog(@"%f,%f",currentY,_kTableView.contentSize.height);
+
+    if (selectedIndex==0) {
+        if (currentY>=_kTableView.contentSize.height) {
+            _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _SHeight);
+        }else if(_kTableView.contentOffset.y<=0){
+            _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _LHeight);
+        }
+    }
 }
 @end

@@ -20,6 +20,8 @@
 
 @implementation KSYPopularVideoView
 
+
+
 -(void)hiddenNavigater:(BOOL)hidden{
     if (self.hiddenNvgt) {
         self.hiddenNvgt(hidden);
@@ -229,6 +231,6 @@
     }
 }
 - (void)dealloc{
-    [_ksyVideoPlayerView removeFromSuperview];
+    
 }
 @end
