@@ -13,7 +13,7 @@
 @interface KSYVoiceView ()
 
 @property (nonatomic, strong) KSYMediaVoiceView *mediaVoiceView;
-
+@property (nonatomic, assign) BOOL OnOROff;
 @end
 
 
@@ -59,6 +59,7 @@
     _mediaVoiceView.tag = kMediaVoiceViewTag;
     [_mediaVoiceView setFillColor:THEMECOLOR];
     [_mediaVoiceView setIVoice:[MPMusicPlayerController applicationMusicPlayer].volume];
+    _voiceVolume = [MPMusicPlayerController applicationMusicPlayer].volume;
     [self addSubview:_mediaVoiceView];
     
     //最大声音视图
@@ -71,8 +72,16 @@
 }
 #pragma mark 静音按钮
 - (void)clickSoundOff:(UITapGestureRecognizer *)tapGesture {
-    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
-    [musicPlayer setVolume:0];
-    [_mediaVoiceView setIVoice:0];
+    _OnOROff = !_OnOROff;
+    if (_OnOROff) {
+        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+        [musicPlayer setVolume:0];
+        [_mediaVoiceView setIVoice:0];
+    }else{
+        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+        [musicPlayer setVolume:_voiceVolume];
+        [_mediaVoiceView setIVoice:_voiceVolume];
+    }
+   
 }
 @end

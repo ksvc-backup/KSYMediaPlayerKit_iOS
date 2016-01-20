@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface KSYVoiceView : UIView
-
+@property (nonatomic, assign) CGFloat voiceVolume;
 @end

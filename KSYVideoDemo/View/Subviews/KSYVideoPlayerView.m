@@ -484,6 +484,7 @@
                 voiceValue = 1;
             }
             [musicPlayer setVolume:voiceValue];
+            kVoiceView.voiceVolume = voiceValue;
             KSYMediaVoiceView *mediaVoiceView = (KSYMediaVoiceView *)[self viewWithTag:kMediaVoiceViewTag];
             [mediaVoiceView setIVoice:voiceValue];
             self.gestureType = kKSYVoice;
