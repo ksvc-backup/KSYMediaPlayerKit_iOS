@@ -72,9 +72,14 @@
         [self addBottomView];
         [self bringSubviewToFront:bottomView];
         [self addTopView];
+        [self performSelector:@selector(hiddenTopAndBottom) withObject:nil afterDelay:3.0];
         _HEIGHT=THESCREENWIDTH;
     }
     return self;
+}
+- (void)hiddenTopAndBottom{
+    topView.hidden = YES;
+    bottomView.hidden = YES;
 }
 #pragma mark 添加视图
 //添加TopView
