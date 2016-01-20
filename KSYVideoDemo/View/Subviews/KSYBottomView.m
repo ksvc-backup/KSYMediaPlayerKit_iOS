@@ -101,17 +101,7 @@
             kCurrentLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
             if (thisPlaystate==kSYShortVideoPlay) {
-                WeakSelf(KSYBottomView);
                 kprogress=[[KSYProgressVI alloc]initWithFrame:CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-70, 10)];
-                kprogress.progDidBegin=^(UISlider *slider){
-                    [weakSelf sliderDidBegin:slider];
-                };
-                kprogress.progChanged=^(UISlider *slider){
-                     [weakSelf sliderChanged:slider];
-                };
-                kprogress.progChangeEnd=^(UISlider *slider){
-                    [weakSelf sliderChangeEnd:slider];
-                };
                 //总时间
                 kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kprogress.right+5, kprogress.center.y-15, 50, 30)];
                 //全屏按钮
@@ -128,6 +118,16 @@
                 CGRect kFullBtnRect = CGRectMake(kTotalLabel.right, 5, 30, 30);
                 kFullBtn.frame = kFullBtnRect;
             }
+            WeakSelf(KSYBottomView);
+            kprogress.progDidBegin=^(UISlider *slider){
+                [weakSelf sliderDidBegin:slider];
+            };
+            kprogress.progChanged=^(UISlider *slider){
+                [weakSelf sliderChanged:slider];
+            };
+            kprogress.progChangeEnd=^(UISlider *slider){
+                [weakSelf sliderChangeEnd:slider];
+            };
             [self addSubview:kprogress];
             
             
