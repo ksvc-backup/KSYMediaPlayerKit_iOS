@@ -14,7 +14,7 @@
 @interface KSYPopularVideoView : UIView
 
 
-@property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;  
+@property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;
 @property (nonatomic, strong)  KSYDetailView *detailView;
 @property (nonatomic, strong)  KSYCommentView *commtenView;
 @property (nonatomic, copy)    void (^hiddenNvgt)(BOOL hidden);

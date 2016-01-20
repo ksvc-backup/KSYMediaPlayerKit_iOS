@@ -7,8 +7,8 @@
 //
 
 #import "KSYPopilarLivePlayVC.h"
-
 #import "AppDelegate.h"
+
 @interface KSYPopilarLivePlayVC ()<UIActionSheetDelegate>{
     KSYPopularVideoView *ksyPoularLiveView;
     UIAlertView *alertView;

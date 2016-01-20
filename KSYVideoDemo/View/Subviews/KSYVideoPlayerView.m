@@ -19,7 +19,7 @@
 #import "KSYEpisodeView.h"
 #import "KSYBarrageBarView.h"
 #import "KSYProgressVI.h"
-@interface KSYVideoPlayerView ()<KSYProgressDelegate>
+@interface KSYVideoPlayerView ()
 {
     KSYTopView *topView;
     KSYBottomView *bottomView;
@@ -33,11 +33,11 @@
     KSYEpisodeView *episodeView;
     KSYBarrageBarView *kBarrageView;
     BOOL isActive;
-    BOOL isOpen;
     CGFloat _HEIGHT;
     CGRect _keyboardRect;
 }
 
+@property (nonatomic, assign) KSYPopularLivePlayState playState;
 @property (nonatomic, assign)  KSYGestureType gestureType;
 @property (nonatomic, assign) CGPoint startPoint;
 @property (nonatomic, assign) CGFloat curPosition;
@@ -53,7 +53,9 @@
 
 
 @implementation KSYVideoPlayerView
-
+- (void)dealloc{
+    
+}
 - (instancetype)initWithFrame:(CGRect)frame UrlFromString:(NSString *)urlString playState:(KSYPopularLivePlayState)playState
 {
 
@@ -66,7 +68,7 @@
         //    [themeManager changeTheme:@"pink"];
         [themeManager changeTheme:@"red"];
         _isLock=NO;
-        self.playState=playState;
+        _playState=playState;
         [self addBottomView];
         [self bringSubviewToFront:bottomView];
         [self addTopView];
@@ -87,7 +89,7 @@
     
     WeakSelf(KSYVideoPlayerView);
     bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:_playState];
-    bottomView.kprogress.delegate=self;
+//    bottomView.kprogress.delegate=self;
     bottomView.BtnClick=^(UIButton *btn){
         [weakSelf BtnClick:btn];
     };
@@ -108,6 +110,15 @@
     };
     bottomView.addEpisodeView=^(UIButton *btn){
         [weakSelf addEpisode:(btn)];
+    };
+    bottomView.progressDidBegin=^(UISlider *slider){
+        [weakSelf progDidBegin:slider];
+    };
+    bottomView.progressDidBegin=^(UISlider *slider){
+        [weakSelf progChanged:slider];
+    };
+    bottomView.progressDidBegin=^(UISlider *slider){
+        [weakSelf progChangeEnd:slider];
     };
     [self addSubview: bottomView];
 }
@@ -274,15 +285,14 @@
 }
 - (void)brightnessChangeEnd:(UISlider *)slider {
 }
-- (void)progDidBegin{
+- (void)progDidBegin:(UISlider *)slider{
     if ([self.player isPlaying]==YES) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
 }
-- (void)progChanged{
-    UISlider *slider=(UISlider *)[self viewWithTag:kProgressSliderTag];
+- (void)progChanged:(UISlider *)slider{
     if (![self.player isPreparedToPlay]) {
         slider.value = 0.0f;
         return;
@@ -295,8 +305,7 @@
     startLabel.text = strCurTime;
     
 }
-- (void)progChangeEnd{
-    UISlider *slider=(UISlider *)[self viewWithTag:kProgressSliderTag];
+- (void)progChangeEnd:(UISlider *)slider{
     if (![self.player isPreparedToPlay]) {
         slider.value=0.0f;
         return;

@@ -35,18 +35,18 @@
     return self;
 }
 - (void)progressDidBegin:(UISlider *)slider{
-    if ([_delegate performSelector:@selector(progDidBegin)]) {
-        [_delegate progDidBegin];
+    if (self.progDidBegin) {
+        self.progDidBegin(slider);
     }
 }
 - (void)progressChanged:(UISlider *)slider{
-    if ([_delegate performSelector:@selector(progChanged)]) {
-        [_delegate progChanged];
+    if (self.progChanged) {
+        self.progChanged(slider);
     }
 }
 - (void)progressChangeEnd:(UISlider *)slider{
-    if ([_delegate performSelector:@selector(progChangeEnd)]) {
-        [_delegate progChangeEnd];
+    if (self.progChangeEnd) {
+        self.progChangeEnd(slider);
     }
 }
 - (void)updateProgress:(NSInteger)duration Position:(NSInteger)currentPlaybackTime playAbleDuration:(NSInteger)playableDuration{

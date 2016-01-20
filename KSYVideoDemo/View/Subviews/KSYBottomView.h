@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "KSYProgressVI.h"
 @interface KSYBottomView : UIView<UITextFieldDelegate>
-{
-    KSYPopularLivePlayState _playstate;
-}
+
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UIButton *kShortPlayBtn;
 @property (nonatomic, strong) UILabel *kCurrentLabel;

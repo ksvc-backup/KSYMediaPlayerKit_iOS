@@ -172,5 +172,7 @@
     [kTextField resignFirstResponder];
     commentView.frame=CGRectMake(0, self.height-40, self.width, 40);
 }
-
+-(void)dealloc{
+    
+}
 @end
