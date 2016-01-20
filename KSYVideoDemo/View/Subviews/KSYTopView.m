@@ -67,8 +67,6 @@
     [kForcBtn addTarget:self action:@selector(clickForceBtn:) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)clickForceBtn:(UIButton *)btn{
-    if (self.forceBtn) {
-        self.forceBtn(btn);
-    }
+    [kForcBtn setTitle:@"已关注" forState:UIControlStateNormal];
 }
 @end

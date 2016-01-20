@@ -41,6 +41,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.allowRotation=NO;
     application.statusBarOrientation = UIInterfaceOrientationPortrait;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     KSYMainViewController *viewController = [[KSYMainViewController alloc] init];

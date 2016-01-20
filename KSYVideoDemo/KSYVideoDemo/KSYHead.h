@@ -8,7 +8,7 @@
 
 #ifndef KSYHead_h
 #define KSYHead_h
-
+#import "AppDelegate.h"
 #import <KSYMediaPlayer/KSYMediaPlayer.h>
 #import "UIColor+ColorExtension.h"
 #import "UIView+BFExtension.h"

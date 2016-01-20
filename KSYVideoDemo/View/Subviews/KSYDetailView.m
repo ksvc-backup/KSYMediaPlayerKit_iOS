@@ -12,11 +12,14 @@
 @interface KSYDetailModel (){
     NSArray *_model;
     NSMutableArray *_modelsCells;
+    
 }
 
 @end
 
-@implementation KSYDetailView
+@implementation KSYDetailView{
+    BOOL _scrollUpOrDown;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
@@ -69,7 +72,6 @@
     [self addSubview:self.kTableView];
     self.kTableView.delegate=self;
     self.kTableView.dataSource=self;
-    
     //刷新数据
     [self segmentChange:self.kSegmentedCTL];
 
@@ -129,6 +131,7 @@
             UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
             tempView1.backgroundColor = DEEPCOLOR;
             cell.selectedBackgroundView = tempView1;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         KSYDetailModel *SKYmodel=_models[indexPath.row];
         cell.model2=SKYmodel;//调用set方法
@@ -146,6 +149,7 @@
             UIView* tempView1=[[UIView alloc] initWithFrame:cell.frame];
             tempView1.backgroundColor = DEEPCOLOR;
             cell.selectedBackgroundView = tempView1;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         KSYIntroduceModel *SKYmodel=_models[indexPath.row];
         cell.model3=SKYmodel;//调用set方法
@@ -214,11 +218,35 @@
             [_modelsCells addObject:cell];
         }];
         [self.kTableView reloadData];
+        [self.kTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (self.showCommentView) {
         self.showCommentView(_kSegmentedCTL.selectedSegmentIndex,_kTableView.contentOffset.y);
     }
+    static float newx = 0;
+    static float oldx = 0;
+    newx= scrollView.contentOffset.x ;
+    if (newx != oldx ) {
+        //Down-YES,Up-NO
+        if (newx > oldx) {
+            _scrollUpOrDown = NO;
+        }else if(newx < oldx){
+            _scrollUpOrDown = YES;
+        }
+        oldx = newx;
+    }
+}
+- (void)resetTableViewFrame:(NSInteger)selectedIndex{
+//    if (selectedIndex==0) {
+//        static CGRect rect = self
+//        if (_scrollUpOrDown) {
+//
+//        }else{
+//            _kTableView.height -= 40;
+//            _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _kTableView.height);
+//        }
+//    }
 }
 @end

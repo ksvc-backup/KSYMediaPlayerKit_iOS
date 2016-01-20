@@ -10,13 +10,14 @@
 #import "KSYDetailView.h"
 #import "KSYCommentView.h"
 #import "KSYVideoPlayerView.h"
+
 @interface KSYPopularVideoView : UIView
 
 
 @property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;  
-
-
-@property (nonatomic, copy) void (^changeNavigationBarColor)(BOOL hidden);
+@property (nonatomic, strong)  KSYDetailView *detailView;
+@property (nonatomic, strong)  KSYCommentView *commtenView;
+@property (nonatomic, copy)    void (^hiddenNvgt)(BOOL hidden);
 @property (nonatomic, copy) void (^lockWindow)(BOOL isLocked);
 
 - (instancetype)initWithFrame:(CGRect)frame UrlWithString:(NSString *)urlString playState:(KSYPopularLivePlayState)playState;
