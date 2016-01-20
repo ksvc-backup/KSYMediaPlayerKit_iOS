@@ -27,6 +27,6 @@
     return self;
 }
 -(void)dealloc{
-    _ksyShortView=nil;
+
 }
 @end

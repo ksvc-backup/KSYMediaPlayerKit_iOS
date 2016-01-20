@@ -79,7 +79,8 @@
 {
     CommentModel *model = [[CommentModel alloc] init];
     model.userComment = @"评论评论评论";
-    
+    model.userName = @"用户名";
+
     [_phoneLivePlayVC addNewCommentWith:model];
 }
 

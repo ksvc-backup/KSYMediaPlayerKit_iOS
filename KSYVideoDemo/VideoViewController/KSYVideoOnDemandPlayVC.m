@@ -81,6 +81,7 @@
     self.navigationItem.rightBarButtonItem=rightItem;
     
 }
+
 - (void)back
 {
     [ksyOnDemandView.ksyVideoPlayerView shutDown];

@@ -96,7 +96,7 @@
 {
     if (!_slider) {
         _slider = [UISlider new];
-        [_slider addTarget:self action:@selector(progressDidBegin:) forControlEvents:UIControlEventTouchDown];
+//        [_slider addTarget:self action:@selector(progressDidBegin:) forControlEvents:UIControlEventTouchDown];
         [_slider addTarget:self action:@selector(progressChanged:) forControlEvents:UIControlEventValueChanged];
         [_slider addTarget:self action:@selector(progressChangeEnd:) forControlEvents:(UIControlEventTouchUpOutside | UIControlEventTouchCancel|UIControlEventTouchUpInside)];
         _slider.value = 0.0;
@@ -198,13 +198,13 @@
 }
 
 
-- (void)progressDidBegin:(UISlider *)slider
-{
-    
-    if (self.playControlEventBlock) {
-        self.playControlEventBlock(YES);
-    }
-}
+//- (void)progressDidBegin:(UISlider *)slider
+//{
+//    
+//    if (self.playControlEventBlock) {
+//        self.playControlEventBlock(YES);
+//    }
+//}
 - (void)progressChanged:(UISlider *)slider
 {
     int iDuraMin  = (int)(self.slider.maximumValue / 60);

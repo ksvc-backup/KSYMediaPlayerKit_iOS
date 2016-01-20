@@ -22,8 +22,8 @@
 @property (nonatomic) BOOL      isNetShowAlert;
 @property (nonatomic) BOOL      isWifiShowAlert;
 @property (nonatomic, assign) BOOL isResignActive;
-
-
+@property (nonatomic, assign) BOOL isError;
+@property (nonatomic, assign) NSInteger curentTime;
 @end
 
 @implementation KSYBasePlayView
@@ -190,6 +190,14 @@
     
 }
 
+//播放错误之后的重试播放
+- (void)tautologyToPlay
+{
+    [self.player prepareToPlay];
+    [self moviePlayerSeekTo:_curentTime];
+    [self.indicator startAnimating];
+    self.isError = NO;
+}
 - (void)moviePlayerSeekTo:(NSTimeInterval)position
 {
     if (self.player) {
@@ -244,6 +252,15 @@
 - (void)moviePlayerFinishReson:(MPMovieFinishReason)finishReson
 {
     NSLog(@"player finish reson is %ld",(long)finishReson);
+    if (finishReson == MPMovieFinishReasonPlaybackError) {
+        UIAlertView *finishAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"播放出错了" delegate:self cancelButtonTitle:@"我知道了" otherButtonTitles:nil, nil];
+        finishAlertView.tag = 105;
+        [finishAlertView show];
+        _isShowFinishAlert = YES;
+        _curentTime = [self currentPlaybackTime];
+        self.isError = YES;
+        
+    }
 }
 
 
@@ -275,6 +292,8 @@
     }else if (alertView.tag == 104 && buttonIndex != alertView.cancelButtonIndex){//完成提示弹框
         _isShowFinishAlert = NO;
         [self replay];
+    }else if (alertView.tag == 105){//错误提示弹框
+        _isShowFinishAlert = NO;
     }
 }
 
@@ -388,11 +407,11 @@
     {
         case NotReachable:
         {
-            if (_networkStatus != NotReachable && _isNetShowAlert == NO) {
-                if ([self.player isPreparedToPlay]) {
-                    [self pause];
-                    
-                }
+            if (_networkStatus == NotReachable && _isNetShowAlert == NO) {
+//                if ([self.player isPreparedToPlay]) {
+//                    [self pause];
+//                    
+//                }
                 UIAlertView *networkAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"网络似乎已经断开，请检查网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"我知道了", nil];
                 networkAlertView.tag = 102;
                 [networkAlertView show];
@@ -405,7 +424,7 @@
             
         case ReachableViaWiFi:
         {
-            if (_networkStatus != ReachableViaWiFi) {
+            if (_networkStatus == ReachableViaWiFi) {
                 [self play];
             }
             _networkStatus = ReachableViaWiFi;
@@ -416,7 +435,7 @@
         }
         case ReachableViaWWAN:
         {
-            if (_networkStatus != ReachableViaWWAN && _isWifiShowAlert == NO) {
+            if (_networkStatus == ReachableViaWWAN && _isWifiShowAlert == NO) {
 
                 if ([self.player isPreparedToPlay]) {
                     [self pause];
@@ -451,7 +470,12 @@
             [self sendSubviewToBack:self.player.view];
 
         }else if (self.isResignActive){
-            [self play];
+            if (self.isError) {
+                [self tautologyToPlay];
+            }else {
+                [self play];
+
+            }
             self.isResignActive = NO;
             
         }
