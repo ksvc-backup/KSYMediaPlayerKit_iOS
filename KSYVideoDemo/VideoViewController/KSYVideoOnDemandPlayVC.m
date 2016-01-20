@@ -9,14 +9,16 @@
 #import "KSYVideoOnDemandPlayVC.h"
 #import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
-@interface KSYVideoOnDemandPlayVC ()<UIActionSheetDelegate,KSYHiddenNavigationBar>
+@interface KSYVideoOnDemandPlayVC ()<UIActionSheetDelegate>
 {
     KSYPopularVideoView *ksyOnDemandView;
     UIAlertView *alertView;
 }
 @end
 @implementation KSYVideoOnDemandPlayVC
-
+- (void)dealloc{
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
@@ -24,13 +26,12 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self changeNavigationStayle];
     ksyOnDemandView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYVideoOnlinePlay];
-    ksyOnDemandView.ksyVideoPlayerView.delegate=self;
     ksyOnDemandView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
     WeakSelf(KSYVideoOnDemandPlayVC);
     ksyOnDemandView.lockWindow=^(BOOL isLocked){
         [weakSelf lockTheWindow:(isLocked)];
     };
-    ksyOnDemandView.changeNavigationBarColor=^(BOOL hidden){
+    ksyOnDemandView.hiddenNvgt=^(BOOL hidden){
         [weakSelf changeNavigationBarCLO:hidden];
     };
     [self.view addSubview:ksyOnDemandView];
@@ -42,9 +43,6 @@
 {
     AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
     appDelegate.allowRotation=!isLocked;
-}
-- (void)hiddenNavigation:(BOOL)hidden{
-    [self changeNavigationBarCLO:hidden];
 }
 - (void)changeNavigationBarCLO:(BOOL)hidden
 {
@@ -92,6 +90,8 @@
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
+    appDelegate.allowRotation=NO;
 }
 - (void)menu{
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
@@ -117,9 +117,5 @@
             break;
     }
 }
-- (void)dealloc
-{
-    AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
-    appDelegate.allowRotation=NO;
-}
+
 @end

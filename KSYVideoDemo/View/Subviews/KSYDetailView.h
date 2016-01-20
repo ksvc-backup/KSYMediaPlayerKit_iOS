@@ -18,4 +18,5 @@
 
 #pragma mark 方法
 - (void)loadData;
+- (void)resetTableViewFrame:(NSInteger)selectedIndex;
 @end

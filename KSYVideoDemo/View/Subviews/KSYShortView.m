@@ -37,17 +37,10 @@
     if (!_topView) {
         WeakSelf(KSYShortView);
         _topView=[[KSYTopView alloc]initWithFrame:CGRectMake(0, 0, self.width, 40)];
-        _topView.forceBtn=^(UIButton *btn){
-            [weakSelf forceBtnClick:(btn)];
-        };
         _topView.backgroundColor=[UIColor blackColor];
         _topView.alpha=0.5;
         [self addSubview:_topView];
     }
-}
-- (void)forceBtnClick:(UIButton *)btn{
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"已为你提供接口" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
 }
 //更新当前状态
 -(void)updateCurrentTime{

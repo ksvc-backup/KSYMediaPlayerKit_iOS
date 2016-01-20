@@ -103,8 +103,8 @@
     bottomView.rechangeBottom=^(){
         [weakSelf rechangeBottom];
     };
-    bottomView.addDanmu=^(UIButton *btn){
-        [weakSelf addDanmuView:(btn)];
+    bottomView.addDanmu=^(BOOL isOpen){
+        [weakSelf addDanmuView:(isOpen)];
     };
     bottomView.addEpisodeView=^(UIButton *btn){
         [weakSelf addEpisode:(btn)];
@@ -206,10 +206,9 @@
     }
 }
 //添加弹幕
-- (void)addDanmuView:(UIButton *)btn
+- (void)addDanmuView:(BOOL)isOpen
 {
-    isOpen=!isOpen;
-    if (isOpen==YES) {
+    if (isOpen) {
         kBarrageView = [[KSYBarrageBarView alloc]initWithFrame:CGRectMake(0, kToolView.bottom,self.width, self.height-120)];
         [self addSubview:kBarrageView];
         [kBarrageView start];
@@ -416,15 +415,17 @@
     kBrightnessView.hidden=YES;
     kVoiceView.hidden=YES;
     kLockView.hidden=YES;
+    kSetView.hidden=YES;
+    kToolView.hidden=YES;
+    [kBarrageView removeFromSuperview];
     bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
     [bottomView resetSubviews];
     kProgressView.frame=CGRectMake((self.width - kProgressViewWidth) / 2, (self.height - 50) / 4, kProgressViewWidth, 50);
     topView.hidden=NO;
-    kToolView.hidden=YES;
     bottomView.hidden=NO;
     self.indicator.center=self.center;
-    if ([_delegate performSelector:@selector(hiddenNavigation:)]) {
-        [_delegate hiddenNavigation:NO];
+    if ((self.hiddenNavigation)) {
+        self.hiddenNavigation(NO);
     }
 }
 
@@ -582,8 +583,8 @@
                     }
                     //隐藏状态栏
                     [[UIApplication sharedApplication]setStatusBarHidden:NO];
-                    if ([_delegate performSelector:@selector(hiddenNavigation:)]) {
-                        [_delegate hiddenNavigation:YES];
+                    if ((self.hiddenNavigation)) {
+                        self.hiddenNavigation(YES);
                     }
                 }
                 kLockView.hidden=NO;
@@ -606,8 +607,8 @@
             bottomView.kFullBtn.hidden = NO;
             if (self.height==_HEIGHT){
                 [[UIApplication sharedApplication]setStatusBarHidden:YES];
-                if ([_delegate performSelector:@selector(hiddenNavigation:)]) {
-                    [_delegate hiddenNavigation:YES];
+                if ((self.hiddenNavigation)) {
+                    self.hiddenNavigation(YES);
                 }
             }
             

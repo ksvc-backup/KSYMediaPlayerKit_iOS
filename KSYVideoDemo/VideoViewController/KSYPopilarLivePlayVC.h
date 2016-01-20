@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "KSYBaseViewController.h"
+#import "KSYPopularVideoView.h"
+
 @interface KSYPopilarLivePlayVC : KSYBaseViewController
+
 @property (nonatomic, copy)     NSString    *urlPath;
 @property (nonatomic ,strong)   NSArray     *spectatorsArray;
 @end

@@ -16,6 +16,7 @@
 @end
 
 @implementation KSYBottomView
+@synthesize backgroundView;
 @synthesize kCurrentLabel;
 @synthesize kShortPlayBtn;
 @synthesize kTotalLabel;
@@ -27,14 +28,19 @@
 @synthesize commentText;
 @synthesize kprogress;
 @synthesize episodeBtn;
+
+
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate
 {
     self=[super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor=[UIColor blackColor];
+        self.backgroundColor=[UIColor clearColor];
+        backgroundView = [[UIView alloc]initWithFrame:self.bounds];
+        backgroundView.backgroundColor = [UIColor blackColor];
+        backgroundView.alpha = 0.5;
+        [self addSubview:backgroundView];
         
-        self.alpha=0.7;
         _playstate=playstate;
         //播放按钮 播放时间 进度条 总时间
         kShortPlayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -150,7 +156,7 @@
         danmuBtn.hidden = YES;
         danmuBtn.frame = CGRectMake(self.width-95, 10, 50, 30);
         danmuBtn.tag = kDanmuBtnTag;
-        UIImage *danmuImage=[UIImage imageNamed:@"danMuClose"];
+        UIImage *danmuImage=[UIImage imageNamed:@"danMuOpen"];
         [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
         [danmuBtn addTarget:self action:@selector(clickDanmuBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:danmuBtn];
@@ -194,6 +200,7 @@
 }
 - (void)setSubviews
 {
+    backgroundView.frame = CGRectMake(self.origin.x, self.origin.y, self.width, self.height);
     UIImage *fullImage=[UIImage imageNamed:@"unfull"];
     if (_playstate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(10, 5, 30, 30);
@@ -239,6 +246,7 @@
 }
 - (void)resetSubviews
 {
+    backgroundView.frame = CGRectMake(self.origin.x, self.origin.y, self.width, self.height);
     UIImage *unFullImage=[UIImage imageNamed:@"full"];
     if (_playstate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);
@@ -291,8 +299,16 @@
 }
 - (void)clickDanmuBtn:(UIButton *)btn
 {
+    isFull=!isFull;
+    if (isFull) {
+        UIImage *danmuImage=[UIImage imageNamed:@"danMuOpen"];
+        [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
+    }else{
+        UIImage *danmuImage=[UIImage imageNamed:@"danMuClose"];
+        [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
+    }
     if (self.addDanmu) {
-        self.addDanmu(btn);
+        self.addDanmu(isFull);
     }
 }
 - (void)updateCurrentDuration:(NSInteger)duration Position:(NSInteger)currentPlaybackTime playAbleDuration:(NSInteger)playableDuration{

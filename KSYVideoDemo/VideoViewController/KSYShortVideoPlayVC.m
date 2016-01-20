@@ -18,7 +18,9 @@
 @end
 
 @implementation KSYShortVideoPlayVC
-
+- (void)dealloc{
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
@@ -28,6 +30,8 @@
     ksyShortVideoplayView=[[KSYShortVideoPlayView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height) UrlPathString:_videoPath];
     ksyShortVideoplayView.isDidRelease=self.isReleasePlayer;
     [self.view addSubview:ksyShortVideoplayView];
+    AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
+    appDelegate.allowRotation=NO;
 }
 
 #pragma mark 改变导航栏状态

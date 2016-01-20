@@ -61,9 +61,6 @@
         self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
         [self.hostReachability startNotifier];
         
-
-
-
     }
     return self;
 }
