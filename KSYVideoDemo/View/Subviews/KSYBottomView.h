@@ -23,9 +23,9 @@
 @property (nonatomic, strong) KSYProgressVI *kprogress;
 @property (nonatomic, strong) UIButton *episodeBtn;
 
-@property (nonatomic, copy) void (^progressDidBegin)(UISlider *slider);
-@property (nonatomic, copy) void (^progressChanged)(UISlider *slider);
-@property (nonatomic, copy) void (^progressChangeEnd)(UISlider *slider);
+@property (nonatomic, copy) void (^changBegin)(UISlider *slider);
+@property (nonatomic, copy) void (^changIng)(UISlider *slider);
+@property (nonatomic, copy) void (^ChangeEnd)(UISlider *slider);
 @property (nonatomic, copy) void (^BtnClick)(UIButton *btn);
 @property (nonatomic, copy) void (^FullBtnClick)(UIButton *btn);
 @property (nonatomic, copy) void (^unFullBtnClick)(UIButton *btn);

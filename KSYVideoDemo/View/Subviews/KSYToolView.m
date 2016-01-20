@@ -24,8 +24,11 @@
 #pragma mark 添加子视图
 - (void)addSubviews
 {
-    self.backgroundColor=[UIColor blackColor];
-    self.alpha=0.7;
+    self.backgroundColor=[UIColor clearColor];
+    UIView *backgroundView = [[UIView alloc]initWithFrame:self.bounds];
+    backgroundView.backgroundColor = [UIColor blackColor];
+    backgroundView.alpha = 0.5;
+    [self addSubview:backgroundView];
     
     
     //添加返回按钮 做啥才能体现你的水平
