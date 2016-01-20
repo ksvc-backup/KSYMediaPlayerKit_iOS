@@ -13,7 +13,7 @@
 @interface KSYPopularVideoView : UIView
 
 
-@property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;  
+@property (nonatomic, strong)  KSYVideoPlayerView *ksyVideoPlayerView;
 
 
 @property (nonatomic, copy) void (^changeNavigationBarColor)(BOOL hidden);

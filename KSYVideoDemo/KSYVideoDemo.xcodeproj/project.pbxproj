@@ -63,8 +63,6 @@
 		7CC3DA7D1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC3DA7C1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m */; };
 		7CC3DA801C3E3B600004E6AB /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA7E1C3E3B600004E6AB /* close@2x.png */; };
 		7CC3DA811C3E3B600004E6AB /* close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA7F1C3E3B600004E6AB /* close@3x.png */; };
-		7CC3DA841C3E3C530004E6AB /* report@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA821C3E3C530004E6AB /* report@2x.png */; };
-		7CC3DA851C3E3C530004E6AB /* report@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA831C3E3C530004E6AB /* report@3x.png */; };
 		7CC3DA8D1C3E897C0004E6AB /* replay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA8B1C3E897C0004E6AB /* replay@2x.png */; };
 		7CC3DA8E1C3E897C0004E6AB /* replay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CC3DA8C1C3E897C0004E6AB /* replay@3x.png */; };
 		7CD2AD391C0D969A00E6532D /* KSYMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD2AD381C0D969A00E6532D /* KSYMainViewController.m */; };
@@ -488,8 +486,6 @@
 		7CC3DA7C1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+BasicShapes.m"; sourceTree = "<group>"; };
 		7CC3DA7E1C3E3B600004E6AB /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		7CC3DA7F1C3E3B600004E6AB /* close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@3x.png"; sourceTree = "<group>"; };
-		7CC3DA821C3E3C530004E6AB /* report@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "report@2x.png"; sourceTree = "<group>"; };
-		7CC3DA831C3E3C530004E6AB /* report@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "report@3x.png"; sourceTree = "<group>"; };
 		7CC3DA8B1C3E897C0004E6AB /* replay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replay@2x.png"; sourceTree = "<group>"; };
 		7CC3DA8C1C3E897C0004E6AB /* replay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replay@3x.png"; sourceTree = "<group>"; };
 		7CD2AD371C0D969A00E6532D /* KSYMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYMainViewController.h; sourceTree = "<group>"; };
@@ -1052,8 +1048,6 @@
 				7CC3DA751C3D070F0004E6AB /* spectatorsNumber@3x.png */,
 				7CC3DA7E1C3E3B600004E6AB /* close@2x.png */,
 				7CC3DA7F1C3E3B600004E6AB /* close@3x.png */,
-				7CC3DA821C3E3C530004E6AB /* report@2x.png */,
-				7CC3DA831C3E3C530004E6AB /* report@3x.png */,
 				7CC3DA8B1C3E897C0004E6AB /* replay@2x.png */,
 				7CC3DA8C1C3E897C0004E6AB /* replay@3x.png */,
 			);
@@ -2314,7 +2308,7 @@
 				TargetAttributes = {
 					0A68AA431ABBFAE2006CA2EF = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = HFUZX7Q4Y8;
+						DevelopmentTeam = R5WW6M762K;
 					};
 				};
 			};
@@ -2610,7 +2604,6 @@
 				E3AA3CF41C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3AB51C465B34001D2899 /* googleplus L@2x.png in Resources */,
 				E3AA3CAA1C488F58001D2899 /* Contents.json in Resources */,
-				7CC3DA841C3E3C530004E6AB /* report@2x.png in Resources */,
 				E3AA3CD21C488F58001D2899 /* Contents.json in Resources */,
 				7CC3DA341C3CE2A10004E6AB /* heart3@2x.png in Resources */,
 				E3AA3AE21C465B34001D2899 /* subscribe@3x.png in Resources */,
@@ -2627,7 +2620,6 @@
 				E3AA3AC11C465B34001D2899 /* pause@2x.png in Resources */,
 				E3AA3ADD1C465B34001D2899 /* sharedTimes@2x.png in Resources */,
 				E3AA3C9C1C488F58001D2899 /* Contents.json in Resources */,
-				7CC3DA851C3E3C530004E6AB /* report@3x.png in Resources */,
 				E3AA3AAD1C465B33001D2899 /* episode@3x.png in Resources */,
 				E3AA3CA21C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3CE01C488F58001D2899 /* Contents.json in Resources */,
@@ -2841,8 +2833,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhibo cui (3LK9B55BG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhibo cui (3LK9B55BG9)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2859,7 +2851,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.SJKSYPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2873,8 +2865,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zhibo cui (3LK9B55BG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhibo cui (3LK9B55BG9)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2891,7 +2883,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.SJKSYPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -19,6 +19,7 @@
 @interface KSYInteractiveView ()<KSYMessageToolBarDelegate,UIGestureRecognizerDelegate>{
     NSInteger   _testNum;
     UITapGestureRecognizer *_gestureRecongizer;
+    CGFloat     _lastHeight;
 }
 @property (nonatomic, strong)KSYCommentTableView    *commetnTableView;
 @property (nonatomic, strong)KSYSpectatorsTableView *spectatorsTableViews;
@@ -38,6 +39,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _testNum = 200;
+        _lastHeight = 0;
         self.backgroundColor = [UIColor clearColor];
         
         if (_gestureRecongizer == nil) {
@@ -232,6 +234,13 @@
 }
 - (void)didChangeFrameToHeight:(CGFloat)toHeight endHeight:(CGFloat)bottomHeight
 {
+    
+
+    if (bottomHeight > 0) {
+        
+    }
+    _lastHeight = bottomHeight;
+    
     CGRect fromFrame = self.frame;
      toHeight = self.frame.size.height + bottomHeight;
     CGRect toFrame = CGRectMake(fromFrame.origin.x, fromFrame.origin.y + (fromFrame.size.height - toHeight), fromFrame.size.width, toHeight);

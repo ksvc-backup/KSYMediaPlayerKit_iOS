@@ -91,6 +91,7 @@
 {
     [ksyPoularLiveView.ksyVideoPlayerView shutDown];
     [ksyPoularLiveView unregisterObservers];//在这里要记的注销通知
+    [ksyPoularLiveView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
     //修改状态栏颜色
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
