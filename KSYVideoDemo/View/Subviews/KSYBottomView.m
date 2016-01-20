@@ -89,7 +89,6 @@
             [self addSubview:kFullBtn];
             
         }else {
-           
             //播放时间
             kCurrentLabel=[[UILabel alloc]initWithFrame:CGRectMake(kShortPlayBtn.right, kShortPlayBtn.center.y-15, 50, 30)];
             [self addSubview:kCurrentLabel];
@@ -98,7 +97,7 @@
             kCurrentLabel.textAlignment = NSTextAlignmentCenter;
             kCurrentLabel.tag= kProgressCurLabelTag;
             kCurrentLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
-            
+
             if (_playstate==kSYShortVideoPlay) {
                kprogress=[[KSYProgressVI alloc]initWithFrame:CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-70, 10)];
                 //总时间
@@ -117,7 +116,6 @@
                 CGRect kFullBtnRect = CGRectMake(kTotalLabel.right, 5, 30, 30);
                 kFullBtn.frame = kFullBtnRect;
             }
-            
             [self addSubview:kprogress];
             
             

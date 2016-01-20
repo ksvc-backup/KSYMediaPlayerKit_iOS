@@ -343,6 +343,7 @@
 }
 
 - (void)updateCurrentTime{
+    [super updateCurrentTime];
     if ([self.player isPlaying]) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         [bottomView.kShortPlayBtn setImage:playImg forState:UIControlStateNormal];

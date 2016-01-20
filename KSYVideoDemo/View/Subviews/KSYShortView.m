@@ -44,6 +44,7 @@
 }
 //更新当前状态
 -(void)updateCurrentTime{
+    [super updateCurrentTime];
     if (!_bottomView) {
         if (self.duration>60) {
             [self addSubview:self.bottomView];

@@ -253,12 +253,13 @@
 {
     NSLog(@"player finish reson is %ld",(long)finishReson);
     if (finishReson == MPMovieFinishReasonPlaybackError) {
-        UIAlertView *finishAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"播放出错了" delegate:self cancelButtonTitle:@"我知道了" otherButtonTitles:nil, nil];
+        UIAlertView *finishAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"播放出错了,是否重试？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"重试", nil];
         finishAlertView.tag = 105;
         [finishAlertView show];
         _isShowFinishAlert = YES;
         _curentTime = [self currentPlaybackTime];
         self.isError = YES;
+//        [self stopTimer];
         
     }
 }
@@ -292,8 +293,9 @@
     }else if (alertView.tag == 104 && buttonIndex != alertView.cancelButtonIndex){//完成提示弹框
         _isShowFinishAlert = NO;
         [self replay];
-    }else if (alertView.tag == 105){//错误提示弹框
+    }else if (alertView.tag == 105 && buttonIndex != alertView.cancelButtonIndex){//错误提示弹框
         _isShowFinishAlert = NO;
+        [self tautologyToPlay];
     }
 }
 
@@ -470,12 +472,11 @@
             [self sendSubviewToBack:self.player.view];
 
         }else if (self.isResignActive){
-            if (self.isError) {
-                [self tautologyToPlay];
-            }else {
+            if (!self.isError) {
                 [self play];
 
             }
+            
             self.isResignActive = NO;
             
         }
@@ -497,6 +498,5 @@
         };
     });
 }
-
 
 @end
