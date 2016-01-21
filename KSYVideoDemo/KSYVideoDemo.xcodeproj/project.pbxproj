@@ -11,6 +11,9 @@
 		0A68AA4D1ABBFAE2006CA2EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A68AA4C1ABBFAE2006CA2EF /* AppDelegate.m */; };
 		130F72881B0F37F4004B966B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 130F72871B0F37F4004B966B /* Images.xcassets */; };
 		1327D3981ACD377F0042A834 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1327D3971ACD377F0042A834 /* Reachability.m */; };
+		405287C61C50DD8C00D0D4B2 /* CoreDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 405287C11C50DD8C00D0D4B2 /* CoreDataModel.m */; };
+		405287C71C50DD8C00D0D4B2 /* KSYCommentService.m in Sources */ = {isa = PBXBuildFile; fileRef = 405287C31C50DD8C00D0D4B2 /* KSYCommentService.m */; };
+		405287C81C50DD8C00D0D4B2 /* KSYDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 405287C51C50DD8C00D0D4B2 /* KSYDBManager.m */; };
 		7C5CA4DC1C2193BB003A92A8 /* UIColor+ColorExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5CA4DB1C2193BB003A92A8 /* UIColor+ColorExtension.m */; };
 		7CB6B6CC1C33CD9A006C0AD5 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB6B6CB1C33CD9A006C0AD5 /* libstdc++.6.tbd */; };
 		7CB6B6CE1C33CDB4006C0AD5 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB6B6CD1C33CDB4006C0AD5 /* libbz2.tbd */; };
@@ -80,10 +83,6 @@
 		E37D161B1C2819C20009715A /* KSYDetalTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37D16171C2819C20009715A /* KSYDetalTVCell.m */; };
 		E37D161C1C2819C20009715A /* KSYIntTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37D16191C2819C20009715A /* KSYIntTVCell.m */; };
 		E37D20331C2940490009715A /* red in Resources */ = {isa = PBXBuildFile; fileRef = E37D202C1C2940490009715A /* red */; };
-		E37D20341C2940490009715A /* green in Resources */ = {isa = PBXBuildFile; fileRef = E37D202D1C2940490009715A /* green */; };
-		E37D20351C2940490009715A /* orange in Resources */ = {isa = PBXBuildFile; fileRef = E37D202E1C2940490009715A /* orange */; };
-		E37D20371C2940490009715A /* pink in Resources */ = {isa = PBXBuildFile; fileRef = E37D20301C2940490009715A /* pink */; };
-		E37D20381C2940490009715A /* blue in Resources */ = {isa = PBXBuildFile; fileRef = E37D20311C2940490009715A /* blue */; };
 		E3A3701C1C3A15C100E9FCD9 /* CommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A3701B1C3A15C100E9FCD9 /* CommentModel.m */; };
 		E3A371E01C3E8E2400E9FCD9 /* KSYInterfaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A371DF1C3E8E2400E9FCD9 /* KSYInterfaceModel.m */; };
 		E3A371E31C3E8EDE00E9FCD9 /* KSYInteractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A371E21C3E8EDE00E9FCD9 /* KSYInteractCell.m */; };
@@ -201,10 +200,6 @@
 		E3AA3B501C465BDF001D2899 /* KSYVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AA3B2D1C465BDF001D2899 /* KSYVideoPlayerView.m */; };
 		E3AA3B511C465BDF001D2899 /* KSYVoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AA3B2F1C465BDF001D2899 /* KSYVoiceView.m */; };
 		E3AA3B521C465BDF001D2899 /* LefTrotundityView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AA3B311C465BDF001D2899 /* LefTrotundityView.m */; };
-		E3AA3B561C46713B001D2899 /* KSYCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3AA3B541C46713B001D2899 /* KSYCoreDataModel.xcdatamodeld */; };
-		E3AA3B591C467329001D2899 /* CoreDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AA3B581C467329001D2899 /* CoreDataModel.m */; };
-		E3AA3B5C1C46785C001D2899 /* KSYDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AA3B5B1C46785C001D2899 /* KSYDBManager.m */; };
-		E3AA3B5F1C467DBF001D2899 /* KSYCommentService.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AA3B5E1C467DBF001D2899 /* KSYCommentService.m */; };
 		E3AA3C731C488F58001D2899 /* danmakufile in Resources */ = {isa = PBXBuildFile; fileRef = E3AA3B631C488F57001D2899 /* danmakufile */; };
 		E3AA3C741C488F58001D2899 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = E3AA3B661C488F57001D2899 /* Contents.json */; };
 		E3AA3C751C488F58001D2899 /* smile_1.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AA3B671C488F57001D2899 /* smile_1.png */; };
@@ -400,6 +395,12 @@
 		130F72871B0F37F4004B966B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1327D3961ACD377F0042A834 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		1327D3971ACD377F0042A834 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		405287C01C50DD8C00D0D4B2 /* CoreDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataModel.h; sourceTree = "<group>"; };
+		405287C11C50DD8C00D0D4B2 /* CoreDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataModel.m; sourceTree = "<group>"; };
+		405287C21C50DD8C00D0D4B2 /* KSYCommentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYCommentService.h; sourceTree = "<group>"; };
+		405287C31C50DD8C00D0D4B2 /* KSYCommentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYCommentService.m; sourceTree = "<group>"; };
+		405287C41C50DD8C00D0D4B2 /* KSYDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYDBManager.h; sourceTree = "<group>"; };
+		405287C51C50DD8C00D0D4B2 /* KSYDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYDBManager.m; sourceTree = "<group>"; };
 		7C43B9C21C18317100AB8402 /* CommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentModel.h; sourceTree = "<group>"; };
 		7C5CA4DA1C2193BB003A92A8 /* UIColor+ColorExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorExtension.h"; sourceTree = "<group>"; };
 		7C5CA4DB1C2193BB003A92A8 /* UIColor+ColorExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorExtension.m"; sourceTree = "<group>"; };
@@ -503,11 +504,7 @@
 		E37D16181C2819C20009715A /* KSYIntTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYIntTVCell.h; sourceTree = "<group>"; };
 		E37D16191C2819C20009715A /* KSYIntTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYIntTVCell.m; sourceTree = "<group>"; };
 		E37D161D1C281AC70009715A /* KSYHead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSYHead.h; sourceTree = "<group>"; };
-		E37D202C1C2940490009715A /* red */ = {isa = PBXFileReference; lastKnownFileType = folder; path = red; sourceTree = "<group>"; };
-		E37D202D1C2940490009715A /* green */ = {isa = PBXFileReference; lastKnownFileType = folder; path = green; sourceTree = "<group>"; };
-		E37D202E1C2940490009715A /* orange */ = {isa = PBXFileReference; lastKnownFileType = folder; path = orange; sourceTree = "<group>"; };
-		E37D20301C2940490009715A /* pink */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pink; sourceTree = "<group>"; };
-		E37D20311C2940490009715A /* blue */ = {isa = PBXFileReference; lastKnownFileType = folder; path = blue; sourceTree = "<group>"; };
+		E37D202C1C2940490009715A /* red */ = {isa = PBXFileReference; lastKnownFileType = folder; name = red; path = ../red; sourceTree = "<group>"; };
 		E3A3701B1C3A15C100E9FCD9 /* CommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentModel.m; sourceTree = "<group>"; };
 		E3A371DE1C3E8E2400E9FCD9 /* KSYInterfaceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYInterfaceModel.h; sourceTree = "<group>"; };
 		E3A371DF1C3E8E2400E9FCD9 /* KSYInterfaceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYInterfaceModel.m; sourceTree = "<group>"; };
@@ -666,13 +663,6 @@
 		E3AA3B2F1C465BDF001D2899 /* KSYVoiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYVoiceView.m; sourceTree = "<group>"; };
 		E3AA3B301C465BDF001D2899 /* LefTrotundityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LefTrotundityView.h; sourceTree = "<group>"; };
 		E3AA3B311C465BDF001D2899 /* LefTrotundityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LefTrotundityView.m; sourceTree = "<group>"; };
-		E3AA3B551C46713B001D2899 /* KSYCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KSYCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		E3AA3B571C467329001D2899 /* CoreDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataModel.h; sourceTree = "<group>"; };
-		E3AA3B581C467329001D2899 /* CoreDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataModel.m; sourceTree = "<group>"; };
-		E3AA3B5A1C46785C001D2899 /* KSYDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYDBManager.h; sourceTree = "<group>"; };
-		E3AA3B5B1C46785C001D2899 /* KSYDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYDBManager.m; sourceTree = "<group>"; };
-		E3AA3B5D1C467DBF001D2899 /* KSYCommentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYCommentService.h; sourceTree = "<group>"; };
-		E3AA3B5E1C467DBF001D2899 /* KSYCommentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYCommentService.m; sourceTree = "<group>"; };
 		E3AA3B631C488F57001D2899 /* danmakufile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = danmakufile; sourceTree = "<group>"; };
 		E3AA3B661C488F57001D2899 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
 		E3AA3B671C488F57001D2899 /* smile_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile_1.png; sourceTree = "<group>"; };
@@ -877,7 +867,7 @@
 		0A68AA3B1ABBFAE2006CA2EF = {
 			isa = PBXGroup;
 			children = (
-				E3AA3B531C466F68001D2899 /* CoreData */,
+				405287BF1C50DD8C00D0D4B2 /* CoreData */,
 				0A68AA461ABBFAE2006CA2EF /* KSYVideoDemo */,
 				13869D2D1AC3FAF30083B670 /* Framework */,
 				13869D231AC3F4570083B670 /* VideoViewController */,
@@ -956,11 +946,6 @@
 				E3AA3A3D1C465B33001D2899 /* Plists */,
 				E3AA3A411C465B33001D2899 /* Images */,
 				7CC3DA081C3CBD3D0004E6AB /* PhoneLive */,
-				E37D202C1C2940490009715A /* red */,
-				E37D202D1C2940490009715A /* green */,
-				E37D202E1C2940490009715A /* orange */,
-				E37D20301C2940490009715A /* pink */,
-				E37D20311C2940490009715A /* blue */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -998,6 +983,19 @@
 				7CB994E61C27F96700E86919 /* VideoToolbox.framework */,
 			);
 			name = Framework;
+			sourceTree = "<group>";
+		};
+		405287BF1C50DD8C00D0D4B2 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				405287C01C50DD8C00D0D4B2 /* CoreDataModel.h */,
+				405287C11C50DD8C00D0D4B2 /* CoreDataModel.m */,
+				405287C21C50DD8C00D0D4B2 /* KSYCommentService.h */,
+				405287C31C50DD8C00D0D4B2 /* KSYCommentService.m */,
+				405287C41C50DD8C00D0D4B2 /* KSYDBManager.h */,
+				405287C51C50DD8C00D0D4B2 /* KSYDBManager.m */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		7CC3DA081C3CBD3D0004E6AB /* PhoneLive */ = {
@@ -1237,6 +1235,7 @@
 				E3AA3A8C1C465B33001D2899 /* subscribed@3x.png */,
 				E3AA3A8F1C465B33001D2899 /* unfull@2x.png */,
 				E3AA3A901C465B33001D2899 /* unfull@3x.png */,
+				E37D202C1C2940490009715A /* red */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1312,20 +1311,6 @@
 				E3AA3D291C489FB7001D2899 /* KSYProgressVI.m */,
 			);
 			path = Subviews;
-			sourceTree = "<group>";
-		};
-		E3AA3B531C466F68001D2899 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				E3AA3B541C46713B001D2899 /* KSYCoreDataModel.xcdatamodeld */,
-				E3AA3B571C467329001D2899 /* CoreDataModel.h */,
-				E3AA3B581C467329001D2899 /* CoreDataModel.m */,
-				E3AA3B5A1C46785C001D2899 /* KSYDBManager.h */,
-				E3AA3B5B1C46785C001D2899 /* KSYDBManager.m */,
-				E3AA3B5D1C467DBF001D2899 /* KSYCommentService.h */,
-				E3AA3B5E1C467DBF001D2899 /* KSYCommentService.m */,
-			);
-			path = CoreData;
 			sourceTree = "<group>";
 		};
 		E3AA3B641C488F57001D2899 /* Emotions */ = {
@@ -2303,7 +2288,6 @@
 				E3AA3A9F1C465B33001D2899 /* avatar36@3x.png in Resources */,
 				7CC3DA351C3CE2A10004E6AB /* heart3@3x.png in Resources */,
 				E3AA3C881C488F58001D2899 /* Contents.json in Resources */,
-				E37D20351C2940490009715A /* orange in Resources */,
 				E3AA3CBF1C488F58001D2899 /* smile_43.png in Resources */,
 				E3AA3CBC1C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3AB11C465B34001D2899 /* fansCount@2x.png in Resources */,
@@ -2372,7 +2356,6 @@
 				E3AA3C861C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3CAE1C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3CCD1C488F58001D2899 /* smile_5.png in Resources */,
-				E37D20371C2940490009715A /* pink in Resources */,
 				E3AA3C731C488F58001D2899 /* danmakufile in Resources */,
 				E3AA3ACF1C465B34001D2899 /* QQ L@2x.png in Resources */,
 				E3AA3D231C488F59001D2899 /* smile_89.png in Resources */,
@@ -2438,7 +2421,6 @@
 				E3AA3CA91C488F58001D2899 /* smile_33.png in Resources */,
 				E3AA3AD11C465B34001D2899 /* quality@2x.png in Resources */,
 				E3AA3CD01C488F58001D2899 /* Contents.json in Resources */,
-				E37D20341C2940490009715A /* green in Resources */,
 				E3AA3C981C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3D241C488F59001D2899 /* Contents.json in Resources */,
 				E3AA3CC51C488F58001D2899 /* smile_46.png in Resources */,
@@ -2516,7 +2498,6 @@
 				E3AA3CBE1C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3CE81C488F58001D2899 /* Contents.json in Resources */,
 				7CC3DA761C3D070F0004E6AB /* spectatorsNumber@2x.png in Resources */,
-				E37D20381C2940490009715A /* blue in Resources */,
 				E3AA3C901C488F58001D2899 /* Contents.json in Resources */,
 				E3AA3D151C488F58001D2899 /* smile_82.png in Resources */,
 				E3AA3CBA1C488F58001D2899 /* Contents.json in Resources */,
@@ -2604,7 +2585,8 @@
 				7CC3DA661C3CF04C0004E6AB /* SDWebImageDownloaderOperation.m in Sources */,
 				E3AA3B411C465BDF001D2899 /* KSYLockView.m in Sources */,
 				7CC3DA7D1C3E0DB70004E6AB /* UIBezierPath+BasicShapes.m in Sources */,
-				E3AA3B591C467329001D2899 /* CoreDataModel.m in Sources */,
+				405287C61C50DD8C00D0D4B2 /* CoreDataModel.m in Sources */,
+				405287C71C50DD8C00D0D4B2 /* KSYCommentService.m in Sources */,
 				E3A945651C350232000F7FB3 /* KSYDetailModel.m in Sources */,
 				7CDBE5AD1C15559A00D221C7 /* KSYPhoneLivePlayBackVC.m in Sources */,
 				E3AA3B3A1C465BDF001D2899 /* KSYBottomView.m in Sources */,
@@ -2617,7 +2599,6 @@
 				E3AA3A3A1C46013A001D2899 /* KSYEpisodeModel.m in Sources */,
 				7CDBE5D71C15B12100D221C7 /* UIView+BFExtension.m in Sources */,
 				7CC3DA671C3CF04C0004E6AB /* SDWebImageManager.m in Sources */,
-				E3AA3B561C46713B001D2899 /* KSYCoreDataModel.xcdatamodeld in Sources */,
 				E3AA3B391C465BDF001D2899 /* KSYBasePlayView.m in Sources */,
 				E3AA3B461C465BDF001D2899 /* KSYPopularVideoView.m in Sources */,
 				E3AA3B371C465BDF001D2899 /* KSYBarrageInfo.m in Sources */,
@@ -2626,10 +2607,9 @@
 				7CC3DA6B1C3CF04C0004E6AB /* UIImage+MultiFormat.m in Sources */,
 				E3AA3B331C465BDF001D2899 /* KSBarrageView.m in Sources */,
 				7CC3DA681C3CF04C0004E6AB /* SDWebImagePrefetcher.m in Sources */,
-				E3AA3B5F1C467DBF001D2899 /* KSYCommentService.m in Sources */,
 				7CC3DA6E1C3CF04C0004E6AB /* UIImageView+WebCache.m in Sources */,
-				E3AA3B5C1C46785C001D2899 /* KSYDBManager.m in Sources */,
 				7CDBE5E51C16E02700D221C7 /* KSYCommentCell.m in Sources */,
+				405287C81C50DD8C00D0D4B2 /* KSYDBManager.m in Sources */,
 				E3A3701C1C3A15C100E9FCD9 /* CommentModel.m in Sources */,
 				0A68AA4D1ABBFAE2006CA2EF /* AppDelegate.m in Sources */,
 				E3AA3B3D1C465BDF001D2899 /* KSYCommentView.m in Sources */,
@@ -2857,20 +2837,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		E3AA3B541C46713B001D2899 /* KSYCoreDataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E3AA3B551C46713B001D2899 /* KSYCoreDataModel.xcdatamodel */,
-			);
-			currentVersion = E3AA3B551C46713B001D2899 /* KSYCoreDataModel.xcdatamodel */;
-			name = KSYCoreDataModel.xcdatamodeld;
-			path = ../KSYCoreDataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 0A68AA3C1ABBFAE2006CA2EF /* Project object */;
 }

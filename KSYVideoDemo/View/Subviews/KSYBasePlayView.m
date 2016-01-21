@@ -137,7 +137,7 @@
 - (void)replay
 {
     [self play];
-
+    [self moviePlayerSeekTo:0.0];
 }
 - (void)play
 {
@@ -221,7 +221,6 @@
 - (void)updateCurrentTime
 {
     NSLog(@"currentTime is %f",self.currentPlaybackTime);
-    
 }
 
 //播放错误之后的重试播放
