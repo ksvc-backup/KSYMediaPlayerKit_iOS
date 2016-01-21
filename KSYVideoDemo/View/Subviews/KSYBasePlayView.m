@@ -41,6 +41,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.urlString = urlString;
+        self.curentTime = 0;
         self.backgroundColor = [UIColor blackColor];
         if ([urlString hasPrefix:@"http"]) {
             self.isLivePlay = NO;
@@ -193,9 +194,16 @@
 //播放错误之后的重试播放
 - (void)tautologyToPlay
 {
-    [self.player prepareToPlay];
-    [self moviePlayerSeekTo:_curentTime];
-    [self.indicator startAnimating];
+    if (self.isLivePlay || _curentTime == 0) {
+        [self addSubview:self.player.view];
+        [self sendSubviewToBack:self.player.view];
+
+    }else {
+        [self.player prepareToPlay];
+        [self moviePlayerSeekTo:_curentTime];
+        [self.indicator startAnimating];
+
+    }
     self.isError = NO;
 }
 - (void)moviePlayerSeekTo:(NSTimeInterval)position
@@ -253,6 +261,7 @@
 {
     NSLog(@"player finish reson is %ld",(long)finishReson);
     if (finishReson == MPMovieFinishReasonPlaybackError) {
+        [self.indicator stopAnimating];
         UIAlertView *finishAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"播放出错了,是否重试？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"重试", nil];
         finishAlertView.tag = 105;
         [finishAlertView show];
@@ -294,6 +303,10 @@
         _isShowFinishAlert = NO;
         [self replay];
     }else if (alertView.tag == 105 && buttonIndex != alertView.cancelButtonIndex){//错误提示弹框
+        if (self.isLivePlay || self.curentTime == 0) {
+            [self shutDown];
+        }
+
         _isShowFinishAlert = NO;
         [self tautologyToPlay];
     }
