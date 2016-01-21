@@ -33,7 +33,6 @@
 @property (nonatomic, copy) void (^rechangeBottom)();
 @property (nonatomic, copy) void (^addDanmu)(BOOL isOpen);
 @property (nonatomic, copy) void (^addEpisodeView)(UIButton *btn);
-
 - (instancetype)initWithFrame:(CGRect)frame PlayState:(KSYPopularLivePlayState)playstate;
 
 - (void)updateCurrentDuration:(NSInteger)duration Position:(NSInteger)currentPlaybackTime playAbleDuration:(NSInteger)playableDuration;

@@ -14,7 +14,7 @@
 
 
 @property (nonatomic,strong) KSYShortView *ksyShortView;
-
+@property (nonatomic, assign)BOOL isPaly;
 
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier urlstr:(NSString *)urlstring frame:(CGRect)frame;

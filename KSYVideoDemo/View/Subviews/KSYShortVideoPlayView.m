@@ -14,7 +14,7 @@
     UITableView *ksyShortTableView;
     NSString *videoString;
     KSYCommentView *commentView;
-
+    BOOL _isPlay;
 }
 @end
 
@@ -101,7 +101,9 @@
         return cell;
 
     }else{
-        commentView.hidden=NO;
+        if (indexPath.row>5) {
+            commentView.hidden=NO;
+        }
         KSYComTvCell *cell=[tableView dequeueReusableCellWithIdentifier:cellId2];
         if (!cell){
             cell=[[KSYComTvCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId2];
@@ -120,9 +122,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (!_videoCell.ksyShortView.isPlaying) {
-        //获得播放按钮
-        UIButton *playBtn=(UIButton *)[self viewWithTag:kBarPlayBtnTag];
-        if (playBtn.selected==NO) {
+        if (!_isPlay) {
             return;
         }else{
             [_videoCell.ksyShortView play];
@@ -131,8 +131,10 @@
     }else{
         if (ksyShortTableView.contentOffset.y>260.0) {
             [_videoCell.ksyShortView pause];
+            _isPlay = YES;
         }else {
             [_videoCell.ksyShortView play];
+            _isPlay = NO;
         }
     }
 }
