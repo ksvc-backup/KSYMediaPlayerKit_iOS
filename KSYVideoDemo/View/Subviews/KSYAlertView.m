@@ -93,9 +93,6 @@ static CGFloat kTransitionDuration = 0.3;
 {
     if (!_headImageView) {
         _headImageView = [UIImageView new];
-        _headImageView.layer.cornerRadius = 17.5;
-        _headImageView.layer.masksToBounds = YES;
-        _headImageView.backgroundColor = [UIColor purpleColor];
     }
     return _headImageView;
 }
@@ -239,6 +236,7 @@ static CGFloat kTransitionDuration = 0.3;
     _fansNumberLabl.text = model.fansNumber;
     _userNameLabel.text = model.name;
     _followNumberLabel.text = model.followNumber;
+    [_headImageView sd_setImageWithURL:[NSURL URLWithString:model.headUrl] placeholderImage:[UIImage imageNamed:@"live_head"]];
 }
 - (void)alertViewDisAppere
 {

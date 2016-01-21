@@ -336,7 +336,7 @@
     
     [UIView beginAnimations:nil context:(__bridge void * _Nullable)(flakeView)];
     [UIView setAnimationDuration:7 * speed];
-    flakeView.frame = CGRectMake(startX+300, -200, 20.0 * scale, 20.0 * scale);
+    flakeView.frame = CGRectMake(startX + self.width - 130, -200, 20.0 * scale, 20.0 * scale);
     flakeView.alpha = 0.3;
 
     [UIView setAnimationDidStopSelector:@selector(onAnimationComplete:finished:context:)];
