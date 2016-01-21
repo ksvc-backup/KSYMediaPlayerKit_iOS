@@ -37,8 +37,11 @@
     self=[super initWithFrame:frame];
     if (self)
     {
-        self.backgroundColor=[UIColor blackColor];
-        self.alpha = 0.5;
+        self.backgroundColor=[UIColor clearColor];
+        backgroundView = [[UIView alloc]initWithFrame:self.bounds];
+        backgroundView.backgroundColor = [UIColor blackColor];
+        backgroundView.alpha = 0.5;
+        [self addSubview:backgroundView];
         
         thisPlaystate=playstate;
         //播放按钮 播放时间 进度条 总时间
@@ -98,17 +101,7 @@
             kCurrentLabel.font = [UIFont boldSystemFontOfSize:WORDFONT16];
             
             if (thisPlaystate==kSYShortVideoPlay) {
-                WeakSelf(KSYBottomView);
                 kprogress=[[KSYProgressVI alloc]initWithFrame:CGRectMake(kCurrentLabel.right+5, kCurrentLabel.center.y-5, self.width-kCurrentLabel.right-70, 10)];
-                kprogress.progDidBegin=^(UISlider *slider){
-                    [weakSelf progressDidBegin:slider];
-                };
-                kprogress.progChanged=^(UISlider *slider){
-                     [weakSelf progressChanged:slider];
-                };
-                kprogress.progChangeEnd=^(UISlider *slider){
-                    [weakSelf progressChangeEnd:slider];
-                };
                 //总时间
                 kTotalLabel=[[UILabel alloc]initWithFrame:CGRectMake(kprogress.right+5, kprogress.center.y-15, 50, 30)];
                 //全屏按钮
@@ -125,6 +118,16 @@
                 CGRect kFullBtnRect = CGRectMake(kTotalLabel.right, 5, 30, 30);
                 kFullBtn.frame = kFullBtnRect;
             }
+            WeakSelf(KSYBottomView);
+            kprogress.progDidBegin=^(UISlider *slider){
+                [weakSelf sliderDidBegin:slider];
+            };
+            kprogress.progChanged=^(UISlider *slider){
+                [weakSelf sliderChanged:slider];
+            };
+            kprogress.progChangeEnd=^(UISlider *slider){
+                [weakSelf sliderChangeEnd:slider];
+            };
             [self addSubview:kprogress];
             
             
@@ -163,7 +166,7 @@
         danmuBtn.hidden = YES;
         danmuBtn.frame = CGRectMake(self.width-95, 10, 50, 30);
         danmuBtn.tag = kDanmuBtnTag;
-        UIImage *danmuImage=[UIImage imageNamed:@"danMuOpen"];
+        UIImage *danmuImage=[UIImage imageNamed:@"danMuClose"];
         [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
         [danmuBtn addTarget:self action:@selector(clickDanmuBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:danmuBtn];
@@ -176,27 +179,27 @@
     }
 }
 
-- (void)progressDidBegin:(UISlider *)slider
+- (void)sliderDidBegin:(UISlider *)slider
 {
-    if (self.progressDidBegin)
+    if (self.changBegin)
     {
-        self.progressDidBegin(slider);
+        self.changBegin(slider);
     }
 }
 
-- (void)progressChanged:(UISlider *)slider {
+- (void)sliderChanged:(UISlider *)slider {
     
-    if (self.progressChanged)
+    if (self.changIng)
     {
-        self.progressChanged(slider);
+        self.changIng(slider);
     }
     
 }
 
-- (void)progressChangeEnd:(UISlider *)slider {
-    if(self.progressChangeEnd)
+- (void)sliderChangeEnd:(UISlider *)slider {
+    if(self.ChangeEnd)
     {
-        self.progressChangeEnd(slider);
+        self.ChangeEnd(slider);
     }
 }
 - (void)playBtnClick:(UIButton *)btn
@@ -207,6 +210,7 @@
 }
 - (void)setSubviews
 {
+    backgroundView.frame = CGRectMake(0, 0, self.width, self.height);
     UIImage *fullImage=[UIImage imageNamed:@"unfull"];
     if (thisPlaystate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(10, 5, 30, 30);
@@ -252,7 +256,7 @@
 }
 - (void)resetSubviews
 {
-
+    backgroundView.frame = CGRectMake(0, 0, self.width, self.height);
     UIImage *unFullImage=[UIImage imageNamed:@"full"];
     if (thisPlaystate==KSYPopularLivePlay) {
         kShortPlayBtn.frame=CGRectMake(5, 5, 30, 30);

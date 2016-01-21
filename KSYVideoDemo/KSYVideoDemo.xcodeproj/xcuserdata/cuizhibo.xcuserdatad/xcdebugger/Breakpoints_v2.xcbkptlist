@@ -73,7 +73,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "483"
             endingLineNumber = "483"
-            landmarkName = "-applicationDidBecomeActive"
+            landmarkName = "-updateInterfaceWithReachability:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,7 +89,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
             endingLineNumber = "149"
-            landmarkName = "-currentPlaybackTime"
+            landmarkName = "-play"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

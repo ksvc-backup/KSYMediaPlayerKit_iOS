@@ -72,9 +72,14 @@
         [self addBottomView];
         [self bringSubviewToFront:bottomView];
         [self addTopView];
+        [self performSelector:@selector(hiddenTopAndBottom) withObject:nil afterDelay:3.0];
         _HEIGHT=THESCREENWIDTH;
     }
     return self;
+}
+- (void)hiddenTopAndBottom{
+    topView.hidden = YES;
+    bottomView.hidden = YES;
 }
 #pragma mark 添加视图
 //添加TopView
@@ -111,14 +116,14 @@
     bottomView.addEpisodeView=^(UIButton *btn){
         [weakSelf addEpisode:(btn)];
     };
-    bottomView.progressDidBegin=^(UISlider *slider){
-        [weakSelf progDidBegin:slider];
+    bottomView.changBegin=^(UISlider *slider){
+        [weakSelf Begin:slider];
     };
-    bottomView.progressDidBegin=^(UISlider *slider){
-        [weakSelf progChanged:slider];
+    bottomView.changIng=^(UISlider *slider){
+        [weakSelf Changed:slider];
     };
-    bottomView.progressDidBegin=^(UISlider *slider){
-        [weakSelf progChangeEnd:slider];
+    bottomView.ChangeEnd=^(UISlider *slider){
+        [weakSelf ChangeEnd:slider];
     };
     [self addSubview: bottomView];
 }
@@ -285,14 +290,14 @@
 }
 - (void)brightnessChangeEnd:(UISlider *)slider {
 }
-- (void)progDidBegin:(UISlider *)slider{
+- (void)Begin:(UISlider *)slider{
     if ([self.player isPlaying]==YES) {
         UIImage *playImg = [UIImage imageNamed:@"pause"];
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
 }
-- (void)progChanged:(UISlider *)slider{
+- (void)Changed:(UISlider *)slider{
     if (![self.player isPreparedToPlay]) {
         slider.value = 0.0f;
         return;
@@ -305,7 +310,7 @@
     startLabel.text = strCurTime;
     
 }
-- (void)progChangeEnd:(UISlider *)slider{
+- (void)ChangeEnd:(UISlider *)slider{
     if (![self.player isPreparedToPlay]) {
         slider.value=0.0f;
         return;

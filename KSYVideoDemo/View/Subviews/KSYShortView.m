@@ -69,13 +69,13 @@
         _bottomView.BtnClick=^(UIButton *btn){
             [weakSelf BtnClick:btn];
         };
-        _bottomView.progressDidBegin=^(UISlider *slider){
+        _bottomView.changBegin=^(UISlider *slider){
             [weakSelf progDidBegin:slider];
         };
-        _bottomView.progressDidBegin=^(UISlider *slider){
+        _bottomView.changIng=^(UISlider *slider){
             [weakSelf progChanged:slider];
         };
-        _bottomView.progressDidBegin=^(UISlider *slider){
+        _bottomView.ChangeEnd=^(UISlider *slider){
             [weakSelf progChangeEnd:slider];
         };
     }

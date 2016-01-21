@@ -12,8 +12,6 @@
 @interface KSYPopularVideoView (){
     CGFloat _WIDTH;
     CGFloat _HEIGHT;
-    //当前设备的方向
-    BOOL _isLunchFulled;
 }
 
 @end
@@ -52,7 +50,7 @@
         };
         [self addSubview:_ksyVideoPlayerView];
         [self addDetailView];
-        [self addCommtenView];
+//        [self addCommtenView];
         [self registerObservers];
         _WIDTH = THESCREENWIDTH;
         _HEIGHT = THESCREENHEIGHT;
@@ -91,15 +89,12 @@
     [self unLunchFull];
 }
 - (void)lunchFull{
-    if (!_isLunchFulled) {
-        self.frame=CGRectMake(0, 0, _HEIGHT, _WIDTH);
-        _ksyVideoPlayerView.frame=self.frame;
-        [_ksyVideoPlayerView lunchFullScreen];
-        _detailView.hidden=YES;
-        [_commtenView.kTextField resignFirstResponder];
-        _commtenView.hidden=YES;
-        _isLunchFulled=YES;
-    }
+    [_detailView.commtenView.kTextField resignFirstResponder];
+    [_detailView resetTextFrame];
+    self.frame=CGRectMake(0, 0, _HEIGHT, _WIDTH);
+    _ksyVideoPlayerView.frame=self.frame;
+    [_ksyVideoPlayerView lunchFullScreen];
+    _detailView.hidden=YES;
 }
 - (void)unLunchFull{
     if (_ksyVideoPlayerView.isLock) {
@@ -109,79 +104,16 @@
     _ksyVideoPlayerView.frame=CGRectMake(0, 0, self.width, self.height/2-60);
     [_ksyVideoPlayerView minFullScreen];
     _detailView.hidden=NO;
-    _commtenView.hidden=NO;
-    [self resetTextFrame];
-    _isLunchFulled=NO;
 }
 - (void)lockTheScreen:(BOOL)islocked{
     if (self.lockWindow) {
         self.lockWindow(islocked);
     }
 }
-- (void)showCommentView:(NSInteger)selectedSegmentIndex contentOffset:(CGFloat)contentoffset
-{
-    if(selectedSegmentIndex==0&&contentoffset>100){
-        [_detailView resetTableViewFrame:selectedSegmentIndex];
-        _commtenView.hidden=NO;
-    }else{
-        [_detailView resetTableViewFrame:selectedSegmentIndex];
-        _commtenView.hidden=YES;
-        [_commtenView.kTextField resignFirstResponder];
-        [self resetTextFrame];
-    }
-}
 - (void)addDetailView
 {
-    WeakSelf(KSYPopularVideoView);
-    _detailView=[[KSYDetailView alloc]initWithFrame:CGRectMake(0, self.ksyVideoPlayerView.bottom,self.width,self.height/2)];
-    _detailView.showCommentView=^(NSInteger selectedSegmentIndex,CGFloat contentoffset){
-        [weakSelf showCommentView:selectedSegmentIndex contentOffset:contentoffset];
-    };
+    _detailView=[[KSYDetailView alloc]initWithFrame:CGRectMake(0, self.ksyVideoPlayerView.bottom,self.width,self.height-_ksyVideoPlayerView.height)];
     [self addSubview: _detailView];
-}
-
-- (void)addCommtenView
-{
-    WeakSelf(KSYPopularVideoView);
-    _commtenView=[[KSYCommentView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40)];
-    _commtenView.hidden=YES;
-    _commtenView.send=^{
-        [weakSelf resetTextFrame];
-    };
-    _commtenView.changeFrame=^(CGFloat height){
-        [weakSelf changeTextFrame:height];
-    };
-    [self addSubview:_commtenView];
-}
-- (void)changeTextFrame:(CGFloat)height
-{
-    CGRect newFrame = CGRectMake(0, self.height-height-40, self.width, 40);
-    [UIView animateWithDuration:0.2 animations:^{
-        _commtenView.frame = newFrame;
-    }];
-}
-- (void)resetTextFrame
-{
-//    //设置时间格式
-//    NSDate *date=[NSDate date];
-//    UITextField *textField=(UITextField *)[self viewWithTag:kCommentFieldTag];
-//    [textField resignFirstResponder];
-//    if (![textField.text isEqualToString:@""]) {
-//        //向数据库中添加数据
-//        [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"孙健" Time:date Content:textField.text];
-//        //刷新数据库
-//        [self.detailView loadData];
-//        [self.detailView.kTableView reloadData];
-//        [self.detailView.kTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.detailView.models.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//    }
-    //重置评论视图的frame
-    UITextField *textField=(UITextField *)[self viewWithTag:kCommentFieldTag];
-    [textField resignFirstResponder];
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        _commtenView.frame=CGRectMake(0, self.height-40, self.width, 40);
-    } completion:^(BOOL finished) {
-        NSLog(@"Animation Over!");
-    }];
 }
 
 - (void)registerObservers

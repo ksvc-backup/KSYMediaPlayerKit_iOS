@@ -8,7 +8,7 @@
 //
 
 #import "KSYBasePlayView.h"
-
+#import <CommonCrypto/CommonDigest.h>
 
 @interface KSYBasePlayView ()<UIAlertViewDelegate>
 
@@ -34,6 +34,40 @@
     [self releaseObservers];
     [self unregisterApplicationObservers];
 
+}
+- (NSString *)MD5:(NSString*)raw {
+    
+    const char * pointer = [raw UTF8String];
+    unsigned char md5Buffer[CC_MD5_DIGEST_LENGTH];
+    
+    CC_MD5(pointer, (CC_LONG)strlen(pointer), md5Buffer);
+    
+    NSMutableString *string = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [string appendFormat:@"%02x",md5Buffer[i]];
+    
+    return string;
+}
+/**
+ @abstrace 初始化金山云认证信息
+ @discussion 开发者帐号fpzeng，其他信息如下：
+ 
+ * appid: QYA0EEF0FDDD38C79913
+ * ak: abc73bb5ab2328517415f8f52cd5ad37
+ * sk: sff25dc4a428479ff1e20ebf225d113
+ * sksign: md5(sk+tmsec)
+ 
+ 以上信息随时可能失效，请找金山云提供。
+ 
+ @warning 请将appid/ak/sk信息更新至开发者自己信息，再进行编译测试
+ */
+
+- (void)initKSYAuth
+{
+    NSString* time = [NSString stringWithFormat:@"%d",(int)[[NSDate date]timeIntervalSince1970]];
+    NSString* sk = [NSString stringWithFormat:@"sff25dc4a428479ff1e20ebf225d113%@", time];
+    NSString* sksign = [self MD5:sk];
+    [[KSYPlayerAuth sharedInstance]setAuthInfo:@"QYA0EEF0FDDD38C79913" accessKey:@"abc73bb5ab2328517415f8f52cd5ad37" secretKeySign:sksign timeSeconds:time];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame urlString:(NSString *)urlString

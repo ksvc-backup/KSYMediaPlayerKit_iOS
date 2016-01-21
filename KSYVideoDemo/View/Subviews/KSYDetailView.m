@@ -27,11 +27,55 @@
     if (self){
         _models=[[NSMutableArray alloc]init];
         _modelsCells=[[NSMutableArray alloc]init];
-        self.backgroundColor=[UIColor clearColor];
         [self addBellowPart];
+        [self addCommtenView];
     }
     return self;
 }
+- (void)addCommtenView
+{
+    WeakSelf(KSYDetailView);
+    _commtenView=[[KSYCommentView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40)];
+    _commtenView.hidden=YES;
+    _commtenView.send=^{
+        [weakSelf resetTextFrame];
+    };
+    _commtenView.changeFrame=^(CGFloat height){
+        [weakSelf changeTextFrame:height];
+    };
+    [self addSubview:_commtenView];
+}
+- (void)changeTextFrame:(CGFloat)height
+{
+    CGRect newFrame = CGRectMake(0, self.height-height-40, self.width, 40);
+    [UIView animateWithDuration:0.2 animations:^{
+        _commtenView.frame = newFrame;
+    }];
+}
+- (void)resetTextFrame
+{
+    //    //设置时间格式
+    //    NSDate *date=[NSDate date];
+    //    UITextField *textField=(UITextField *)[self viewWithTag:kCommentFieldTag];
+    //    [textField resignFirstResponder];
+    //    if (![textField.text isEqualToString:@""]) {
+    //        //向数据库中添加数据
+    //        [[KSYCommentService sharedKSYCommentService]addCoreDataModelWithImageName:@"avatar60" UserName:@"孙健" Time:date Content:textField.text];
+    //        //刷新数据库
+    //        [self.detailView loadData];
+    //        [self.detailView.kTableView reloadData];
+    //        [self.detailView.kTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.detailView.models.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    //    }
+    //重置评论视图的frame
+    UITextField *textField=(UITextField *)[self viewWithTag:kCommentFieldTag];
+    [textField resignFirstResponder];
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        _commtenView.frame=CGRectMake(0, self.height-40, self.width, 40);
+    } completion:^(BOOL finished) {
+        NSLog(@"Animation Over!");
+    }];
+}
+
 #pragma mark 加载数据
 - (void)loadData{
     //每次进来都要重新刷新数据
@@ -63,12 +107,12 @@
     self.kSegmentedCTL.selectedSegmentIndex=0;
     
     //添加一个分割线
-    UILabel *lineLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.kSegmentedCTL.frame)+10, THESCREENWIDTH, 1)];
+    UILabel *lineLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, _kSegmentedCTL.bottom+10, THESCREENWIDTH, 1)];
     lineLabel.backgroundColor=[UIColor lightGrayColor];
     [self addSubview:lineLabel];
 
     //初始化表视图 只要你在做你就在想
-    _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(lineLabel.frame), THESCREENWIDTH, THESCREENHEIGHT/2-25) style:UITableViewStylePlain];
+    _kTableView=[[UITableView alloc]initWithFrame:CGRectMake(0, lineLabel.bottom, THESCREENWIDTH, self.height-lineLabel.bottom) style:UITableViewStylePlain];
     self.kTableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.kTableView];
     self.kTableView.delegate=self;
@@ -209,6 +253,8 @@
         [_modelsCells addObject:cell];
         //这样做复杂啦换一种方法
         [self.kTableView reloadData];
+        _commtenView.hidden = YES;
+        _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _LHeight);
     }
     //如果是推荐，获取推荐的数据
     else if(segment.selectedSegmentIndex==2){
@@ -221,24 +267,27 @@
             [_modelsCells addObject:cell];
         }];
         [self.kTableView reloadData];
-        [self.kTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        _commtenView.hidden = YES;
+        _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _LHeight);
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (self.showCommentView) {
-        self.showCommentView(_kSegmentedCTL.selectedSegmentIndex,_kTableView.contentOffset.y);
-    }
+    if (_kSegmentedCTL.selectedSegmentIndex==0) {
+        [self resetTableViewFrame];
+    };
+    
 }
-- (void)resetTableViewFrame:(NSInteger)selectedIndex{
+- (void)resetTableViewFrame{
     CGFloat currentY= _kTableView.contentOffset.y+_kTableView.height ;
     NSLog(@"%f,%f",currentY,_kTableView.contentSize.height);
-
-    if (selectedIndex==0) {
         if (currentY>=_kTableView.contentSize.height) {
             _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _SHeight);
+            _commtenView.hidden = NO;
         }else if(_kTableView.contentOffset.y<=0){
             _kTableView.frame = CGRectMake(_kTableView.origin.x, _kTableView.origin.y, _kTableView.width, _LHeight);
+            _commtenView.hidden = YES;
         }
-    }
+
 }
+
 @end
