@@ -10,7 +10,7 @@
 #import "KSYPhoneLivePlayView.h"
 #import "CommentModel.h"
 #import "SpectatorModel.h"
-
+#import "UserInfoModel.h"
 
 @interface KSYPhoneLivePlayVC ()<UIAlertViewDelegate>
 {
@@ -22,6 +22,8 @@
     NSTimer                 *_praiseTimer1;
     NSInteger               _index;         //测试数据
 }
+
+@property (nonatomic, strong)UserInfoModel *userModel;
 @end
 
 @implementation KSYPhoneLivePlayVC
@@ -48,6 +50,7 @@
     _phoneLivePlayVC = [[KSYPhoneLivePlayView alloc] initWithFrame:self.view.bounds urlString:self.videoUrlString playState:KSYPhoneLivePlay];
     //观看用户
     _phoneLivePlayVC.spectatorsArray = _spectatorsArr;
+    _phoneLivePlayVC.userModel = self.userModel;
     _phoneLivePlayVC.liveBroadcastCloseBlock = ^{
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定退出观看？" delegate:weakSelf cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -109,6 +112,20 @@
     }
 }
 
+- (UserInfoModel *)userModel
+{
+    if (_userModel == nil) {
+        _userModel = [UserInfoModel new];
+    }
+    _userModel.name = @"王大锤";
+    _userModel.signConent = @"我叫王大锤，万万没想到的是...我的生涯一片无悔，我想起那天夕阳下的奔跑，那是我逝去的青春";
+    _userModel.liveNumber = @"888";
+    _userModel.fansNumber = @"20K";
+    _userModel.followNumber = @"88";
+    _userModel.praiseNumber = @"5.5w";
+
+    return _userModel;
+}
 //获取随机色
 - (UIColor *)getRandomColorWithalpha:(float)alpla
 {

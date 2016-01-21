@@ -19,22 +19,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "View/Subviews/KSYBasePlayView.m"
-            timestampString = "474955892.472869"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "-tautologyToPlay"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "View/Subviews/KSYVideoPlayerView.m"
             timestampString = "474973100.001755"
             startingColumnNumber = "9223372036854775807"
@@ -84,12 +68,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "View/Subviews/KSYBasePlayView.m"
-            timestampString = "474972663.526644"
+            timestampString = "475035781.350466"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "470"
-            endingLineNumber = "470"
-            landmarkName = "-applicationDidBecomeActive"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "-updateInterfaceWithReachability:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -100,12 +84,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "View/Subviews/KSYBasePlayView.m"
-            timestampString = "474972704.563849"
+            timestampString = "475036212.985899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "-currentPlaybackTime"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "-play"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

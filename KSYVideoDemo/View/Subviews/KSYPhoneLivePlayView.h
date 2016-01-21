@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "KSYInteractiveView.h"
 #import "KSYBasePlayView.h"
-
+#import "UserInfoModel.h"
 
 @interface KSYPhoneLivePlayView : KSYBasePlayView
 
@@ -21,7 +21,7 @@
 
 @property (nonatomic, copy) void (^shareBlock)();
 @property (nonatomic ,strong)   NSArray     *spectatorsArray;
-
+@property (nonatomic, strong) UserInfoModel *userModel;
 - (void)addNewCommentWith:(id)model;
 
 - (void)onPraiseWithSpectatorsInteractiveType:(SpectatorsInteractiveType )type;

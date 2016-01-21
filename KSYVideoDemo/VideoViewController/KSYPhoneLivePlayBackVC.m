@@ -11,6 +11,7 @@
 #import "KSYPhoneLivePlayView.h"
 #import "CommentModel.h"
 #import "SpectatorModel.h"
+#import "UserInfoModel.h"
 
 @interface KSYPhoneLivePlayBackVC ()
 {
@@ -21,6 +22,7 @@
     NSTimer                 *_praiseTimer1;
 
 }
+@property (nonatomic, strong)UserInfoModel *userModel;
 
 @end
 
@@ -43,6 +45,8 @@
     _phoneLivePlayVC = [[KSYPhoneLivePlayView alloc] initWithFrame:self.view.bounds urlString:self.videoUrlString playState:KSYPhoneLivePlayBack];
     //观看用户
     _phoneLivePlayVC.spectatorsArray = _spectatorsArr;
+    
+    _phoneLivePlayVC.userModel = self.userModel;
 
     _phoneLivePlayVC.isBackGroundReleasePlayer = self.isReleasePlayer;
 
@@ -96,6 +100,21 @@
         model.praiseNumber = @"5.5w";
         [_spectatorsArr addObject:model];
     }
+}
+
+- (UserInfoModel *)userModel
+{
+    if (_userModel == nil) {
+        _userModel = [UserInfoModel new];
+    }
+    _userModel.name = @"王大锤";
+    _userModel.signConent = @"我叫王大锤，万万没想到的是...我的生涯一片无悔，我想起那天夕阳下的奔跑，那是我逝去的青春";
+    _userModel.liveNumber = @"888";
+    _userModel.fansNumber = @"20K";
+    _userModel.followNumber = @"88";
+    _userModel.praiseNumber = @"5.5w";
+    
+    return _userModel;
 }
 
 //获取随机色

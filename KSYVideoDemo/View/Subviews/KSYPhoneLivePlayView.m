@@ -305,6 +305,8 @@
 
 - (void)headEvent:(UIButton *)button
 {
+    self.alertView.contentModel = self.userModel;
+    [self setInfoViewFrame:YES];
 
 }
 
