@@ -166,7 +166,7 @@
         danmuBtn.hidden = YES;
         danmuBtn.frame = CGRectMake(self.width-95, 10, 50, 30);
         danmuBtn.tag = kDanmuBtnTag;
-        UIImage *danmuImage=[UIImage imageNamed:@"danMuOpen"];
+        UIImage *danmuImage=[UIImage imageNamed:@"danMuClose"];
         [danmuBtn setImage:danmuImage forState:UIControlStateNormal];
         [danmuBtn addTarget:self action:@selector(clickDanmuBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:danmuBtn];
