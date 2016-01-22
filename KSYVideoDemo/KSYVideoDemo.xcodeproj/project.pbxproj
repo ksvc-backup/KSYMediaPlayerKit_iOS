@@ -2251,7 +2251,7 @@
 				TargetAttributes = {
 					0A68AA431ABBFAE2006CA2EF = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = HFUZX7Q4Y8;
+						DevelopmentTeam = ZGJ54Q7R45;
 					};
 				};
 			};
@@ -2775,7 +2775,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.KingYunPlayer;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
+>>>>>>> e4d75cb06ad0bc738c9620b7400c3e92b61d57db
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2807,7 +2811,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.KingYunPlayer;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = com.ksy.AMZPlayer;
+>>>>>>> e4d75cb06ad0bc738c9620b7400c3e92b61d57db
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

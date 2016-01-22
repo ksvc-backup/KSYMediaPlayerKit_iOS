@@ -70,13 +70,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    id model = _commentArray[indexPath.row];
-//    if ([model isKindOfClass:[CommentModel class]]) {
-//        CommentModel *userModel = (CommentModel *)model;
-//        if (userModel.userName != nil) {
-//            return 35;
-//        }
-//    }
     return 50;
 
 }
@@ -96,41 +89,16 @@
 
 - (void)newUserAdd:(id)object
 {
-    
-//    int i = 0;
-    //一个cell刷新
-//    if (_commentArray.count > 15) {
-//        
-//        [_commentArray removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]];
-//        i = 3;
-//        
-//    }
+    if (_commentArray.count > 15) {
+        
+        [_commentArray removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 8)]];
+        
+    }
 
     [_commentArray addObject:object];
 
-    
     [_tableView reloadData];
     [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_commentArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
-//- (void)delleteObj:(id)object
-//{
-//
-////    [self performSelector:@selector(test:) withObject:object afterDelay:4];
-//}
-//
-//- (void)test:(CommentModel *)obj
-//{
-//
-//    [_commentArray removeObjectsAtIndexes:[NSIndexSet indexSetWithIndex:0]];
-//    [_tableView reloadData];
-//    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_commentArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//
-////    NSInteger i = [_commentArray indexOfObject:obj];
-////    [_commentArray removeObject:obj];
-////    [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-////    [_commentArray insertObject:@"" atIndex:i];
-////
-////    [_tableView reloadData];
-//}
 @end
