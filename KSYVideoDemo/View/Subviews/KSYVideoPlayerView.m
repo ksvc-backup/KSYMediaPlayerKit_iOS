@@ -94,7 +94,6 @@
     
     WeakSelf(KSYVideoPlayerView);
     bottomView=[[KSYBottomView alloc]initWithFrame:CGRectMake(0, self.height-40, self.width, 40) PlayState:_playState];
-//    bottomView.kprogress.delegate=self;
     bottomView.BtnClick=^(UIButton *btn){
         [weakSelf BtnClick:btn];
     };
@@ -280,7 +279,6 @@
     if (_playState==KSYPopularLivePlay) {
         [bottomView.commentText resignFirstResponder];
         bottomView.frame=CGRectMake(0, self.height-40, self.width, 40);
-        bottomView.alpha=0.6;
     }
 }
 - (void)brightnessDidBegin:(UISlider *)slider {
@@ -331,13 +329,9 @@
     }
     if ([self.player isPlaying]==NO){
         [self play];
-        UIImage *pauseImg_n = [UIImage imageNamed:@"pause"];
-        [btn setImage:pauseImg_n forState:UIControlStateNormal];
     }
     else{
         [self pause];
-        UIImage *playImg_n = [UIImage imageNamed:@"play"];
-        [btn setImage:playImg_n forState:UIControlStateNormal];
     } 
     
 }

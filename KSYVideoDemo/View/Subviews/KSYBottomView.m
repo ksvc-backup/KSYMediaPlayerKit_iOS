@@ -52,7 +52,6 @@
         [kShortPlayBtn addTarget:self action:@selector(playBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:kShortPlayBtn];
         kShortPlayBtn.tag=kBarPlayBtnTag;
-        
         if (thisPlaystate==KSYPopularLivePlay) {
             //添加用户头像
             imageView=[[UIImageView alloc]initWithFrame:CGRectMake(kShortPlayBtn.right+5, 5, 30, 30)];
@@ -204,8 +203,16 @@
 }
 - (void)playBtnClick:(UIButton *)btn
 {
+    btn.selected = !btn.selected;
     if (self.BtnClick) {
         self.BtnClick(btn);
+    }
+    if (btn.selected) {
+        UIImage *pauseImg_n = [UIImage imageNamed:@"play"];
+        [btn setImage:pauseImg_n forState:UIControlStateNormal];
+    }else{
+        UIImage *playImg_n = [UIImage imageNamed:@"pause"];
+        [btn setImage:playImg_n forState:UIControlStateNormal];
     }
 }
 - (void)setSubviews

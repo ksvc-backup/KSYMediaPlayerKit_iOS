@@ -27,7 +27,6 @@
         [self addTopView];
         //添加底部slider
         [self addBottomPro];
-        
     }
     return self;
 }
@@ -36,8 +35,6 @@
 {
     if (!_topView) {
         _topView=[[KSYTopView alloc]initWithFrame:CGRectMake(0, 0, self.width, 40)];
-        _topView.backgroundColor=[UIColor blackColor];
-        _topView.alpha=0.5;
         [self addSubview:_topView];
     }
 }
@@ -47,8 +44,6 @@
     if (!_bottomView) {
         if (self.duration>60) {
             [self addSubview:self.bottomView];
-            _bottomView.backgroundColor=[UIColor blackColor];
-            _bottomView.alpha=0.5;
         }
     }
     if ([self.player isPlaying]) {
@@ -59,6 +54,7 @@
     
     _slider.value=self.currentPlaybackTime;
     _slider.maximumValue=self.duration;
+
 }
 - (UIView *)bottomView{
     if (!_bottomView) {
@@ -87,7 +83,6 @@
         UIButton *btn = (UIButton *)[self viewWithTag:kBarPlayBtnTag];
         [btn setImage:playImg forState:UIControlStateNormal];
     }
-    
 }
 -(void)progChanged:(UISlider *)slider{
 

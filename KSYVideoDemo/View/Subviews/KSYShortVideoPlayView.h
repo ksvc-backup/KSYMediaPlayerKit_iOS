@@ -12,7 +12,7 @@
 @interface KSYShortVideoPlayView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame UrlPathString:(NSString *)urlPathString;
-- (void)unregNotification;
+
 
 
 
