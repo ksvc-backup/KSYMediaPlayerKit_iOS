@@ -7,7 +7,6 @@
 //
 
 #import "KSYPopilarLivePlayBackVC.h"
-#import "KSYPopularVideoView.h"
 #import "AppDelegate.h"
 
 @interface KSYPopilarLivePlayBackVC ()<UIActionSheetDelegate>
@@ -18,37 +17,41 @@
 @end
 
 @implementation KSYPopilarLivePlayBackVC
-
+- (void)dealloc
+{
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
     self.navigationController.navigationBar.barTintColor=[UIColor blackColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self changeNavigationStayle];
+    [self changeNavigationStyle];
     ksyPoularbackView=[[KSYPopularVideoView alloc]initWithFrame:CGRectMake(0, 64, self.view.width, self.view.height-64) UrlWithString:self.urlPath playState:KSYPopularPlayBack];
-    ksyPoularbackView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
+//    ksyPoularbackView.ksyVideoPlayerView.isBackGroundReleasePlayer=self.isReleasePlayer;
     WeakSelf(KSYPopilarLivePlayBackVC);
-    ksyPoularbackView.changeNavigationBarColor=^(){
-        [weakSelf changeNavigationBarCLO];
-    };
     ksyPoularbackView.lockWindow=^(BOOL isLocked){
         [weakSelf lockTheWindow:(isLocked)];
+    };
+    ksyPoularbackView.hiddenNvgt=^(BOOL hidden){
+        [weakSelf changeNavigationBarCLO:hidden];
     };
     [self.view addSubview:ksyPoularbackView];
     AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
     appDelegate.allowRotation=YES;
 }
-
 - (void)lockTheWindow:(BOOL)isLocked
 {
     AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
     appDelegate.allowRotation=!isLocked;
 }
-- (void)changeNavigationBarCLO
+#pragma mark 修改导航栏颜色
+- (void)changeNavigationBarCLO:(BOOL)hidden
 {
-    self.navigationController.navigationBar.alpha=0.0;
+    self.navigationController.navigationBar.hidden=hidden;
 }
-- (void)changeNavigationStayle
+#pragma mark 修改导航栏模式
+- (void)changeNavigationStyle
 {
     //设置返回按钮
     UIButton *ksyBackBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -81,17 +84,27 @@
     self.navigationItem.rightBarButtonItem=rightItem;
     
 }
+
+
 - (void)back
 {
-    [ksyPoularbackView.ksyVideoPlayerView shutDown ];
+    [ksyPoularbackView.ksyVideoPlayerView shutDown];
     [ksyPoularbackView unregisterObservers];
+    [ksyPoularbackView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
+    appDelegate.allowRotation=NO;
 }
-- (void)menu
-{
-    UIActionSheet *ksyActionSheet=[[UIActionSheet alloc]initWithTitle:@"想要做什么？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"订阅",@"举报", nil];
-    [ksyActionSheet showInView:self.view];
+- (void)menu{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"想要做什么？"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:@"订阅"
+                                  otherButtonTitles:@"举报",nil];
+    [actionSheet showInView:self.view];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -107,10 +120,6 @@
             break;
     }
 }
-- (void)dealloc
-{
-    AppDelegate *appDelegate=[UIApplication sharedApplication].delegate;
-    appDelegate.allowRotation=NO;
-}
+
 
 @end

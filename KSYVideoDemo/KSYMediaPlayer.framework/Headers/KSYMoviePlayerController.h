@@ -179,18 +179,40 @@
 // The duration of the movie, or 0.0 if not known.
 @property (nonatomic, readonly) NSTimeInterval duration;
 
+/**
+ @abstract 当前视频可播放长度
+ @discussion 视频可播放时长，单位是秒。
+ 
+ * currentPlaybackTime 标记的是播放器当前已播放的时长。
+ * playableDuration 标记的是播放器缓冲的时间，会稍大于currentPlaybackTime，与currentPlaybackTime的差值则是缓冲长度。
+ * duration 是视频总时长。
+ @since Available in KSYMoviePlayerController 1.0 and later.
+ */
+// The currently playable duration of the movie, for progressively downloaded network content.
+@property (nonatomic, readonly) NSTimeInterval playableDuration;
+
+
+/**
+ @abstract 当前视频宽高
+ @discussion 获取信息
+ * 监听MPMovieNaturalSizeAvailableNotification
+ * 播放过程中，宽高信息可能会产生更改
+ @since Available in KSYMoviePlayerController 1.0 and later.
+ */
+@property (nonatomic, readonly) CGSize naturalSize;
 
 // Posted when the playback state changes, either programatically or by the user.
-MP_EXTERN NSString * const MPMoviePlayerPlaybackStateDidChangeNotification NS_DEPRECATED_IOS(3_2, 9_0);
+MP_EXTERN NSString * const MPMoviePlayerPlaybackStateDidChangeNotification;
 
 // Posted when movie playback ends or a user exits playback.
-MP_EXTERN NSString * const MPMoviePlayerPlaybackDidFinishNotification NS_DEPRECATED_IOS(2_0, 9_0);
+MP_EXTERN NSString * const MPMoviePlayerPlaybackDidFinishNotification;
 
-MP_EXTERN NSString * const MPMoviePlayerPlaybackDidFinishReasonUserInfoKey NS_DEPRECATED_IOS(3_2, 9_0); // NSNumber (MPMovieFinishReason)
+MP_EXTERN NSString * const MPMoviePlayerPlaybackDidFinishReasonUserInfoKey; // NSNumber (MPMovieFinishReason)
 
 // Posted when the network load state changes.
-MP_EXTERN NSString * const MPMoviePlayerLoadStateDidChangeNotification NS_DEPRECATED_IOS(3_2, 9_0);
+MP_EXTERN NSString * const MPMoviePlayerLoadStateDidChangeNotification;
 
+MP_EXTERN NSString * const MPMovieNaturalSizeAvailableNotification;
 
 #pragma mark KSYMoviePlayerController New Feature
 /**

@@ -10,7 +10,7 @@
 #import "KSYPhoneLivePlayView.h"
 #import "CommentModel.h"
 #import "SpectatorModel.h"
-
+#import "UserInfoModel.h"
 
 @interface KSYPhoneLivePlayVC ()<UIAlertViewDelegate>
 {
@@ -20,14 +20,18 @@
     NSTimer                 *_commetnTimer1;
     NSTimer                 *_praiseTimer0;
     NSTimer                 *_praiseTimer1;
+    NSInteger               _index;         //测试数据
 }
+
+@property (nonatomic, strong)UserInfoModel *userModel;
 @end
 
 @implementation KSYPhoneLivePlayVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
+    appDelegate.allowRotation=NO;
     WeakSelf(KSYBaseViewController);
     //模拟观众评论
     _commetnTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addNewCommentWith) userInfo:nil repeats:YES];
@@ -40,11 +44,13 @@
 
     //模拟观众信息
     _spectatorsArr = [[NSMutableArray alloc] initWithCapacity:0];
+    _index = 0;
     [self requestSepctators];
     
     _phoneLivePlayVC = [[KSYPhoneLivePlayView alloc] initWithFrame:self.view.bounds urlString:self.videoUrlString playState:KSYPhoneLivePlay];
     //观看用户
     _phoneLivePlayVC.spectatorsArray = _spectatorsArr;
+    _phoneLivePlayVC.userModel = self.userModel;
     _phoneLivePlayVC.liveBroadcastCloseBlock = ^{
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定退出观看？" delegate:weakSelf cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -78,21 +84,17 @@
 - (void)addNewCommentWith
 {
     CommentModel *model = [[CommentModel alloc] init];
-    model.userComment = @"哇，大美女！";
-    model.backColor = [self getRandomColorWithalpha:0.9];
-    model.headColor = [self getRandomColorWithalpha:1];
+    model.userComment = @"评论评论评论";
+    model.userName = @"用户名";
 
     [_phoneLivePlayVC addNewCommentWith:model];
 }
 
 - (void)addNewUserName
 {
-    CommentModel *model = [[CommentModel alloc] init];
-    model.userName = @"用户名";
-    model.backColor = [self getRandomColorWithalpha:0.9];
-    model.headColor = [self getRandomColorWithalpha:1];
     
-    [_phoneLivePlayVC addNewCommentWith:model];
+    [_phoneLivePlayVC addNewCommentWith:[NSString stringWithFormat:@"王大锤%@",@(_index)]];
+    _index++;
 
 }
 
@@ -106,11 +108,24 @@
         model.fansNumber = @"20K";
         model.followNumber = @"88";
         model.praiseNumber = @"5.5w";
-        model.headColor = [self getRandomColorWithalpha:1];
         [_spectatorsArr addObject:model];
     }
 }
 
+- (UserInfoModel *)userModel
+{
+    if (_userModel == nil) {
+        _userModel = [UserInfoModel new];
+    }
+    _userModel.name = @"王大锤";
+    _userModel.signConent = @"我叫王大锤，万万没想到的是...我的生涯一片无悔，我想起那天夕阳下的奔跑，那是我逝去的青春";
+    _userModel.liveNumber = @"888";
+    _userModel.fansNumber = @"20K";
+    _userModel.followNumber = @"88";
+    _userModel.praiseNumber = @"5.5w";
+
+    return _userModel;
+}
 //获取随机色
 - (UIColor *)getRandomColorWithalpha:(float)alpla
 {

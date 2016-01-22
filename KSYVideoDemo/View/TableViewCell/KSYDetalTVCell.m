@@ -16,12 +16,13 @@
 {
     UIImageView *_hostImageView;
     UILabel *_hostName;
-    UILabel *_hostLevel;
+    UIImageView *_hostLevel;
     UILabel *_fansCount;
     UILabel *_signature;
     UIButton *_focusBtn;
     UILabel *_underLine;
     UILabel *_studioName;
+    
     UILabel *_time;
     UILabel *_playtimes;
     UILabel *_content;
@@ -40,6 +41,7 @@
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        self.userInteractionEnabled=NO;
         [self initSubviews];
     }
     return self;
@@ -53,15 +55,19 @@
     [self addSubview:_hostImageView];
     //主播名字
     _hostName=[[UILabel alloc]init];
+    _hostName.textColor=[UIColor whiteColor];
+    _hostName.font=[UIFont systemFontOfSize:WORDFONT18];
     [self addSubview:_hostName];
     //级别
-    _hostLevel=[[UILabel alloc]init];
+    _hostLevel=[[UIImageView alloc]init];
     [self addSubview:_hostLevel];
     //粉丝数量
     _fansCount=[[UILabel alloc]init];
+    _fansCount.textColor=[UIColor whiteColor];
     [self addSubview:_fansCount];
     //个人签名
     _signature=[[UILabel alloc]init];
+    _signature.textColor=[UIColor lightGrayColor];
     [self addSubview:_signature];
     _signature.numberOfLines=0;
     //关注按钮
@@ -72,16 +78,21 @@
     [self addSubview:_underLine];
     //直播间名称
     _studioName=[[UILabel alloc]init];
+    _studioName.textColor=[UIColor whiteColor];
+    _studioName.font=[UIFont systemFontOfSize:WORDFONT18];
     [self addSubview:_studioName];
     //时间
     _time=[[UILabel alloc]init];
+    _time.textColor=[UIColor whiteColor];
     [self addSubview:_time];
     _time.numberOfLines=0;
     //播放次数
     _playtimes=[[UILabel alloc]init];
+    _playtimes.textColor=[UIColor whiteColor];
     [self addSubview:_playtimes];
     //内容简介
     _content=[[UILabel alloc]init];
+    _content.textColor=[UIColor whiteColor];
     [self addSubview:_content];
     _content.numberOfLines=0;
 }
@@ -109,43 +120,46 @@
     //级别
     CGFloat hostLevelX=hostNameX;
     CGFloat hostLevelY=CGRectGetMaxY(_hostName.frame)+SPACING;
-    CGSize hostLevelSize=[model2.hostLevel sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:HOSTLEVELFONT]}];
-    CGRect hostLevelRect=CGRectMake(hostLevelX, hostLevelY, hostLevelSize.width, hostLevelSize.height);
-    _hostLevel.text=model2.hostLevel;
+    CGRect hostLevelRect=CGRectMake(hostLevelX, hostLevelY, 30, 30);
+    _hostLevel.image=[UIImage imageNamed:model2.hostLevel];
     _hostLevel.frame=hostLevelRect;
     
     //粉丝数量
     CGFloat fansCountX=CGRectGetMaxX(_hostLevel.frame)+SPACING;
-    CGFloat fansCountY=hostLevelY;
-    CGSize fansCountSize=[model2.fansCount sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:HOSTLEVELFONT]}];
-    CGRect fansCountRect=CGRectMake(fansCountX, fansCountY, fansCountSize.width, fansCountSize.height);
-    _hostLevel.text=model2.fansCount;
-    _hostLevel.frame=fansCountRect;
+    CGFloat fansCountY=_hostLevel.top+5;
+    CGRect fansCountRect=CGRectMake(fansCountX, fansCountY, 200, 20);
+    _fansCount.text=model2.fansCount;
+    _fansCount.frame=fansCountRect;
     
     //关注按钮
     CGFloat fouceBtnX=hostImageViewX;
     CGFloat fouctBtnY=CGRectGetMaxY(_hostImageView.frame)+SPACING;
-    _focusBtn.frame=CGRectMake(fouceBtnX, fouctBtnY, 80, 20);
-    [_focusBtn setTitle:@"关注" forState:UIControlStateNormal];
+    _focusBtn.frame=CGRectMake(fouceBtnX, fouctBtnY, _hostImageView.width, 30);
+    [_focusBtn setTitle:@"+关注" forState:UIControlStateNormal];
     _focusBtn.layer.masksToBounds=YES;
-    _focusBtn.layer.cornerRadius=2;
-    [_focusBtn setTitleColor:KSYCOLOR(92, 222, 231) forState:UIControlStateNormal];
-    _focusBtn.layer.borderColor=[KSYCOLOR(92, 222, 231)CGColor];
+    _focusBtn.layer.cornerRadius=5;
+    [_focusBtn setTitleColor:THEMECOLOR forState:UIControlStateNormal];
+    _focusBtn.layer.borderColor=[THEMECOLOR CGColor];
     _focusBtn.layer.borderWidth = 0.5;
-
+ 
     
     //个人签名
     CGFloat signatureX=hostNameX;
-    CGFloat signatureY=CGRectGetMaxY(_hostLevel.frame)+SPACING;
-    CGFloat signatureWidth=self.frame.size.width-CGRectGetMaxY(_hostLevel.frame)-2*SPACING;
+    CGFloat signatureY=_hostLevel.bottom+SPACING;
+    CGFloat signatureWidth=THESCREENWIDTH-_hostLevel.left-10;
     CGSize signatureSize=[model2.signature boundingRectWithSize:CGSizeMake(signatureWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:SIGNATUREFONT]} context:nil].size;
     CGRect signatureRect=CGRectMake(signatureX, signatureY, signatureSize.width, signatureSize.height);
     _signature.text=model2.signature;
     _signature.frame=signatureRect;
                          
-    
-    //添加下划线
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_focusBtn.frame)+SPACING, self.frame.size.width, 1)];
+    CGFloat labelY;
+    //添加下划线 这里需要判断
+    if (_focusBtn.bottom>_signature.bottom) {
+        labelY =_focusBtn.bottom+10;
+    }else{
+        labelY=_signature.bottom+10;
+    }
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, labelY, THESCREENWIDTH, 1)];
     label.backgroundColor=[UIColor lightGrayColor];
     [self addSubview:label];
     
@@ -163,13 +177,14 @@
     CGFloat createtimeY=CGRectGetMaxY(_studioName.frame)+SPACING;
     CGRect createtimeRect=CGRectMake(createtimeX, createtimeY, 80, 30);
     UILabel *createTime=[[UILabel alloc]initWithFrame:createtimeRect];
+    createTime.textColor=[UIColor lightGrayColor];
     createTime.text=@"创建时间";
     [self addSubview:createTime];
     
     //时间
     CGFloat timeX=CGRectGetMaxX(createTime.frame)+SPACING;
     CGFloat timeY=createtimeY;
-    CGRect timeRect=CGRectMake(timeX, timeY, self.frame.size.width-timeX-10, 30);
+    CGRect timeRect=CGRectMake(timeX, timeY, THESCREENWIDTH-timeX-10, 30);
     _time.frame=timeRect;
     _time.text=model2.time;
     
@@ -178,6 +193,7 @@
     CGFloat timesY=CGRectGetMaxY(createTime.frame)+SPACING;
     CGRect timesRect=CGRectMake(timesX, timesY, 80, 30);
     UILabel *Times=[[UILabel alloc]initWithFrame:timesRect];
+    Times.textColor=[UIColor lightGrayColor];
     [self addSubview:Times];
     Times.text=@"直播次数";
     
@@ -194,13 +210,14 @@
     CGFloat ctentY=CGRectGetMaxY(Times.frame)+SPACING;
     CGRect ctentRect=CGRectMake(ctentX, ctentY, 80, 30);
     UILabel *ctent=[[UILabel alloc]initWithFrame:ctentRect];
+    ctent.textColor=[UIColor lightGrayColor];
     [self addSubview:ctent];
     ctent.text=@"内容简介";
     
     //时间
     CGFloat contentX=timeX;
     CGFloat contentY=ctentY-5;
-    CGFloat contentWidth=self.frame.size.width-contentX-20;
+    CGFloat contentWidth=THESCREENWIDTH-contentX-20;
     CGSize contentSize=[model2.content boundingRectWithSize:CGSizeMake(contentWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:HOSTLEVELFONT]} context:nil].size;
     CGRect contentRec=CGRectMake(contentX, contentY, contentSize.width, contentSize.height);
     _content.frame=contentRec;

@@ -8,9 +8,10 @@
 
 #ifndef KSYHead_h
 #define KSYHead_h
-
-#import "UIView+BFExtension.h"
+#import "AppDelegate.h"
 #import <KSYMediaPlayer/KSYMediaPlayer.h>
+#import "UIColor+ColorExtension.h"
+#import "UIView+BFExtension.h"
 #import "KSYBasePlayView.h"
 #import "KSYThemeManager.h"
 #import "KSYMediaVoiceView.h"
@@ -20,7 +21,7 @@
 #import "KSYDetailModel.h"
 #import "KSYIntTVCell.h"
 #import "KSYIntroduceModel.h"
-
+#import "UIImageView+WebCache.h"
 
 
 typedef enum : NSUInteger {
@@ -64,14 +65,15 @@ typedef enum KSYGestureType KSYGestureType;
 #define THESCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define THESCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
-#define TEXTCOLOR1 ([UIColor colorWithRed:207.0/255.0 green:206.0/255.0 blue:203.0/255.0 alpha:1.0])
-#define TEXTCOLOR2 ([UIColor colorWithRed:237.0/255.0 green:236.0/255.0 blue:234.0/255.0 alpha:1.0])
+#define TEXTCOLOR1 ([UIColor whiteColor])
+#define TEXTCOLOR2 ([UIColor whiteColor])
 #define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+
 
 #define kCoverBarLeftMargin 20
 #define kCoverBarRightMargin 20
 #define kCoverLockViewLeftMargin 68
-
+#define kCoverLockWidth 30
 #define kCoverBarWidth 25
 #define kProgressViewWidth 150
 #define kLandscapeSpacing 10
@@ -79,6 +81,7 @@ typedef enum KSYGestureType KSYGestureType;
 #define kBigFont 18
 #define kSmallFont 16
 
+#define kQualityViewTag         101
 #define kVoiceViewTag           102
 #define kVoiceSliderTag         104
 #define kProgressSliderTag      105
@@ -86,31 +89,13 @@ typedef enum KSYGestureType KSYGestureType;
 #define kProgressCurLabelTag    107
 #define kProgressViewTag        108
 #define kCurProgressLabelTag    109
-//#define kTotalProgressLabelTag  110
 #define kWardMarkImgViewTag     111
 #define kFullScreenBtnTag       112
-//#define kScale50BtnTag          113
-//#define kScale75BtnTag          114
-//#define kScale100BtnTag         115
-#define kToolViewTag            116
-#define kToolBgViewTag          117
 #define kQualityBtnTag          118
-#define kSnapBtnTag             119
-#define kBarBgViewTag           120
 #define kBarPlayBtnTag          121
-#define kLoadIndicatorViewTag   122
-#define kLoadIndicatorLabelTag  123
-#define kLockViewTag            124
-#define kScaleBtnTag            125
-#define kEpisodeBtnTag          126
-#define kScaleViewTag           127
 #define kBrightnessViewTag      128
 #define kBrightnessSliderTag    129
 #define kMediaVoiceViewTag      130
-#define kErrorLabelTag          131
-
-#define kCPULabel               132
-#define kMemLabel               133
 #define kDanmuBtnTag            134
 #define kSetBtnTag              135
 #define kSetViewTag             136
@@ -124,19 +109,43 @@ typedef enum KSYGestureType KSYGestureType;
 #define kPlaySetLabelTag        144
 #define kUnderLineTag           145
 #define kVoiceSetLabelTag       146
-#define kEpisodeTableViewTag    147
-#define kCommentBtnTag          148
 #define kCommentFieldTag        149
-#define kCommentViewTag         150
-#define kSendBtnTag             151
-#define kTableViewTag           152
-#define kBackgroundViewTag      153
+
+
 
 //颜色
 #define KSYCOLER(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 //字体大小
 #define WORDFONT16 16
 #define WORDFONT18 18
+#define THEMECOLOR [UIColor colorWithRed:92/255.0 green:232/255.0 blue:223/255.0 alpha:1.0]
+#define DEEPCOLOR [UIColor colorWithRed:43/255.0 green:43/255.0 blue:43/255.0 alpha:1.0]
+#define ALPHA 0.5
+
+
+#pragma mark 接口.h中的定义
+//由于宏定义里有需要替换的内容所以定义一个变量className
+//##用于分割、连接字符串
+#define singleton_interface(className) +(className *)shared##className;
+#pragma mark 实现.m
+//\在代码中用于连接宏定义，以实现多行定义
+#define singleton_implementation(className) \
+static className *_instance;\
++(id)shared##className{\
+if(!_instance){\
+_instance=[[self alloc]init];\
+}\
+return _instance;\
+}\
++(id)allocWithZone:(struct _NSZone *)zone{\
+static dispatch_once_t dispatchOnce;\
+dispatch_once(&dispatchOnce, ^{\
+_instance=[super allocWithZone:zone];\
+});\
+return _instance;\
+}
+
+
 
 
 #endif /* KSYHead_h */

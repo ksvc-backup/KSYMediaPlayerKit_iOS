@@ -10,9 +10,32 @@
 #import <UIKit/UIKit.h>
 @interface UserInfoModel : NSObject
 
-@property (nonatomic, copy)NSString *userName;
-@property (nonatomic, copy)NSString *userHead;
-@property (nonatomic, copy)NSString *userComment;
-@property (nonatomic, strong)UIColor *backColor;
-@property (nonatomic, assign)BOOL isShoudDele;
+/**
+ *	@brief	用户名
+ */
+@property (nonatomic, copy)NSString *name;
+/**
+ *	@brief	头像地址
+ */
+@property (nonatomic, copy)NSString *headUrl;
+/**
+ *	@brief	观众签名内容
+ */
+@property (nonatomic, copy)NSString *signConent;
+/**
+ *	@brief	直播次数
+ */
+@property (nonatomic, copy)NSString *liveNumber;
+/**
+ *	@brief	粉丝数
+ */
+@property (nonatomic, copy)NSString *fansNumber;
+/**
+ *	@brief	关注数
+ */
+@property (nonatomic, copy)NSString *followNumber;
+/**
+ *	@brief	点赞数
+ */
+@property (nonatomic, copy)NSString *praiseNumber;
 @end

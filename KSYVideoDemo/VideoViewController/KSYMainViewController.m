@@ -29,12 +29,10 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"KSYPlayer";
     self.view.backgroundColor = [UIColor whiteColor];
     _sesionArr = [[NSArray alloc] initWithObjects:@"传统直播",@"手机直播",@"在线视频点播",@"短视频播放",@"列表浮窗", nil];
@@ -65,6 +63,7 @@
     
     _httpTextF = [[UITextField alloc] initWithFrame:CGRectMake(httpUrlLabl.right + 5, httpUrlLabl.top,self.view.width-httpUrlLabl.right-10, 20)];
     _httpTextF.adjustsFontSizeToFitWidth = YES;
+//    _httpTextF.text = @"http://eflakee.kssws.ks-cdn.com/MP4/My%20Love.mp4";
     _httpTextF.text = @"http://121.42.58.232:8980/hls_test/1.m3u8";
     _httpTextF.borderStyle = UITextBorderStyleRoundedRect;
     _httpTextF.returnKeyType = UIReturnKeyDone;
@@ -75,6 +74,7 @@
     _rtmpTextF = [[UITextField alloc] initWithFrame:CGRectMake(rtmpUrlLabl.right + 5, rtmpUrlLabl.top, self.view.width-_httpTextF.left-5, 20)];
     _rtmpTextF.adjustsFontSizeToFitWidth = YES;
     _rtmpTextF.text = @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
+//    _rtmpTextF.text = @"rtmp://test.live.ksyun.com/live/yun.265";
     _rtmpTextF.borderStyle = UITextBorderStyleRoundedRect;
     _rtmpTextF.returnKeyType = UIReturnKeyDone;
     _rtmpTextF.font = [UIFont systemFontOfSize:13.0];
@@ -89,7 +89,7 @@
 
     [self.view addSubview:tableView];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
 
     
 }
@@ -237,7 +237,7 @@
             break;
         case 2:
         {
-            KSYVideoOnDemandPlayVC *view=[[KSYVideoOnDemandPlayVC alloc]init];
+            KSYVideoOnDemandPlayVC *view=[KSYVideoOnDemandPlayVC new];
             view.urlPath=_httpTextF.text;
             view.isReleasePlayer=_switchControl.isOn;
             [self.navigationController pushViewController:view animated:YES];

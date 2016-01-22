@@ -11,6 +11,7 @@
 #import "KSYPhoneLivePlayView.h"
 #import "CommentModel.h"
 #import "SpectatorModel.h"
+#import "UserInfoModel.h"
 
 @interface KSYPhoneLivePlayBackVC ()
 {
@@ -21,6 +22,7 @@
     NSTimer                 *_praiseTimer1;
 
 }
+@property (nonatomic, strong)UserInfoModel *userModel;
 
 @end
 
@@ -28,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    AppDelegate *appDelegate=[[UIApplication sharedApplication]delegate];
+    appDelegate.allowRotation=NO;
     WeakSelf(KSYBaseViewController);
     //模拟观众评论
     _commetnTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addNewCommentWith) userInfo:nil repeats:YES];
@@ -41,6 +45,8 @@
     _phoneLivePlayVC = [[KSYPhoneLivePlayView alloc] initWithFrame:self.view.bounds urlString:self.videoUrlString playState:KSYPhoneLivePlayBack];
     //观看用户
     _phoneLivePlayVC.spectatorsArray = _spectatorsArr;
+    
+    _phoneLivePlayVC.userModel = self.userModel;
 
     _phoneLivePlayVC.isBackGroundReleasePlayer = self.isReleasePlayer;
 
@@ -76,17 +82,9 @@
 - (void)addNewCommentWith
 {
     CommentModel *model = [[CommentModel alloc] init];
-    model.userComment = @"哇，大美女！";
-    CGFloat hue = ( arc4random() % 256 / 256.0 );
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
-    model.backColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:0.9];
-    
-    CGFloat hue1 = ( arc4random() % 256 / 256.0 );
-    CGFloat saturation1 = ( arc4random() % 128 / 256.0 ) + 0.5;
-    CGFloat brightness1 = ( arc4random() % 128 / 256.0 ) + 0.5;
-    model.headColor = [UIColor colorWithHue:hue1 saturation:saturation1 brightness:brightness1 alpha:1];
-    
+    model.userComment = @"评论评论评论";
+    model.userName = @"用户名";
+
     [_phoneLivePlayVC addNewCommentWith:model];
 }
 
@@ -100,9 +98,23 @@
         model.fansNumber = @"20K";
         model.followNumber = @"88";
         model.praiseNumber = @"5.5w";
-        model.headColor = [self getRandomColorWithalpha:1];
         [_spectatorsArr addObject:model];
     }
+}
+
+- (UserInfoModel *)userModel
+{
+    if (_userModel == nil) {
+        _userModel = [UserInfoModel new];
+    }
+    _userModel.name = @"王大锤";
+    _userModel.signConent = @"我叫王大锤，万万没想到的是...我的生涯一片无悔，我想起那天夕阳下的奔跑，那是我逝去的青春";
+    _userModel.liveNumber = @"888";
+    _userModel.fansNumber = @"20K";
+    _userModel.followNumber = @"88";
+    _userModel.praiseNumber = @"5.5w";
+    
+    return _userModel;
 }
 
 //获取随机色
