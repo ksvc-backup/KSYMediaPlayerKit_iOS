@@ -203,15 +203,14 @@
 }
 - (void)playBtnClick:(UIButton *)btn
 {
-    btn.selected = !btn.selected;
     if (self.BtnClick) {
         self.BtnClick(btn);
     }
     if (btn.selected) {
-        UIImage *pauseImg_n = [UIImage imageNamed:@"play"];
+        UIImage *pauseImg_n = [UIImage imageNamed:@"pause"];
         [btn setImage:pauseImg_n forState:UIControlStateNormal];
     }else{
-        UIImage *playImg_n = [UIImage imageNamed:@"pause"];
+        UIImage *playImg_n = [UIImage imageNamed:@"play"];
         [btn setImage:playImg_n forState:UIControlStateNormal];
     }
 }
