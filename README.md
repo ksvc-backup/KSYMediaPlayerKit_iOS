@@ -2,6 +2,14 @@
 ---
 ##LIBRARY更新日志
   
+**2016-01-22**	 	
+
+**V 1.0.0 版本发布**
+
+  -  添加了对应场景(手机直播及回看，游戏直播，在线视频点播及短视频)的视觉效果及UI细化
+  -  修改了断网重连情况播放器不能重连的bug
+  -	 添加了初始化播放器鉴权的逻辑
+
 **2016-01-05**
 
   -   **V 0.1.0** 初版本发布，提供对应场景(手机直播及回看，游戏直播，在线视频点播及短视频)的基本UI以及播放器状态控制逻辑
@@ -47,6 +55,7 @@ KSYMediaPlayer Demo 采用MVC模式，对播放器的核心SDK KSYMediaPlayer.fr
 
 - 新建工程，引入KSYMediaPlayer.framework，VideoToolbox.framework，libz.tbd，libbz2.tbd，libstdc++.6.tbd这些类库。
 - 引入View,Model,Catergoary,Reahabitity文件夹
+- 每一个UI组件都是可分离的控件，开发者可根据自己的需求替换或者修改对应的控件
 
 **初始化**
 
