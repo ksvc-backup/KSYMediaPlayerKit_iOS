@@ -1,4 +1,4 @@
-#KSYMediaPlayer-iOS-SDK-LIBRARY
+#KSYMediaPlayerKit_iOS
 ---
 ##LIBRARY更新日志
   
